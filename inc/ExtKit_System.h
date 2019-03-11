@@ -10,6 +10,10 @@
 */
 
 /**	@mainpage	Main Page
+	- @subpage	microbit-dal-ext-kit
+*/
+
+/**	@page	microbit-dal-ext-kit	microbit-dal-ext-kit
 	`microbit-dal-ext-kit` is a yotta module which provides a set of components and utilities for C++ applications using `microbit-dal` (also know as micro:bit runtime).
 
 	The interfaces are provided by the following header files.
