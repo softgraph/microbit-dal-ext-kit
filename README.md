@@ -9,16 +9,16 @@ The `microbit-dal-ext-kit` provides components and utilities compatible with BBC
 
 ### Structure
 
-<table><tr
-><td bgcolor="#ffc080" align="center" colspan="3"><font color="#000000">Application written in C++</font></td></tr><tr
-><td bgcolor="#c0ffc0" align="center"><font color="#000000"><b>microbit-dal-ext-kit</b></font></td><td bgcolor="#c0c0ff"></td><td bgcolor="#ff80c0"></td></tr><tr
-><td bgcolor="#c0c0ff" align="center" colspan="2"><font color="#000000"><b>microbit-dal</b> (micro:bit runtime)</font></td><td bgcolor="#ff80c0"></td></tr><tr
-><td bgcolor="#ff80c0" align="center" colspan="3"><font color="#000000">Arm Mbed OS</font></td></tr><tr
-><tr><td bgcolor="#ffffff" colspan="3"></td></tr><tr
-><td bgcolor="#c0c0ff" align="center" colspan="3"><font color="#000000">BBC micro:bit device</font></td></tr><tr
-><td bgcolor="#c0ffc0" align="center"><font color="#000000">Extension Board and/or Hardware Module (optional)</font></td><td bgcolor="#c0c0ff" colspan="2"></td></tr><tr
-><td bgcolor="#ffc080" align="center" colspan="3"><font color="#000000">Inputs/Outputs (optional)</font></td></tr
-></table>
+<table>
+<tr><td align="center">Application written in C++</td></tr>
+<tr><td align="center"><b>microbit-dal-ext-kit</b></td></tr>
+<tr><td align="center"><b>microbit-dal</b> (micro:bit runtime)</td></tr>
+<tr><td align="center">Arm Mbed OS</td></tr>
+<tr><tr><td ></td></tr>
+<tr><td align="center" >BBC micro:bit device</td></tr>
+<tr><td align="center">Extension Board and/or Hardware Module (optional)</td></tr>
+<tr><td align="center">Inputs/Outputs (optional)</td></tr>
+</table>
 
 ### Extension boards and hardware modules supported unofficially
 
