@@ -2,7 +2,7 @@
 	"_see_also": "http://docs.yottabuild.org/reference/module.html",
 	"name": "microbit-dal-ext-kit",
 	"description": "The set of components and utilities for C++ applications using microbit-dal",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"license": "MIT",
 	"dependencies": {
 		"microbit": "lancaster-university/microbit#v2.1.1"
