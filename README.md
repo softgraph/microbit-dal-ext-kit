@@ -33,6 +33,12 @@ The `microbit-dal-ext-kit` provides components and utilities compatible with BBC
 
 MIT
 
+## Usage Example
+
+Yotta module | URL
+------------ | ---
+microbit-dal-ext-kit-example | https://github.com/softgraph/microbit-dal-ext-kit-example
+
 ## Dependencies
 
 Yotta module | URL | Version
