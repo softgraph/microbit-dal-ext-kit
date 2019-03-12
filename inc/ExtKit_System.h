@@ -10,13 +10,17 @@
 */
 
 /**	@mainpage	Main Page
-	- @subpage	microbit-dal-ext-kit
+
+	@section sec1	Introduction to microbit-dal-ext-kit
+	-# https://github.com/softgraph/microbit-dal-ext-kit
+	-# @subpage	microbit-dal-ext-kit
+
+	@section sec2	Introduction to microbit-dal-ext-kit-example
+	-# https://github.com/softgraph/microbit-dal-ext-kit-example
 */
 
-/**	@page	microbit-dal-ext-kit	microbit-dal-ext-kit
-	`microbit-dal-ext-kit` is a yotta module which provides a set of components and utilities for C++ applications using `microbit-dal` (also know as micro:bit runtime).
-
-	The interfaces are provided by the following header files.
+/**	@page	microbit-dal-ext-kit	Header File Structure of microbit-dal-ext-kit
+	The interfaces of `microbit-dal-ext-kit` are provided by the following header files.
 
 	# Global variables
 		- ExtKitGlobal.h
