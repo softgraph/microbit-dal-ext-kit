@@ -17,19 +17,17 @@
 namespace microbit_dal_ext_kit {
 
 /// Node. The base struct for any node which can be linked.
-/* virtual */ struct Node
+/* abstract */ struct Node
 {
-	/// The previous node.
-	Node* prev;
-
-	/// The next node.
-	Node* next;
-
+public:
 	/// Constructor.
 	Node();
 
 	/// Destructor.
-	virtual /* to be overridden */ ~Node();
+	virtual ~Node();
+
+	/// Check whether the node is valid or not. Pleaes note that a singleton node is not valid.
+	bool isValid();
 
 	/// Link after a node.
 	void linkAfter(Node& node);
@@ -39,41 +37,14 @@ namespace microbit_dal_ext_kit {
 
 	/// Unlink.
 	void unlink();
-};
 
-inline Node::Node()
-{
-	next = this;
-	prev = this;
-}
+	/// The previous node.
+	Node* prev;
 
-inline /* to be overridden */ Node::~Node()
-{
-}
+	/// The next node.
+	Node* next;
 
-inline void Node::linkAfter(Node& node)
-{
-	prev = &node;
-	next = node.next;
-	next->prev = this;
-	prev->next = this;
-}
-
-inline void Node::linkBefore(Node& node)
-{
-	next = &node;
-	prev = node.prev;
-	next->prev = this;
-	prev->next = this;
-}
-
-inline void Node::unlink()
-{
-	prev->next = next;
-	next->prev = prev;
-	next = this;
-	prev = this;
-}
+};	// Node
 
 }	// microbit_dal_ext_kit
 

@@ -10,7 +10,7 @@
 */
 
 #include "ExtKitPeriodicListener.h"	// self
-#include "ExtKit_System.h"
+#include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
 
@@ -21,16 +21,16 @@ PeriodicListener::HandlerRecord::HandlerRecord()
 	: Node()
 {
 	this->unit		= kUnit100ms;
-	this->handler	= 0;
+	this->function	= 0;
 	this->protocol	= 0;
 	this->priority	= PeriodicListener::kHandlerPriorityVeryLow;
 }
 
-PeriodicListener::HandlerRecord::HandlerRecord(PeriodUnit unit, Handler* handler, HandlerPriority priority)
+PeriodicListener::HandlerRecord::HandlerRecord(PeriodUnit unit, HandlerFunction* function, HandlerPriority priority)
 	: Node()
 {
 	this->unit		= unit;
-	this->handler	= handler;
+	this->function	= function;
 	this->protocol	= 0;
 	this->priority	= priority;
 }
@@ -39,7 +39,7 @@ PeriodicListener::HandlerRecord::HandlerRecord(PeriodUnit unit, HandlerProtocol*
 	: Node()
 {
 	this->unit		= unit;
-	this->handler	= 0;
+	this->function	= 0;
 	this->protocol	= protocol;
 	this->priority	= priority;
 }
@@ -49,9 +49,9 @@ PeriodicListener::HandlerRecord::HandlerRecord(PeriodUnit unit, HandlerProtocol*
 
 PeriodicListener::HandlerRecord PeriodicListener::sRoot;
 
-void PeriodicListener::registerHandler(PeriodUnit unit, Handler* handler, HandlerPriority priority)
+void PeriodicListener::registerHandler(PeriodUnit unit, HandlerFunction* function, HandlerPriority priority)
 {
-	Node* p = new HandlerRecord(unit, handler, priority);
+	Node* p = new HandlerRecord(unit, function, priority);
 	EXT_KIT_ASSERT_OR_PANIC(p, kPanicOutOfMemory);
 
 	p->linkBefore(sRoot);
@@ -65,12 +65,14 @@ void PeriodicListener::registerHandler(PeriodUnit unit, HandlerProtocol* protoco
 	p->linkBefore(sRoot);
 }
 
-int /* result */ PeriodicListener::unregisterHandler(PeriodUnit unit, Handler* handler)	// returns MICROBIT_NO_DATA or MICROBIT_OK
+int /* result */ PeriodicListener::unregisterHandler(PeriodUnit unit, HandlerFunction* function)	// returns MICROBIT_NO_DATA or MICROBIT_OK
 {
 	Node* p = &sRoot;
 	while((p = p->next) != &sRoot) {
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+
 		HandlerRecord* r = static_cast<HandlerRecord*>(p);
-		if((r->handler == handler) && (r->unit == unit)) {
+		if((r->function == function) && (r->unit == unit)) {
 			r->unlink();
 			delete r;
 			return MICROBIT_OK;
@@ -83,6 +85,8 @@ int /* result */ PeriodicListener::unregisterHandler(PeriodUnit unit, HandlerPro
 {
 	Node* p = &sRoot;
 	while((p = p->next) != &sRoot) {
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+
 		HandlerRecord* r = static_cast<HandlerRecord*>(p);
 		if((r->protocol == protocol) && (r->unit == unit)) {
 			r->unlink();
@@ -134,13 +138,15 @@ void PeriodicListener::notify(uint32_t count, PeriodUnit unit, HandlerPriority p
 {
 	Node* p = &sRoot;
 	while((p = p->next) != &sRoot) {
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+
 		HandlerRecord* r = static_cast<HandlerRecord*>(p);
 		if(r->unit != unit || r->priority != priority) {
 			continue;
 		}
-		Handler* handler = r->handler;
-		if(handler) {
-			(*handler)(count, unit);
+		HandlerFunction* function = r->function;
+		if(function) {
+			(*function)(count, unit);
 			continue;
 		}
 		HandlerProtocol* protocol = r->protocol;

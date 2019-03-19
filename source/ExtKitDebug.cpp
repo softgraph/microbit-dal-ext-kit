@@ -2,7 +2,7 @@
 /**	@package	microbit_dal_ext_kit
 */
 
-/// Debug Utility
+/// Debug utility
 /**	@file
 	@author	Copyright (c) 2019 Tomoyuki Nakashima.<br>
 			This code is licensed under MIT license. See `LICENSE` in the project root for more information.
@@ -10,7 +10,7 @@
 */
 
 #include "ExtKitDebug.h"	// self
-#include "ExtKit_System.h"
+#include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
 
@@ -91,73 +91,4 @@ void debug_sendMemoryDump(const void* buffer, size_t length)
 	serial::sendMemoryDump(buffer, length);
 }
 
-namespace statistics {
-
-static const int kMaxItems	= 10;
-
-struct Item
-{
-	const ManagedString*	title;
-	uint16_t				count;
-	uint16_t				total;
-};
-
-static Item items[kMaxItems] = {};
-
-static int registerItem(const ManagedString* title);	// returns MICROBIT_NO_RESOURCES or offset
-
-int /* result */ incrementItem(const ManagedString* title)	// returns MICROBIT_NO_RESOURCES or MICROBIT_OK
-{
-	int offset = registerItem(title);
-	if(offset < 0) {
-		return MICROBIT_NO_RESOURCES;
-	}
-	items[offset].count++;
-	return MICROBIT_OK;
-}
-
-int /* result */ setItem(const ManagedString* title, uint16_t value)	// returns MICROBIT_NO_RESOURCES or MICROBIT_OK
-{
-	int offset = registerItem(title);
-	if(offset < 0) {
-		return MICROBIT_NO_RESOURCES;
-	}
-	items[offset].count = value;
-	return MICROBIT_OK;
-}
-
-int registerItem(const ManagedString* title)	// returns MICROBIT_NO_RESOURCES or offset
-{
-	for(int i = 0; i < kMaxItems; i++) {
-		if(items[i].title == title) {
-			return i;
-		}
-	}
-	for(int i = 0; i < kMaxItems; i++) {
-		if(!items[i].title) {
-			items[i].title = title;
-			return i;
-		}
-	}
-	return MICROBIT_NO_RESOURCES;
-}
-
-void debug_sendItems()
-{
-	for(int i = 0; i < kMaxItems; i++) {
-		if(!items[i].title) {
-			continue;
-		}
-		if(!items[i].count) {
-			continue;
-		}
-		uint16_t count = items[i].count;
-		items[i].count = 0;
-		items[i].total += count;
-		debug_sendLine(EXT_KIT_DEBUG_STATISTICS, items[i].title->toCharArray(), "\t0x", string::hex(count).toCharArray());
-		// incrementItem() may be called inside this debug_sendLine() call.
-	}
-}
-
-}	// statistics
 }	// microbit_dal_ext_kit

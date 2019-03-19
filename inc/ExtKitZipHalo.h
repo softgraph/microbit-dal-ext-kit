@@ -18,7 +18,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/// ZipHalo Component.
+/// ZipHalo Component
 /**
 	Support for Kitronik's Zip Halo board.
 	@sa	Kitronik Zip Halo

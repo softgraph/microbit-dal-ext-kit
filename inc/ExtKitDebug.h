@@ -2,7 +2,7 @@
 /**	@package	microbit_dal_ext_kit
 */
 
-/// Debug Utility
+/// Debug utility
 /**	@file
 	@author	Copyright (c) 2019 Tomoyuki Nakashima.<br>
 			This code is licensed under MIT license. See `LICENSE` in the project root for more information.
@@ -57,19 +57,6 @@ void debug_sendLine(const char* s1, const char* s2, const char* s3, const char* 
 /// Send a memory dump block to the debugger.
 void debug_sendMemoryDump(const void* buffer, size_t length);
 
-///	Debug Statistics utility.
-namespace statistics {
-
-/// Increment item count.
-int /* result */ incrementItem(const ManagedString* title);	// returns MICROBIT_NO_RESOURCES or MICROBIT_OK
-
-/// Set item value.
-int /* result */ setItem(const ManagedString* title, uint16_t value);	// returns MICROBIT_NO_RESOURCES or MICROBIT_OK
-
-/// Send changed items to the debugger.
-void debug_sendItems();
-
-}	// statistics
 }	// microbit_dal_ext_kit
 
 #endif	// EXT_KIT_DEBUG_H

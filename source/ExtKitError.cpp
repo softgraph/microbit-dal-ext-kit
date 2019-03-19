@@ -10,12 +10,12 @@
 */
 
 #include "ExtKitError.h"	// self
-#include "ExtKit_System.h"
+#include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
 namespace error {
 
-void raise(const char *desc, const char *file, int line)
+void raise(const char *desc, const char *file, int line, int panicCode)
 {
 	serial::send(desc);
 	serial::send(", file: ");
@@ -23,13 +23,18 @@ void raise(const char *desc, const char *file, int line)
 	serial::send(", line: ");
 	serial::sendLine(line);
 
-	//	give other fibers a chance to keep running
-	while(1) {
-		time::sleep(1000  /* milliseconds */);
+	if(panicCode) {
+		microbit_panic(panicCode);
+	}
+	else {
+		//	give other fibers a chance to keep running
+		while(1) {
+			time::sleep(1000  /* milliseconds */);
+		}
 	}
 }
 
-void raise(const char *desc, const char* name, const void* object)
+void raise(const char *desc, const char* name, const void* object, int panicCode)
 {
 	serial::send(desc);
 	serial::send(", name: ");
@@ -37,9 +42,14 @@ void raise(const char *desc, const char* name, const void* object)
 	serial::send(", object: 0x");
 	serial::sendLine(string::hex((uint32_t) object).toCharArray());
 
-	//	give other fibers a chance to keep running
-	while(1) {
-		time::sleep(1000  /* milliseconds */);
+	if(panicCode) {
+		microbit_panic(panicCode);
+	}
+	else {
+		//	give other fibers a chance to keep running
+		while(1) {
+			time::sleep(1000  /* milliseconds */);
+		}
 	}
 }
 

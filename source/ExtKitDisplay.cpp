@@ -10,7 +10,7 @@
 */
 
 #include "ExtKitDisplay.h"	// self
-#include "ExtKit_System.h"
+#include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
 namespace display {
@@ -70,34 +70,53 @@ static const Graph sBarGraph[] = {
 	 1, 1}	// 9
 };
 
+static bool sIsUpsideDown = false;
+
+void setUpsideDown()
+{
+	sIsUpsideDown = true;
+	MicroBitDisplay& d = ExtKit::global().display();
+	d.rotateTo(MICROBIT_DISPLAY_ROTATION_180);
+}
+
+bool isUpsideDown()
+{
+	return sIsUpsideDown;
+}
+
 void clear()
 {
-	gDisplay.clear();
+	MicroBitDisplay& d = ExtKit::global().display();
+	d.clear();
 }
 
 void showChar(char c)
 {
-	gDisplay.printChar(c);
+	MicroBitDisplay& d = ExtKit::global().display();
+	d.printChar(c);
 }
 
 void flashChar(char c, uint32_t durationInMilliseconds)
 {
-	MicroBitImage saved = gDisplay.screenShot();
-	gDisplay.clear();		time::sleep(100 /* milliseconds */);
-	gDisplay.printChar(c);	time::sleep(durationInMilliseconds);
-	gDisplay.clear();		time::sleep(100 /* milliseconds */);
-	gDisplay.print(saved);
+	MicroBitDisplay& d = ExtKit::global().display();
+	MicroBitImage saved = d.screenShot();
+	d.clear();		time::sleep(100 /* milliseconds */);
+	d.printChar(c);	time::sleep(durationInMilliseconds);
+	d.clear();		time::sleep(100 /* milliseconds */);
+	d.print(saved);
 }
 
 void scrollString(const ManagedString& s)
 {
-	MicroBitImage saved = gDisplay.screenShot();
-	gDisplay.scroll(s);
-	gDisplay.print(saved);
+	MicroBitDisplay& d = ExtKit::global().display();
+	MicroBitImage saved = d.screenShot();
+	d.scroll(s);
+	d.print(saved);
 }
 
 void showNumber(int twoDigitNumber /* 00-99 */)
 {
+	MicroBitDisplay& d = ExtKit::global().display();
 	twoDigitNumber = numeric::clamp(0, 99, twoDigitNumber);
 	const char* p1 = &sBarGraph[twoDigitNumber / 10][0];
 	const char* p2 = &sBarGraph[twoDigitNumber % 10][0];
@@ -108,11 +127,12 @@ void showNumber(int twoDigitNumber /* 00-99 */)
 		image.setPixelValue(3, y, *p2++ ? 1 : 0);
 		image.setPixelValue(4, y, *p2++ ? 1 : 0);
 	}
-	gDisplay.print(image);
+	d.print(image);
 }
 
 void showBits(uint32_t bits /* 0x00000 - 0xfffff */)
 {
+	MicroBitDisplay& d = ExtKit::global().display();
 	MicroBitImage image(5,5);
 	for (int16_t x = 4; 0 <= x; x--) {
 		for (int16_t y = 4; 1 <= y; y--) {
@@ -121,12 +141,12 @@ void showBits(uint32_t bits /* 0x00000 - 0xfffff */)
 		}
 		image.setPixelValue(x, 0, 1);
 	}
-	gDisplay.print(image);
+	d.print(image);
 }
 
 void showButton(Buttons buttons)
 {
-	MicroBitDisplay& d = gDisplay;
+	MicroBitDisplay& d = ExtKit::global().display();
 	if(buttons == button::kNone)					{ d.clear(); }
 	else if(buttons == button::kInvalid)			{ d.printChar('!'); }
 	else if((buttons & button::kLR) == button::kLR)	{ d.printChar('W'); }
@@ -158,7 +178,7 @@ EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, imageDirRB,	0,0,0,0,0,
 
 void showDirection(Direction direction)
 {
-	MicroBitDisplay& d = gDisplay;
+	MicroBitDisplay& d = ExtKit::global().display();
 	switch(direction) {
 		case direction::kCenter:	d.clear();				break;
 		case direction::kN:			d.print(imageDirN);		break;

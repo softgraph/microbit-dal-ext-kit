@@ -19,10 +19,10 @@ namespace microbit_dal_ext_kit {
 /// Gesture utility
 namespace gesture {
 
-/// Returns MICROBIT_ACCELEROMETER_EVT_TILT_LEFT or RIGHT in accordance with device::isUpsideDown().
+/// Returns MICROBIT_ACCELEROMETER_EVT_TILT_LEFT or RIGHT in accordance with display::isUpsideDown().
 int microBitGestureEventTiltLeft();
 
-/// Returns MICROBIT_ACCELEROMETER_EVT_TILT_LEFT or RIGHT in accordance with device::isUpsideDown().
+/// Returns MICROBIT_ACCELEROMETER_EVT_TILT_LEFT or RIGHT in accordance with display::isUpsideDown().
 int microBitGestureEventTiltRight();
 
 }	// gesture

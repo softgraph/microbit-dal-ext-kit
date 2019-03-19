@@ -10,20 +10,19 @@
 */
 
 #include "ExtKitGesture.h"	// self
-
-#include "ExtKit_System.h"
+#include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
 namespace gesture {
 
 int microBitGestureEventTiltLeft()	// for MICROBIT_ID_GESTURE
 {
-	return device::isUpsideDown() ? MICROBIT_ACCELEROMETER_EVT_TILT_RIGHT : MICROBIT_ACCELEROMETER_EVT_TILT_LEFT;
+	return display::isUpsideDown() ? MICROBIT_ACCELEROMETER_EVT_TILT_RIGHT : MICROBIT_ACCELEROMETER_EVT_TILT_LEFT;
 }
 
 int microBitGestureEventTiltRight()	// for MICROBIT_ID_GESTURE
 {
-	return device::isUpsideDown() ? MICROBIT_ACCELEROMETER_EVT_TILT_LEFT : MICROBIT_ACCELEROMETER_EVT_TILT_RIGHT;
+	return display::isUpsideDown() ? MICROBIT_ACCELEROMETER_EVT_TILT_LEFT : MICROBIT_ACCELEROMETER_EVT_TILT_RIGHT;
 }
 
 }	// gesture

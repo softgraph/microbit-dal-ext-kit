@@ -2,7 +2,7 @@
 /**	@package	microbit_dal_ext_kit
 */
 
-/// MotoBit component.
+/// MotoBit component
 /**	@file
 	@author	Copyright (c) 2019 Tomoyuki Nakashima.<br>
 			This code is licensed under MIT license. See `LICENSE` in the project root for more information.
@@ -10,7 +10,7 @@
 */
 
 #include "ExtKitMotoBit.h"	// self
-#include "ExtKit_System.h"
+#include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
 
@@ -88,7 +88,7 @@ int MotoBit::setMotorPower(bool power)	// returns MICROBIT_I2C_ERROR or MICROBIT
 	char i2cData[2];
 	i2cData[0] = kI2cCmdSetMotorPower;
 	i2cData[1] = power ? kI2cDataMotorPowerOn : kI2cDataMotorPowerOff;
-	return gI2c.write(kI2cAddress, i2cData, COUNT_OF(i2cData));
+	return ExtKit::global().i2c().write(kI2cAddress, i2cData, COUNT_OF(i2cData));
 }
 
 int MotoBit::setMotorSpeed(MotoBit::Motor motor, MotoBit::MotorDirection direction, int speedInPercent)	// returns MICROBIT_I2C_ERROR or MICROBIT_OK
@@ -101,7 +101,7 @@ int MotoBit::setMotorSpeed(MotoBit::Motor motor, MotoBit::MotorDirection directi
 	i2cData[1] = (direction == kForward) ?
 		128 + speed /* range: 128 - 255 */ :
 		127 - speed /* range: 127 - 0 */ ;
-	return gI2c.write(kI2cAddress, i2cData, COUNT_OF(i2cData));
+	return ExtKit::global().i2c().write(kI2cAddress, i2cData, COUNT_OF(i2cData));
 }
 
 int MotoBit::setMotorPolarity(MotoBit::Motor motor, bool invert)	// returns MICROBIT_I2C_ERROR or MICROBIT_OK
@@ -109,7 +109,7 @@ int MotoBit::setMotorPolarity(MotoBit::Motor motor, bool invert)	// returns MICR
 	char i2cData[2];
 	i2cData[0] = ((motor == kLeft) != mInverted) ? kI2cCmdSetMotorPolarityL: kI2cCmdSetMotorPolarityR;
 	i2cData[1] = invert ? kI2cDataMotorPolarityInvert : kI2cDataMotorPolarityNormal;
-	return gI2c.write(kI2cAddress, i2cData, COUNT_OF(i2cData));
+	return ExtKit::global().i2c().write(kI2cAddress, i2cData, COUNT_OF(i2cData));
 }
 
 }	// microbit_dal_ext_kit

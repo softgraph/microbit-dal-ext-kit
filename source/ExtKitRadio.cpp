@@ -10,9 +10,36 @@
 */
 
 #include "ExtKitRadio.h"	// self
-#include "ExtKit_System.h"
+#include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
+
+/**
+	@class	Radio
+*/
+
+static const Features kFeature = feature::kRadio;
+
+/* Component */ bool Radio::isConfigured()
+{
+	return feature::isConfigured(kFeature);
+}
+
+Radio::Radio()
+	: Component("Radio")
+{
+	MicroBitRadio* r = ExtKit::global().radio();
+	EXT_KIT_ASSERT(r);
+}
+
+/* Component */ void Radio::start()
+{
+	MicroBitRadio* r = ExtKit::global().radio();
+	if(r) {
+		r->setGroup(EXT_KIT_CONFIG_VALUE(RADIO_GROUP));
+		r->enable();
+	}
+}
 
 void sendToRadio(const ManagedString& radioCmd)
 {
@@ -20,17 +47,24 @@ void sendToRadio(const ManagedString& radioCmd)
 		return;
 	}
 
-	MicroBitRadioDatagram& rd = gRadio.datagram;
-	rd.send(radioCmd);
-	//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Radio Datagram: \'", radioCmd.toCharArray(), "\'");
+	MicroBitRadio* r = ExtKit::global().radio();
+	if(r) {
+		r->datagram.send(radioCmd);
+		//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Radio Datagram: \'", radioCmd.toCharArray(), "\'");
+	}
 }
 
 ManagedString /*received */ recvFromRadio()
 {
-	MicroBitRadioDatagram& rd = gRadio.datagram;
-	ManagedString received = rd.recv(); // return the data received, or an empty PacketBuffer if no data is available.
-	//	debug_sendLine(EXT_KIT_DEBUG_EVENT "Radio Datagram: \'", received.toCharArray(), "\'");
-	return received;
+	MicroBitRadio* r = ExtKit::global().radio();
+	if(r) {
+		ManagedString received = r->datagram.recv(); // return the data received, or an empty PacketBuffer if no data is available.
+		//	debug_sendLine(EXT_KIT_DEBUG_EVENT "Radio Datagram: \'", received.toCharArray(), "\'");
+		return received;
+	}
+	else {
+		return ManagedString(ManagedString::EmptyString);
+	}
 }
 
 }	// microbit_dal_ext_kit

@@ -20,7 +20,7 @@ class MicroBitPin;
 
 namespace microbit_dal_ext_kit {
 
-/// NeoPixel Component.
+/// NeoPixel Component
 /**
 	Support for a LED Strip using WS2812B modules also known as NeoPixel.
 */
@@ -53,6 +53,9 @@ public:
 
 	/// Set max brightness value in percent. Call show() to apply the change.
 	void setMaxBrightness(MaxBrightness limit);
+
+	/// Change max brightness value in percent. Call show() to apply the change.
+	void changeMaxBrightness(int offset);
 
 	/// Get max brightness value in percent.
 	MaxBrightness maxBrightness();
@@ -91,6 +94,7 @@ public:
 	void fillColorWithFocusDirection(Direction focusDirection);
 
 protected:
+	void fillColorDirectly(Color color);
 	void setColorDirectly(int index, Color color);
 	void fillColorUsingColorMode();
 

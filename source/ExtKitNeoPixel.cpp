@@ -10,7 +10,7 @@
 */
 
 #include "ExtKitNeoPixel.h"	// self
-#include "ExtKit_System.h"
+#include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
 
@@ -123,6 +123,11 @@ void NeoPixel::setMaxBrightness(NeoPixel::MaxBrightness limit)
 	mMaxBrightness = numeric::clamp(kMaxBrightnessLowest, kMaxBrightnessNoLimit, limit);
 }
 
+void NeoPixel::changeMaxBrightness(int offset)
+{
+	setMaxBrightness(mMaxBrightness + offset);
+}
+
 NeoPixel::MaxBrightness NeoPixel::maxBrightness()
 {
 	return mMaxBrightness;
@@ -131,7 +136,12 @@ NeoPixel::MaxBrightness NeoPixel::maxBrightness()
 void NeoPixel::fillColor(Color color)
 {
 	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::fillColor");
+	fillColorDirectly(color);
+	mColorMode = kManual;
+}
 
+void NeoPixel::fillColorDirectly(Color color)
+{
 	const uint8_t g	= color.g();
 	const uint8_t r	= color.r();
 	const uint8_t b	= color.b();
@@ -141,7 +151,6 @@ void NeoPixel::fillColor(Color color)
 		*p++ = r;
 		*p++ = b;
 	}
-	mColorMode = kManual;
 }
 
 void NeoPixel::fillColorWithRainbow()
@@ -327,7 +336,7 @@ void NeoPixel::fillColorUsingColorMode()
 			}
 		}
 		if(mColorMode == kColorMapForFocus) {
-			fillColor(mColorMap[0]);
+			fillColorDirectly(mColorMap[0]);
 			if(0 < offset) {
 				setColorDirectly(offset - 1,	mColorMap[1]);
 				setColorDirectly(offset,		mColorMap[2]);
@@ -357,7 +366,7 @@ void NeoPixel::debug_dumpPin(MicroBitPin* pin)
 }
 
 /*
-	An output example of NeoPixel::debug_dumpPin() for gP1
+	An output example of NeoPixel::debug_dumpPin() for P1
 */
 
 //	ec 21 00 20:  78 32 02 00  08 00 02 00  e8 29 00 20  0f 01 02 00

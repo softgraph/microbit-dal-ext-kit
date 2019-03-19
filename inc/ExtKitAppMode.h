@@ -20,7 +20,7 @@ namespace microbit_dal_ext_kit {
 typedef Features	AppMode;
 
 /// The Describer Protocol for App Mode.
-/* virtual */ class AppModeDescriberProtocol
+/* abstract */ class AppModeDescriberProtocol
 {
 public:
 	/// A character for App Mode.

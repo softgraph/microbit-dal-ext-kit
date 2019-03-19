@@ -10,7 +10,7 @@
 */
 
 #include "ExtKitColor.h"	// self
-#include "ExtKit_System.h"
+#include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
 

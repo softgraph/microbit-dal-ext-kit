@@ -26,11 +26,11 @@ public:
 		kUnit100ms
 	};
 
-	/// Handler
-	typedef void Handler(uint32_t count, PeriodUnit unit);
+	/// Handler Function
+	typedef void HandlerFunction(uint32_t count, PeriodUnit unit);
 
 	/// Handler Protocol
-	/* virtual */ class HandlerProtocol
+	/* abstract */ class HandlerProtocol
 	{
 	public:
 		virtual /* to be implemented */ void handlePeriodicEvent(uint32_t count, PeriodUnit unit) = 0;
@@ -46,14 +46,14 @@ public:
 		kHandlerPriorityVeryHigh
 	};
 
-	/// Register Periodic Handler
-	static void registerHandler(PeriodUnit unit, Handler* handler, HandlerPriority priority = kHandlerPriorityMedium);
+	/// Register Periodic Handler Function
+	static void registerHandler(PeriodUnit unit, HandlerFunction* function, HandlerPriority priority = kHandlerPriorityMedium);
 
-	/// Register Periodic Handler Protocol
+	/// Register Periodic Handler
 	static void registerHandler(PeriodUnit unit, HandlerProtocol* protocol, HandlerPriority priority = kHandlerPriorityMedium);
 
 	/// Unregister Periodic Handler
-	static int /* result */ unregisterHandler(PeriodUnit unit, Handler* handler);	// returns MICROBIT_NO_DATA or MICROBIT_OK
+	static int /* result */ unregisterHandler(PeriodUnit unit, HandlerFunction* function);	// returns MICROBIT_NO_DATA or MICROBIT_OK
 
 	/// Unregister Periodic Handler
 	static int /* result */ unregisterHandler(PeriodUnit unit, HandlerProtocol* protocol);	// returns MICROBIT_NO_DATA or MICROBIT_OK
@@ -69,13 +69,13 @@ private:
 	struct HandlerRecord : public Node
 	{
 		PeriodUnit			unit;
-		Handler* 			handler;
+		HandlerFunction* 	function;
 		HandlerProtocol*	protocol;
 		HandlerPriority		priority;
 
 		HandlerRecord();
-		HandlerRecord(PeriodUnit unit, Handler* handler, HandlerPriority priority);
-		HandlerRecord(PeriodUnit unit, HandlerProtocol* protocol, HandlerPriority priority);
+		HandlerRecord(PeriodUnit unit, HandlerFunction* function, HandlerPriority priority);
+		HandlerRecord(PeriodUnit unit, HandlerProtocol* handler, HandlerPriority priority);
 	};
 
 	static HandlerRecord sRoot;

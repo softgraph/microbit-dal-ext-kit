@@ -2,7 +2,7 @@
 /**	@package	microbit_dal_ext_kit
 */
 
-/// TouchPiano component.
+/// TouchPiano component
 /**	@file
 	@author	Copyright (c) 2019 Tomoyuki Nakashima.<br>
 			This code is licensed under MIT license. See `LICENSE` in the project root for more information.
@@ -19,7 +19,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/// TouchPiano Component.
+/// TouchPiano Component
 /**
 	Support for Waveshare's Mini Piano Module for micro:bit.
 	@sa	Waveshare Mini Piano Module for micro:bit

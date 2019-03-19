@@ -2,7 +2,7 @@
 /**	@package	microbit_dal_ext_kit
 */
 
-/// Global variables.
+/// Global variables
 /**	@file
 	@author	Copyright (c) 2019 Tomoyuki Nakashima.<br>
 			This code is licensed under MIT license. See `LICENSE` in the project root for more information.
@@ -32,33 +32,141 @@ class MicroBitThermometer;
 	uBit global variable.
 */
 
-#if EXT_KIT_CONFIG_ENABLED(GLOBAL_UBIT)
-
-extern MicroBit					uBit;
-
-#endif	// GLOBAL_UBIT
-
 namespace microbit_dal_ext_kit {
 
-/*
-	Global aliases.
-*/
+/// Global instance
+struct ExtKit
+{
+public:
+	/// Get global instance. Valid only after MicroBitExtKit::init() or PrimitiveExtKit::init() is completed.
+	static ExtKit& global();
 
-extern MicroBitButton&			gButtonA;
-extern MicroBitButton&			gButtonB;
-extern MicroBitDisplay&			gDisplay;
-extern MicroBitI2C&				gI2c;
-extern MicroBitMessageBus&		gMessageBus;
-extern MicroBitPin&				gP0;
-extern MicroBitPin&				gP1;
-extern MicroBitPin&				gP2;
-extern MicroBitRadio&			gRadio;
-extern MicroBitSerial&			gSerial;
+	/// Constructor.
+	ExtKit(
+		const char*				owner,
+		MicroBitButton&			buttonA,
+		MicroBitButton&			buttonB,
+		MicroBitMultiButton&	buttonAB,
+		MicroBitDisplay&		display,
+		MicroBitI2C&			i2c,
+		MicroBitMessageBus&		messageBus,
+		MicroBitPin&			p0,
+		MicroBitPin&			p1,
+		MicroBitPin&			p2,
+		mbed::InterruptIn&		resetButton,
+		MicroBitSerial&			serial,
+		MicroBitAccelerometer*	accelerometer,	// may null
+		MicroBitCompass*		compass,		// may null
+		MicroBitRadio*			radio,			// may null
+		MicroBitThermometer*	thermometer		// may null
+	);
 
-extern MicroBitAccelerometer*	gAccelerometer;	// may null
-extern MicroBitMultiButton*		gButtonAB;		// may null
-extern MicroBitCompass*			gCompass;		// may null
-extern MicroBitThermometer*		gThermometer;	// may null
+	/// Initialize.
+	void init();
+
+	inline const char* owner() {
+		return mOwner;
+	}
+
+	inline MicroBitButton& buttonA() {
+		return mButtonA;
+	}
+
+	inline MicroBitButton& buttonB() {
+		return mButtonB;
+	}
+
+	inline MicroBitMultiButton& buttonAB() {
+		return mButtonAB;
+	}
+
+	inline MicroBitDisplay& display() {
+		return mDisplay;
+	}
+
+	inline MicroBitI2C& i2c() {
+		return mI2c;
+	}
+
+	inline MicroBitMessageBus& messageBus() {
+		return mMessageBus;
+	}
+
+	inline MicroBitPin& p0() {
+		return mP0;
+	}
+
+	inline MicroBitPin& p1() {
+		return mP1;
+	}
+
+	inline MicroBitPin& p2() {
+		return mP2;
+	}
+
+	inline mbed::InterruptIn& resetButton() {
+		return mResetButton;
+	}
+
+	inline MicroBitSerial& serial() {
+		return mSerial;
+	}
+
+	inline MicroBitAccelerometer* accelerometer() {	// may null
+		return mAccelerometer;
+	}
+
+	inline MicroBitCompass* compass() {	// may null
+		return mCompass;
+	}
+
+	inline MicroBitRadio* radio() {	// may null
+		return mRadio;
+	}
+
+	inline MicroBitThermometer* thermometer() {	// may null
+		return mThermometer;
+	}
+
+	inline void registerAccelerometer(MicroBitAccelerometer& accelerometer) {
+		mAccelerometer = &accelerometer;
+	}
+
+	inline void registerCompass(MicroBitCompass& compass) {
+		mCompass = &compass;
+	}
+
+	inline void registerRadio(MicroBitRadio& radio) {
+		mRadio = &radio;
+	}
+
+	inline void registerThermometer(MicroBitThermometer& thermometer) {
+		mThermometer = &thermometer;
+	}
+
+private:
+	static ExtKit*			sGlobal;
+
+	const char*				mOwner;
+
+	MicroBitButton&			mButtonA;
+	MicroBitButton&			mButtonB;
+	MicroBitMultiButton&	mButtonAB;
+	MicroBitDisplay&		mDisplay;
+	MicroBitI2C&			mI2c;
+	MicroBitMessageBus&		mMessageBus;
+	MicroBitPin&			mP0;
+	MicroBitPin&			mP1;
+	MicroBitPin&			mP2;
+	mbed::InterruptIn&		mResetButton;
+	MicroBitSerial&			mSerial;
+
+	MicroBitAccelerometer*	mAccelerometer;	// may null
+	MicroBitCompass*		mCompass;		// may null
+	MicroBitRadio*			mRadio;			// may null
+	MicroBitThermometer*	mThermometer;	// may null
+
+};	// ExtKit
 
 }	// microbit_dal_ext_kit
 

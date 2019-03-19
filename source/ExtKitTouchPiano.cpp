@@ -10,7 +10,7 @@
 */
 
 #include "ExtKitTouchPiano.h"	// self
-#include "ExtKit_System.h"
+#include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
 
@@ -27,7 +27,7 @@ static const int kI2cAddress	= 0x57 << 1;
 /* Component */ Features TouchPiano::avaiableFeatures()
 {
 	char buf[2];
-	int ret = gI2c.read(kI2cAddress, buf, (int) sizeof(buf));
+	int ret = ExtKit::global().i2c().read(kI2cAddress, buf, (int) sizeof(buf));
 	return (ret == MICROBIT_OK) ? kFeature : 0;
 }
 
@@ -44,16 +44,15 @@ TouchPiano::TouchPiano()
 void TouchPiano::read(PianoKeys* /* OUT */ outKeys)
 {
 	char buf[2];
-	int ret = gI2c.read(kI2cAddress, buf, (int) sizeof(buf));
+	int ret = ExtKit::global().i2c().read(kI2cAddress, buf, (int) sizeof(buf));
 	*outKeys = (ret == MICROBIT_OK) ? buf[0] + (buf[1] << 8) : 0;
 }
 
 /**	@class	NeoPixelForTouchPiano
 */
 
-static MicroBitPin& sNeoPixelPort	= gP1;	// digital output port for NeoPixel
 static const int kNeoPixelLedCount	= 4;
-static const NeoPixel::MaxBrightness kMaxBrightnessDefault = 100;
+static const NeoPixel::MaxBrightness kMaxBrightnessDefault = 10;
 
 /* Component */ bool NeoPixelForTouchPiano::isConfigured()
 {
@@ -61,7 +60,7 @@ static const NeoPixel::MaxBrightness kMaxBrightnessDefault = 100;
 }
 
 NeoPixelForTouchPiano::NeoPixelForTouchPiano()
-	: NeoPixel("NeoPixelForTouchPiano", /* digitalPort */ sNeoPixelPort, kNeoPixelLedCount)
+	: NeoPixel("NeoPixelForTouchPiano", /* digitalPort */ ExtKit::global().p1(), kNeoPixelLedCount)
 {
 	setMaxBrightness(kMaxBrightnessDefault);
 }
@@ -103,10 +102,8 @@ void NeoPixelForTouchPiano::fillColorWithIndicatorRange(int indicatorRange /* 0-
 /**	@class	BuzzerForTouchPiano
 */
 
-static MicroBitPin& sBuzzerPort	= gP0;	// analog output port for Buzzer
-
 BuzzerForTouchPiano::BuzzerForTouchPiano()
-	: Buzzer("BuzzerForTouchPiano", /* analogPort */ sBuzzerPort)
+	: Buzzer("BuzzerForTouchPiano", /* analogPort */ ExtKit::global().p0())
 {
 }
 

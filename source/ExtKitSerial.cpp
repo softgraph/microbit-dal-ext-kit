@@ -10,7 +10,7 @@
 */
 
 #include "ExtKitSerial.h"	// self
-#include "ExtKit_System.h"
+#include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
 namespace serial {
@@ -23,6 +23,32 @@ static void checkSendError(int ret);
 static void dumpHexBlock(const uint8_t* buffer, size_t length);
 static void dumpHexLine(const uint8_t* buffer, size_t length);
 static void dumpHexByte(uint8_t byte);
+
+void initializeRx()
+{
+	MicroBitSerial& serial = ExtKit::global().serial();
+	int ret;
+	while(true) {
+		ret = serial.setRxBufferSize(EXT_KIT_CONFIG_VALUE(SERIAL_RXBUF));	// MicroBitSerial::initialiseRx() is called inside setRxBufferSize().
+		if(ret != MICROBIT_SERIAL_IN_USE) {
+			break;
+		}
+		time::sleep(0 /* milliseconds */);
+	}
+}
+
+void initializeTx()
+{
+	MicroBitSerial& serial = ExtKit::global().serial();
+	int ret;
+	while(true) {
+		ret = serial.setTxBufferSize(EXT_KIT_CONFIG_VALUE(SERIAL_TXBUF));	// MicroBitSerial::initialiseTx() is called inside setTxBufferSize().
+		if(ret != MICROBIT_SERIAL_IN_USE) {
+			break;
+		}
+		time::sleep(0 /* milliseconds */);
+	}
+}
 
 void send(char c)
 {
@@ -48,9 +74,10 @@ void send(const char* s)
 		return;
 	}
 
+	MicroBitSerial& serial = ExtKit::global().serial();
 	int ret;
 	while(true) {
-		ret = gSerial.send((uint8_t *) s, length);
+		ret = serial.send((uint8_t *) s, length);
 		if(ret != MICROBIT_SERIAL_IN_USE) {
 			break;
 		}
@@ -66,9 +93,10 @@ void send(const ManagedString& s)
 		return;
 	}
 
+	MicroBitSerial& serial = ExtKit::global().serial();
 	int ret;
 	while(true) {
-		ret = gSerial.send(s);
+		ret = serial.send(s);
 		if(ret != MICROBIT_SERIAL_IN_USE) {
 			break;
 		}
@@ -83,10 +111,10 @@ void checkSendError(int ret)
 		// nothing to do
 	}
 	else if(ret == MICROBIT_INVALID_PARAMETER) {
-		statistics::incrementItem(&sendError1);
+		Statistics::incrementItem(&sendError1);
 	}
 	else {
-		statistics::incrementItem(&sendError2);
+		Statistics::incrementItem(&sendError2);
 	}
 }
 

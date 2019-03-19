@@ -11,7 +11,7 @@
 
 #include "ExtKitSerialDebugger.h"	// self
 
-#include "ExtKit_System.h"
+#include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
 
@@ -23,24 +23,25 @@ SerialDebugger::SerialDebugger(const char* name)
 {
 }
 
-#if EXT_KIT_CONFIG_ENABLED(SERIAL_DEBUGGER)
+#if EXT_KIT_CONFIG_ENABLED(SERIAL_EXT_DEBUG)
 
 /* Component */ void SerialDebugger::start()
 {
-	gMessageBus.listen(MICROBIT_ID_SERIAL, MICROBIT_SERIAL_EVT_HEAD_MATCH, this, &SerialDebugger::handleSerialReceived);
-
-	gSerial.eventAfter(1 /* character */);
+	ExtKit& g = ExtKit::global();
+	g.messageBus().listen(MICROBIT_ID_SERIAL, MICROBIT_SERIAL_EVT_HEAD_MATCH, this, &SerialDebugger::handleSerialReceived);
+	serial::initializeRx();		// required for receivng the event
+	g.serial().eventAfter(1 /* character */);
 
 	doHandleSerialEnabled();
 }
 
-#else	// SERIAL_DEBUGGER
+#else	// SERIAL_EXT_DEBUG
 
 /* Component */ void SerialDebugger::start()
 {
 }
 
-#endif	// SERIAL_DEBUGGER
+#endif	// SERIAL_EXT_DEBUG
 
 void SerialDebugger::handleSerialReceived(MicroBitEvent event)
 {
@@ -48,9 +49,10 @@ void SerialDebugger::handleSerialReceived(MicroBitEvent event)
 		return;
 	}
 
-	ManagedString s = gSerial.read(1 /* character */);
-	gSerial.clearRxBuffer();
-	gSerial.eventAfter(1 /* character */);
+	MicroBitSerial& serial = ExtKit::global().serial();
+	ManagedString s = serial.read(1 /* character */);
+	serial.clearRxBuffer();
+	serial.eventAfter(1 /* character */);
 
 	char c = s.charAt(0);
 	doHandleSerialReceived(c);
@@ -160,8 +162,33 @@ void SerialDebugger::handleSerialReceived(MicroBitEvent event)
 
 /* to be overridden */ void SerialDebugger::debug_sendConfig()
 {
-	debug_sendLine("--- Active App Modes ---", false);
+	ExtKit& g = ExtKit::global();
+
+	debug_sendLine("--- Active App Mode ---", false);
 	debug_sendAppMode(0, feature::configured(), false);
+
+	debug_sendLine("--- Global object ---", false);
+	debug_sendLine("owner: ", g.owner(), false);
+	if(g.accelerometer()) {
+		debug_sendLine("accelerometer: registered", false);
+	} else {
+		debug_sendLine("accelerometer: not registered", false);
+	}
+	if(g.compass()) {
+		debug_sendLine("compass:       registered", false);
+	} else {
+		debug_sendLine("compass:       not registered", false);
+	}
+	if(g.radio()) {
+		debug_sendLine("radio:         registered", false);
+	} else {
+		debug_sendLine("radio:         not registered", false);
+	}
+	if(g.thermometer()) {
+		debug_sendLine("thermometer:   registered", false);
+	} else {
+		debug_sendLine("thermometer:   not registered", false);
+	}
 
 	debug_sendLine("--- Yotta Config (microbit-dal) ---", false);
 	debug_sendLine("CONFIG MICROBIT_SRAM_BASE:   0x", string::hex(MICROBIT_SRAM_BASE).toCharArray(), false);
@@ -201,19 +228,13 @@ void SerialDebugger::handleSerialReceived(MicroBitEvent event)
 	debug_sendLine("CONFIG ASSERT: disabled", false);
 #endif	// ASSERT
 
-#if EXT_KIT_CONFIG_ENABLED(GLOBAL_UBIT)
-	debug_sendLine("CONFIG GLOBAL_UBIT: enabled", false);
-#else	// GLOBAL_UBIT
-	debug_sendLine("CONFIG GLOBAL_UBIT: disabled", false);
-#endif	// GLOBAL_UBIT
-
 	debug_sendLine("CONFIG RADIO_GROUP: ", ManagedString(EXT_KIT_CONFIG_VALUE(RADIO_GROUP)).toCharArray(), false);
 
-#if EXT_KIT_CONFIG_ENABLED(SERIAL_DEBUGGER)
-	debug_sendLine("CONFIG SERIAL_DEBUGGER: enabled", false);
-#else	// SERIAL_DEBUGGER
-	debug_sendLine("CONFIG SERIAL_DEBUGGER: disabled", false);
-#endif	// SERIAL_DEBUGGER
+#if EXT_KIT_CONFIG_ENABLED(SERIAL_EXT_DEBUG)
+	debug_sendLine("CONFIG SERIAL_EXT_DEBUG: enabled", false);
+#else	// SERIAL_EXT_DEBUG
+	debug_sendLine("CONFIG SERIAL_EXT_DEBUG: disabled", false);
+#endif	// SERIAL_EXT_DEBUG
 
 	debug_sendLine("CONFIG SERIAL_RXBUF: ", ManagedString(EXT_KIT_CONFIG_VALUE(SERIAL_RXBUF)).toCharArray(), false);
 	debug_sendLine("CONFIG SERIAL_TXBUF: ", ManagedString(EXT_KIT_CONFIG_VALUE(SERIAL_TXBUF)).toCharArray(), false);
@@ -228,7 +249,7 @@ void SerialDebugger::handleSerialReceived(MicroBitEvent event)
 	debug_sendLine("Serial Number: 0x", string::hex(microbit_serial_number()).toCharArray(), false);
 	debug_sendLine("Friendly Name: ", microbit_friendly_name(), false);
 
-	debug_sendLine("--- Application Information ---", false);
+	debug_sendLine("--- Software Information ---", false);
 	debug_sendLine("Build Date: ", __DATE__, " ", __TIME__, false);
 	debug_sendLine("microbit-dal version: ", microbit_dal_version(), false);
 	debug_sendLine("microbit_dal_ext_kit version: " YOTTA_MICROBIT_DAL_EXT_KIT_VERSION_STRING, false);
@@ -243,7 +264,7 @@ void raiseFailedAssertion()
 void raiseUnexpectedError()
 {
 	time::sleep(500 /* milliseconds */);
-	microbit_panic(kPanicUnexpectedError);
+	EXT_KIT_ASSERT_OR_PANIC(!"Error raised by the serial debugger", kPanicUnexpectedError);
 }
 
 }	// microbit_dal_ext_kit

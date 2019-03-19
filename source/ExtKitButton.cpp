@@ -10,7 +10,7 @@
 */
 
 #include "ExtKitButton.h"	// self
-#include "ExtKit_System.h"
+#include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
 namespace button {
@@ -20,12 +20,12 @@ static bool hasPseudoButtonBClicked = false;
 
 int microBitIDButtonLeft()	// returns MICROBIT_ID_BUTTON_A or MICROBIT_ID_BUTTON_B
 {
-	return device::isUpsideDown() ? MICROBIT_ID_BUTTON_B : MICROBIT_ID_BUTTON_A;
+	return display::isUpsideDown() ? MICROBIT_ID_BUTTON_B : MICROBIT_ID_BUTTON_A;
 }
 
 int microBitIDButtonRight()	// returns MICROBIT_ID_BUTTON_A or MICROBIT_ID_BUTTON_B
 {
-	return device::isUpsideDown() ? MICROBIT_ID_BUTTON_A : MICROBIT_ID_BUTTON_B;
+	return display::isUpsideDown() ? MICROBIT_ID_BUTTON_A : MICROBIT_ID_BUTTON_B;
 }
 
 void clickPseudoButton(char button /* a, b or w */)
@@ -57,7 +57,8 @@ bool isButtonAPressed()
 		return true;
 	}
 
-	MicroBitButton& b = gButtonA;
+	ExtKit& g = ExtKit::global();
+	MicroBitButton& b = g.buttonA();
 	return b.isPressed();
 }
 
@@ -68,7 +69,8 @@ bool isButtonBPressed()
 		return true;
 	}
 
-	MicroBitButton& b = gButtonB;
+	ExtKit& g = ExtKit::global();
+	MicroBitButton& b = g.buttonB();
 	return b.isPressed();
 }
 
@@ -84,7 +86,7 @@ Buttons readMicroBitButtons()
 	Buttons buttons = 0;
 	bool isButtonLPressed = isButtonAPressed();
 	bool isButtonRPressed = isButtonBPressed();
-	if(device::isUpsideDown()) {
+	if(display::isUpsideDown()) {
 		swap(isButtonLPressed, isButtonRPressed);
 	}
 	if(isButtonLPressed) {

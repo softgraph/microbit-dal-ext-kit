@@ -12,40 +12,91 @@
 #ifndef EXT_KIT_DEVICE_H
 #define EXT_KIT_DEVICE_H
 
+#include "MicroBit.h"
 #include "ExtKit_Common.h"
-
-class MicroBitAccelerometer;
-class MicroBitCompass;
-class MicroBitMultiButton;
-class MicroBitThermometer;
+#include "ExtKitGlobal.h"
 
 namespace microbit_dal_ext_kit {
 
-/// Device utility.
-namespace device {
+class MicroBitExtKit : public MicroBit
+{
+public:
+	/// Constructor.
+	MicroBitExtKit();
 
-/// Initialize the device.
-void initialize();
+	/// Inherited.
+	/* MicroBit */ void init();
 
-/// Prepare for the button AB.
-void prepareFor(MicroBitMultiButton* buttonAB);
+protected:
+	ExtKit	mExtKit;
 
-/// Prepare for the accelerometer.
-void prepareFor(MicroBitAccelerometer* accelerometer);
+};	// MicroBitExtKit
 
-/// Prepare for the compass.
-void prepareFor(MicroBitCompass *compass);
+class PrimitiveExtKitIO
+{
+public:
+	/// Constructor.
+	PrimitiveExtKitIO(const int id[3], const PinName name[3], const PinCapability capability[3]);
 
-/// Prepare for the thermometer.
-void prepareFor(MicroBitThermometer* thermometer);
+	/// The same as class MicroBit.
+	MicroBitPin		pin[0];
 
-/// Set that the device is mounted upside down.
-void setUpsideDown();
+	/// The same as class MicroBit.
+	MicroBitPin		P0;
 
-/// Check that the device is mounted upside down.
-bool isUpsideDown();
+	/// The same as class MicroBit.
+	MicroBitPin		P1;
 
-}	// device
+	/// The same as class MicroBit.
+	MicroBitPin		P2;
+
+};	// PrimitiveExtKitIO
+
+class PrimitiveExtKit
+{
+public:
+	/// Constructor.
+	PrimitiveExtKit();
+
+	/// Initialize.
+	void init();
+
+	/// The same as class MicroBit.
+	MicroBitSerial			serial;
+
+	/// The same as class MicroBit.
+	mbed::InterruptIn		resetButton;
+
+	/// The same as class MicroBit.
+	MicroBitI2C				i2c;
+
+	/// The same as class MicroBit.
+	MicroBitMessageBus		messageBus;
+
+	/// The same as class MicroBit.
+	MicroBitDisplay			display;
+
+	/// The same as class MicroBit.
+	MicroBitButton			buttonA;
+
+	/// The same as class MicroBit.
+	MicroBitButton			buttonB;
+
+	/// The same as class MicroBit.
+	MicroBitMultiButton		buttonAB;
+
+	/// I/O
+	PrimitiveExtKitIO		io;
+
+protected:
+	uint8_t	mStatus;
+	ExtKit	mExtKit;
+
+private:
+	void handleMessageBusListenerAdded(MicroBitEvent evt);
+
+};	// PrimitiveExtKit
+
 }	// microbit_dal_ext_kit
 
 #endif	// EXT_KIT_DEVICE_H

@@ -19,21 +19,25 @@ namespace microbit_dal_ext_kit {
 
 /// Panic Code
 enum PanicCode {
-	/// Out Of Memory
-	kPanicOutOfMemory	= 200,
-
 	/// Unexpected Error
-	kPanicUnexpectedError,
+	kPanicUnexpectedError	= 270,
+
+	/// Out Of Memory
+	kPanicOutOfMemory,
+
+	/// Corrupted Node
+	kPanicCorruptedNode
+
 };
 
-///	Error utility.
+///	Error utility
 namespace error {
 
 /// Raise an error.
-void raise(const char *desc, const char* file, int line);
+void raise(const char *desc, const char* file, int line, int panicCode = 0);
 
 /// Raise an error.
-void raise(const char *desc, const char* name, const void* object);
+void raise(const char *desc, const char* name, const void* object, int panicCode = 0);
 
 }	// error
 }	// microbit_dal_ext_kit

@@ -2,7 +2,7 @@
 /**	@package	microbit_dal_ext_kit
 */
 
-/// Sonar component.
+/// Sonar component
 /**	@file
 	@author	Copyright (c) 2019 Tomoyuki Nakashima.<br>
 			This code is licensed under MIT license. See `LICENSE` in the project root for more information.
@@ -10,7 +10,7 @@
 */
 
 #include "ExtKitSonar.h"	// self
-#include "ExtKit_System.h"
+#include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
 
@@ -20,7 +20,6 @@ namespace microbit_dal_ext_kit {
 		- https://makecode.microbit.org/pkg/Microsoft/pxt-sonar
 		- https://github.com/Microsoft/pxt-sonar
 		- https://github.com/Microsoft/pxt-sonar/blob/master/main.ts
-	@todo	to be implemented
 */
 
 static const Features kFeature = feature::kSonar;
@@ -30,35 +29,28 @@ static const Features kFeature = feature::kSonar;
 	return feature::isConfigured(kFeature);
 }
 
-Sonar::Sonar(MicroBitPin& triggerOutput, MicroBitPin& echoInput, uint16_t echoInputEventID, EchoInputHandler* echoInputHandler)
+Sonar::Sonar(MicroBitPin& triggerOutput, MicroBitPin& echoInput, uint16_t echoInputEventID, HandlerProtocol& handler)
 	: Component("Sonar")
 	, mTriggerOutputPort(triggerOutput)
-	, mEchoInputHandler(echoInputHandler)
+	, mHandler(handler)
 {
-	EXT_KIT_ASSERT(echoInputHandler);
-
-	gMessageBus.listen(echoInputEventID, MICROBIT_PIN_EVT_PULSE_HI, this, &Sonar::handleEchoInput);
+	ExtKit::global().messageBus().listen(echoInputEventID, MICROBIT_PIN_EVT_PULSE_HI, this, &Sonar::handleEchoInput);
 
 	echoInput.eventOn(MICROBIT_PIN_EVENT_ON_PULSE);
 }
 
-/**
-	@todo	to be implemented
-*/
 void Sonar::trigger()
 {
-#if 0
 	mTriggerOutputPort.setPull(PullNone);
 	mTriggerOutputPort.setDigitalValue(0);	wait_us(2);
 	mTriggerOutputPort.setDigitalValue(1);	wait_us(10);
 	mTriggerOutputPort.setDigitalValue(0);
-#endif
 }
 
 void Sonar::handleEchoInput(MicroBitEvent event)
 {
 	uint64_t durationInMs = event.timestamp;
-	(*mEchoInputHandler)(durationInMs);
+	mHandler.handleSonarEcho(durationInMs);
 }
 
 }	// microbit_dal_ext_kit

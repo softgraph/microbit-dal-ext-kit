@@ -10,7 +10,7 @@
 */
 
 #include "ExtKitZipHalo.h"	// self
-#include "ExtKit_System.h"
+#include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
 
@@ -32,9 +32,8 @@ ZipHalo::ZipHalo()
 /**	@class	NeoPixelForZipHalo
 */
 
-static MicroBitPin& sNeoPixelPort	= gP0;	// digital output port for NeoPixel
 static const int kNeoPixelLedCount	= 24;
-static const NeoPixel::MaxBrightness kMaxBrightnessDefault	= 100;
+static const NeoPixel::MaxBrightness kMaxBrightnessDefault	= 10;
 
 /* Component */ bool NeoPixelForZipHalo::isConfigured()
 {
@@ -42,7 +41,7 @@ static const NeoPixel::MaxBrightness kMaxBrightnessDefault	= 100;
 }
 
 NeoPixelForZipHalo::NeoPixelForZipHalo()
-	: NeoPixel("NeoPixelForZipHalo", /* digitalPort */ sNeoPixelPort, kNeoPixelLedCount)
+	: NeoPixel("NeoPixelForZipHalo", /* digitalPort */ ExtKit::global().p0(), kNeoPixelLedCount)
 {
 	setMaxBrightness(kMaxBrightnessDefault);
 }

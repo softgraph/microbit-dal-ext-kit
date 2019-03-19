@@ -24,8 +24,8 @@ namespace button {
 
 const Buttons kInvalid	= (Buttons) -1;
 const Buttons kNone		= 0;
-const Buttons kL		= 1 << 0;		// Button L = micro:bit Button A, or B if device::isUpsideDown() is true
-const Buttons kR		= 1 << 1;		// Button R = micro:bit Button B, or A if device::isUpsideDown() is true
+const Buttons kL		= 1 << 0;		// Button L = micro:bit Button A, or B if display::isUpsideDown() is true
+const Buttons kR		= 1 << 1;		// Button R = micro:bit Button B, or A if display::isUpsideDown() is true
 const Buttons kA		= 1 << 2;		// Button A
 const Buttons kB		= 1 << 3;		// Button B
 const Buttons kC		= 1 << 4;		// Button C

@@ -17,7 +17,7 @@
 namespace microbit_dal_ext_kit {
 
 /// Component. The root base class for any Component.
-/* virtual */ class Component
+/* abstract */ class Component
 {
 public:
 	/// Check that the required hardware/software resources are avaialable and return available Features.

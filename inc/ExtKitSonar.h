@@ -2,7 +2,7 @@
 /**	@package	microbit_dal_ext_kit
 */
 
-/// Sonar component.
+/// Sonar component
 /**	@file
 	@author	Copyright (c) 2019 Tomoyuki Nakashima.<br>
 			This code is licensed under MIT license. See `LICENSE` in the project root for more information.
@@ -19,21 +19,27 @@ class MicroBitPin;
 
 namespace microbit_dal_ext_kit {
 
-/// Sonar Component.
+/// Sonar Component
 /**
 	Support for a sonar modules such as HC-SR04.
 */
 class Sonar : public Component
 {
 public:
-	/// Echo Input Handler.
-	typedef void EchoInputHandler(uint64_t durationInMs);
+	/// Handler Protocol.
+	/* abstract */ class HandlerProtocol
+	{
+	public:
+		/// Handle Sonar Echo.
+		virtual void handleSonarEcho(uint64_t durationInMs) = 0;
+
+	};	// HandlerProtocol
 
 	/// Inherited.
 	static /* Component */ bool isConfigured();
 
 	/// Constructor.
-	Sonar(MicroBitPin& triggerOutput, MicroBitPin& echoInput, uint16_t echoInputEventID, EchoInputHandler* echoInputHandler);
+	Sonar(MicroBitPin& triggerOutput, MicroBitPin& echoInput, uint16_t echoInputEventID, HandlerProtocol& handler);
 
 	/// Trigger sonar.
 	void trigger();
@@ -42,7 +48,7 @@ protected:
 	void handleEchoInput(MicroBitEvent event);
 
 	MicroBitPin&		mTriggerOutputPort;
-	EchoInputHandler*	mEchoInputHandler;
+	HandlerProtocol&	mHandler;
 
 };	// Sonar
 

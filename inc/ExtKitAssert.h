@@ -21,7 +21,12 @@ namespace microbit_dal_ext_kit {
 #if EXT_KIT_CONFIG_ENABLED(ASSERT)
 
 /// Assert the condition. Trigger a panic if EXT_KIT_CONFIG_ENABLED(ASSERT) is not true.
-#define EXT_KIT_ASSERT_OR_PANIC(expr, panic_code)	EXT_KIT_ASSERT(expr)
+#define EXT_KIT_ASSERT_OR_PANIC(expr, panic_code)	\
+	do {	\
+		if(!(expr)) {	\
+			microbit_dal_ext_kit::error::raise("Assertation failed: (" #expr ")", __FILE__, __LINE__, panic_code);	\
+		}	\
+	} while (0)
 
 /// Assert the condition. Do nothing if EXT_KIT_CONFIG_ENABLED(ASSERT) is not true.
 #define EXT_KIT_ASSERT(expr)	\

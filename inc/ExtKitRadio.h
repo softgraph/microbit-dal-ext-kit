@@ -13,10 +13,25 @@
 #define EXT_KIT_RADIO_H
 
 #include "ExtKit_Common.h"
+#include "ExtKitComponent.h"
 
 class ManagedString;
 
 namespace microbit_dal_ext_kit {
+
+class Radio : public Component
+{
+public:
+	/// Inherited.
+	static /* Component */ bool isConfigured();
+
+	/// Constructor.
+	Radio();
+
+	/// Inherited.
+	/* Component */ void start();
+
+};
 
 /// Send to Radio
 void sendToRadio(const ManagedString& radioCmd);

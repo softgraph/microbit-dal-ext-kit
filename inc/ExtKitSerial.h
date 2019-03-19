@@ -21,6 +21,12 @@ namespace microbit_dal_ext_kit {
 /// Serial utility
 namespace serial {
 
+/// Initialize RX.
+void initializeRx();
+
+/// Initialize TX.
+void initializeTx();
+
 /// Send data to the serial port
 void send(char c);
 

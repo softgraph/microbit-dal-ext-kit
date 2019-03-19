@@ -2,7 +2,7 @@
 /**	@package	microbit_dal_ext_kit
 */
 
-/// JoystickBit component.
+/// JoystickBit component
 /**	@file
 	@author	Copyright (c) 2019 Tomoyuki Nakashima.<br>
 			This code is licensed under MIT license. See `LICENSE` in the project root for more information.
@@ -10,7 +10,7 @@
 */
 
 #include "ExtKitJoystickBit.h"	// self
-#include "ExtKit_System.h"
+#include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
 
@@ -20,10 +20,6 @@ namespace microbit_dal_ext_kit {
 		- https://www.elecfreaks.com/estore/elecfreaks-joystick-bit-for-micro-bit.html
 */
 
-static MicroBitPin& sJoystickPortDirectionX	= gP0;	// analog input port for JoystickBit Direction X
-static MicroBitPin& sJoystickPortDirectionY	= gP1;	// analog input port for JoystickBit Direction Y
-static MicroBitPin& sJoystickPortButtons	= gP2;	// analog input port for JoystickBit Buttons
-
 static const int kJoystickDirectionCenterMin = 400;
 static const int kJoystickDirectionCenterMax = 600;
 
@@ -31,8 +27,9 @@ static const Features kFeature = feature::kJoystickBit;
 
 /* Component */ Features JoystickBit::avaiableFeatures()
 {
-	int valueX = sJoystickPortDirectionX.getAnalogValue();
-	int valueY = sJoystickPortDirectionY.getAnalogValue();
+	ExtKit& g = ExtKit::global();
+	int valueX = g.p0().getAnalogValue();
+	int valueY = g.p1().getAnalogValue();
 	bool available =
 		(((kJoystickDirectionCenterMin <= valueX) && (valueX <= kJoystickDirectionCenterMax)) &&
 		 ((kJoystickDirectionCenterMin <= valueY) && (valueY <= kJoystickDirectionCenterMax)));
@@ -52,7 +49,8 @@ JoystickBit::JoystickBit()
 Buttons JoystickBit::readJoystickButtons()
 {
 	Buttons buttons = button::readMicroBitButtons();
-	int value = sJoystickPortButtons.getAnalogValue();
+	ExtKit& g = ExtKit::global();
+	int value = g.p2().getAnalogValue();
 	if(value < 256) {
 		buttons |= button::kA;
 	}
@@ -77,8 +75,9 @@ Buttons JoystickBit::readJoystickButtons()
 Direction JoystickBit::readJoystickDirection()
 {
 	Direction direction = 0;
-	int valueX = sJoystickPortDirectionX.getAnalogValue();
-	int valueY = sJoystickPortDirectionY.getAnalogValue();
+	ExtKit& g = ExtKit::global();
+	int valueX = g.p0().getAnalogValue();
+	int valueY = g.p1().getAnalogValue();
 	if(valueX < kJoystickDirectionCenterMin) {
 		direction |= direction::kW;
 	}
