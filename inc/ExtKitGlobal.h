@@ -41,7 +41,7 @@ public:
 	/// Get global instance. Valid only after MicroBitExtKit::init() or PrimitiveExtKit::init() is completed.
 	static ExtKit& global();
 
-	/// Constructor.
+	/// Constructor
 	ExtKit(
 		const char*				owner,
 		MicroBitButton&			buttonA,
@@ -61,7 +61,7 @@ public:
 		MicroBitThermometer*	thermometer		// may null
 	);
 
-	/// Initialize.
+	/// Initialize
 	void init();
 
 	inline const char* owner() {

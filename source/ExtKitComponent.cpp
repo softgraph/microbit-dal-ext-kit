@@ -2,7 +2,7 @@
 /**	@package	microbit_dal_ext_kit
 */
 
-/// Component. The root base class for any Component.
+/// Component - The root base class for any Component
 /**	@file
 	@author	Copyright (c) 2019 Tomoyuki Nakashima.<br>
 			This code is licensed under MIT license. See `LICENSE` in the project root for more information.
@@ -29,6 +29,7 @@ namespace microbit_dal_ext_kit {
 
 Component::Component(const char* name)
 	: mName(name)
+	, mStatus(0)
 {
 	EXT_KIT_ASSERT_SAFE_CLASS_OBJECT(name, this);
 }
@@ -37,14 +38,103 @@ Component::~Component()
 {
 }
 
-/* to be overridden */ void Component::start()
+void Component::start()
 {
-	// nothing to do
+	if(mStatus & kStatusActive) {
+		return;
+	}
+
+	restart();
 }
 
-/* to be overridden */ void Component::stop()
+void Component::restart()
 {
-	// nothing to do
+	if(mStatus & kStatusStarting) {
+		return;
+	}
+
+	mStatus |= kStatusStarting;
+	doStart();
+	mStatus &= ~kStatusStarting;
+
+	mStatus |= kStatusActive;
+}
+
+void Component::stop()
+{
+	if(!(mStatus & kStatusActive)) {
+		return;
+	}
+	if(mStatus & kStatusStopping) {
+		return;
+	}
+
+	mStatus |= kStatusStopping;
+	doStart();
+	mStatus &= ~kStatusStopping;
+
+	mStatus &= ~kStatusActive;
+}
+
+/**	@class	CompositeComponent
+*/
+
+CompositeComponent::CompositeComponent(const char* name)
+	: Component(name)
+{
+}
+
+void CompositeComponent::addChild(Component& component)
+{
+	Node* p = new ComponentRecord(component);
+	EXT_KIT_ASSERT_OR_PANIC(p, kPanicOutOfMemory);
+
+	p->linkBefore(mRoot);
+}
+
+void CompositeComponent::removeChild(Component& component)
+{
+	Node* p = &mRoot;
+	while((p = p->next) != &mRoot) {
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+
+		ComponentRecord* r = static_cast<ComponentRecord*>(p);
+		if(&(r->component) == &component) {
+			p = r->prev;	// rewind p
+			r->unlink();	// unlink and delete r
+			delete r;
+		}
+	}
+}
+
+void CompositeComponent::startChildren()
+{
+	Node* p = &mRoot;
+	while((p = p->next) != &mRoot) {
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+
+		ComponentRecord* r = static_cast<ComponentRecord*>(p);
+		r->component.start();
+	}
+}
+
+void CompositeComponent::stopChildren()
+{
+	Node* p = &mRoot;
+	while((p = p->prev) != &mRoot) {
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+
+		ComponentRecord* r = static_cast<ComponentRecord*>(p);
+		r->component.stop();
+	}
+}
+
+/**	@class	CompositeComponent::ComponentRecord
+*/
+
+CompositeComponent::ComponentRecord::ComponentRecord(Component& component)
+	: component(component)
+{
 }
 
 }	// microbit_dal_ext_kit

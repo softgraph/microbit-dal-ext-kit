@@ -63,14 +63,14 @@ MotoBit::MotoBit()
 	mInverted = !feature::isConfigured(feature::kInverted);
 }
 
-/* Component */ void MotoBit::start()
+/* Component */ void MotoBit::doStart()
 {
 	setMotorPolarity(kLeft, mInverted);
 	setMotorPolarity(kRight, mInverted);
 	setMotorSpeed(kForward, kForward, 0, 0);
 }
 
-/* Component */ void MotoBit::stop()
+/* Component */ void MotoBit::doStop()
 {
 	setMotorSpeed(kForward, kForward, 0, 0);
 }

@@ -2,7 +2,7 @@
 /**	@package	microbit_dal_ext_kit
 */
 
-/// ExtKit Generic Header. A handy header file to include all microbit-dal-ext-kit interfaces.
+/// ExtKit Generic Header - A handy header file to include all microbit-dal-ext-kit interfaces
 /**	@file
 	@author	Copyright (c) 2019 Tomoyuki Nakashima.<br>
 			This code is licensed under MIT license. See `LICENSE` in the project root for more information.
@@ -20,18 +20,27 @@
 		.
 	# Components
 		- Components dedicated to extensiton boards or hardware modules
-			- ExtKitBuzzer.h
-			- ExtKitJoystickBit.h
-			- ExtKitMotoBit.h
-			- ExtKitNeoPixel.h
-			- ExtKitSonar.h
-			- ExtKitTouchPiano.h
-			- ExtKitZipHalo.h
+			- ExtKitBuzzer.h <br>
+				Generic Buzzer
+			- ExtKitJoystickBit.h <br>
+				ElecFreaks' Joystick:bit
+			- ExtKitMotoBit.h <br>
+				SparkFun's moto:bit
+			- ExtKitNeoPixel.h <br>
+				Generic NeoPixel (WS2812B) LED strip
+			- ExtKitSonar.h <br>
+				Generic Sonar module (HC-SR04)
+			- ExtKitTouchPiano.h <br>
+				Waveshare's Mini Piano Module
+			- ExtKitZipHalo.h <br>
+				Kitronik's Zip Halo
 			.
 		- Generic components
-			- ExtKitComponent.h (the base class)
-			- ExtKitPeriodicListener.h
-			- ExtKitRadio.h
+			- ExtKitComponent.h <br>
+				the base class
+			- ExtKitPeriodicObserver.h
+			- ExtKitRemoteState.h <br>
+				Transmitter and Receiver
 			- ExtKitSerialDebugger.h
 			.
 		.
@@ -51,7 +60,9 @@
 		- ExtKitNumeric.h
 		- ExtKitOctave.h
 		- ExtKitPianoKey.h
+		- ExtKitRadio.h
 		- ExtKitSerial.h
+		- ExtKitState.h
 		- ExtKitStatistics.h
 		- ExtKitString.h
 		- ExtKitTime.h
@@ -97,12 +108,13 @@
 #include "ExtKitNode.h"
 #include "ExtKitNumeric.h"
 #include "ExtKitOctave.h"
-#include "ExtKitPeriodicListener.h"
+#include "ExtKitPeriodicObserver.h"
 #include "ExtKitPianoKey.h"
 #include "ExtKitRadio.h"
 #include "ExtKitSerial.h"
 #include "ExtKitSerialDebugger.h"
 #include "ExtKitSonar.h"
+#include "ExtKitState.h"
 #include "ExtKitStatistics.h"
 #include "ExtKitString.h"
 #include "ExtKitTime.h"

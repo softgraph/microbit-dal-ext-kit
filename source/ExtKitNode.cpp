@@ -14,6 +14,9 @@
 
 namespace microbit_dal_ext_kit {
 
+/**	@struct Node
+*/
+
 Node::Node()
 {
 	next = this;
@@ -51,6 +54,22 @@ void Node::unlink()
 	next->prev = prev;
 	next = this;
 	prev = this;
+}
+
+/**	@struct RootForDynamicNodes
+*/
+
+RootForDynamicNodes::~RootForDynamicNodes()
+{
+	Node* p = this;
+	while((p = p->next) != this) {
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+
+		Node* r = p;
+		p = r->prev;	// rewind p
+		r->unlink();	// unlink and delete r
+		delete r;
+	}
 }
 
 }	// microbit_dal_ext_kit

@@ -16,7 +16,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/// Color.
+/// Color
 struct Color
 {
 public:
@@ -73,41 +73,41 @@ public:
 	/// CSS 1 Color Purple
 	static const Color purple;
 
-	/// Constructor.
+	/// Constructor
 	inline Color() {
 		mRGB = 0;	// black
 	}
 
-	/// Constructor with a rgb color.
+	/// Constructor with a rgb color
 	inline Color(uint32_t rgb) {
 		mRGB = rgb;
 	}
 
-	/// Constructor with rgb color components.
+	/// Constructor with rgb color components
 	inline Color(uint8_t /* red level */ r, uint8_t /* green level */ g, uint8_t /* blue level */ b) {
 		mRGB = (r << 16) + (g << 8) + b;
 	}
 
-	/// Constructor with hsv color components.
+	/// Constructor with hsv color components
 	Color(uint16_t /* 360 */ whole, uint16_t /* hue level (e.g., 0-359) */ h, uint8_t /* saturation level */ s, uint8_t /* value (brightness) level */ v);
 
-	/// Get red color component of rgb.
+	/// Get red color component of rgb
 	inline uint8_t /* red level */ r() const {
 		return (uint8_t) (mRGB >> 16);
 	}
 
-	/// Get green color component of rgb.
+	/// Get green color component of rgb
 	inline uint8_t /* green level */ g() const {
 		return (uint8_t) (mRGB >> 8);
 	}
 
-	/// Get blue color component of rgb.
+	/// Get blue color component of rgb
 	inline uint8_t /* blue level */ b() const {
 		return (uint8_t) mRGB;
 	}
 
 private:
-	/// Color representation in rgb.
+	/// Color representation in rgb
 	uint32_t mRGB;
 
 };	// Color

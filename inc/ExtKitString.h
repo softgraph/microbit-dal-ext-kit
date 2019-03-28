@@ -16,7 +16,7 @@
 
 class ManagedString;
 
-/// Define Literal MicroBitImage.
+/// Define Literal MicroBitImage
 /**
 	Example:
 	@code

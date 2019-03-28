@@ -27,28 +27,25 @@ namespace microbit_dal_ext_kit {
 class NeoPixel : public Component
 {
 public:
-	/// Max brightness value in percent.
+	/// Max brightness value in percent
 	typedef int	MaxBrightness;
 
-	/// The lowest value for max brightness.
+	/// The lowest value for max brightness
 	static const MaxBrightness kMaxBrightnessLowest = 5;
 
-	/// No limit value for max brightness.
+	/// No limit value for max brightness
 	static const MaxBrightness kMaxBrightnessNoLimit = 100;
 
-	/// Inherited.
+	/// Inherited
 	static /* Component */ bool isConfigured();
 
-	/// Constructor with a digital port and a led count.
+	/// Constructor with a digital port and a led count
 	NeoPixel(const char* name, MicroBitPin& digitalPort, int ledCount);
 
-	/// Destructor.
+	/// Destructor
 	~NeoPixel();
 
-	/// Inherited.
-	/* Component */ void start();
-
-	/// Apply the current colors and max brightness to the LED strip.
+	/// Apply the current colors and max brightness to the LED strip
 	void show();
 
 	/// Set max brightness value in percent. Call show() to apply the change.
@@ -57,7 +54,7 @@ public:
 	/// Change max brightness value in percent. Call show() to apply the change.
 	void changeMaxBrightness(int offset);
 
-	/// Get max brightness value in percent.
+	/// Get max brightness value in percent
 	MaxBrightness maxBrightness();
 
 	/// Fill all led modules with a color. Call show() to apply the change.
@@ -81,19 +78,22 @@ public:
 	/// Set a color map for a indicator. Call show() to apply the change.
 	void setColorMapForIndicator(Color colorOff, Color colorOn);
 
-	/// Fill all led modules using a indicator pattern.
+	/// Fill all led modules using a indicator pattern
 	void fillColorWithIndicatorPattern(uint32_t indicatorPattern);
 
 	/// Set a color map for a focus. Call show() to apply the change.
 	void setColorMapForFocus(Color colorOff, Color colorOn1, Color colorOn2, Color colorOn3);
 
-	/// Set a rainbow map for a focus. Call show() to apply the change.
+	/// Set a rainbow map for a focus. Call show() to apply the change
 	void setRainbowMapForFocus();
 
-	/// Fill all led modules using a focus direction.
+	/// Fill all led modules using a focus direction
 	void fillColorWithFocusDirection(Direction focusDirection);
 
 protected:
+	/// Inherited
+	/* Component */ void doStart();
+
 	void fillColorDirectly(Color color);
 	void setColorDirectly(int index, Color color);
 	void fillColorUsingColorMode();

@@ -31,23 +31,24 @@ public:
 		kBackward
 	};
 
-	/// Inherited.
+	/// Inherited
 	static /* Component */ Features avaiableFeatures();
 
-	/// Inherited.
+	/// Inherited
 	static /* Component */ bool isConfigured();
 
-	/// Constructor.
+	/// Constructor
 	MotoBit();
 
-	/// Inherited.
-	/* Component */ void start();
-
-	/// Inherited.
-	/* Component */ void stop();
-
-	/// Set motor speed.
+	/// Set motor speed
 	void setMotorSpeed(MotorDirection directionL, MotorDirection directionR, int speedInPercentL, int speedInPercentR);
+
+protected:
+	/// Inherited
+	/* Component */ void doStart();
+
+	/// Inherited
+	/* Component */ void doStop();
 
 private:
 	enum Motor {

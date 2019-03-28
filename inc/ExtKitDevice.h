@@ -21,10 +21,10 @@ namespace microbit_dal_ext_kit {
 class MicroBitExtKit : public MicroBit
 {
 public:
-	/// Constructor.
+	/// Constructor
 	MicroBitExtKit();
 
-	/// Inherited.
+	/// Inherited
 	/* MicroBit */ void init();
 
 protected:
@@ -35,19 +35,19 @@ protected:
 class PrimitiveExtKitIO
 {
 public:
-	/// Constructor.
+	/// Constructor
 	PrimitiveExtKitIO(const int id[3], const PinName name[3], const PinCapability capability[3]);
 
-	/// The same as class MicroBit.
+	/// The same as class `MicroBit`
 	MicroBitPin		pin[0];
 
-	/// The same as class MicroBit.
+	/// The same as class `MicroBit`
 	MicroBitPin		P0;
 
-	/// The same as class MicroBit.
+	/// The same as class `MicroBit`
 	MicroBitPin		P1;
 
-	/// The same as class MicroBit.
+	/// The same as class `MicroBit`
 	MicroBitPin		P2;
 
 };	// PrimitiveExtKitIO
@@ -55,42 +55,44 @@ public:
 class PrimitiveExtKit
 {
 public:
-	/// Constructor.
+	/// Constructor
 	PrimitiveExtKit();
 
-	/// Initialize.
+	/// Initialize
 	void init();
 
-	/// The same as class MicroBit.
+	/// The same as class `MicroBit`
 	MicroBitSerial			serial;
 
-	/// The same as class MicroBit.
+	/// The same as class `MicroBit`
 	mbed::InterruptIn		resetButton;
 
-	/// The same as class MicroBit.
+	/// The same as class `MicroBit`
 	MicroBitI2C				i2c;
 
-	/// The same as class MicroBit.
+	/// The same as class `MicroBit`
 	MicroBitMessageBus		messageBus;
 
-	/// The same as class MicroBit.
+	/// The same as class `MicroBit`
 	MicroBitDisplay			display;
 
-	/// The same as class MicroBit.
+	/// The same as class `MicroBit`
 	MicroBitButton			buttonA;
 
-	/// The same as class MicroBit.
+	/// The same as class `MicroBit`
 	MicroBitButton			buttonB;
 
-	/// The same as class MicroBit.
+	/// The same as class `MicroBit`
 	MicroBitMultiButton		buttonAB;
 
 	/// I/O
 	PrimitiveExtKitIO		io;
 
 protected:
-	uint8_t	mStatus;
 	ExtKit	mExtKit;
+
+	/// The same as class `MicroBit`
+	uint8_t	status;
 
 private:
 	void handleMessageBusListenerAdded(MicroBitEvent evt);

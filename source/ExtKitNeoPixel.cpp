@@ -14,8 +14,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/**
-	@class	NeoPixel
+/**	@class	NeoPixel
 	@sa	Microsoft pxt-ws2812b sendBuffer.asm (MIT license)
 		- https://github.com/Microsoft/pxt-ws2812b
 		- https://github.com/Microsoft/pxt-ws2812b/blob/master/sendBuffer.asm
@@ -49,7 +48,8 @@ NeoPixel::NeoPixel(const char* name, MicroBitPin& digitalPort, int ledCount)
 	mLedPort.setDigitalValue(0);	// configure the port for digital output
 	wait_us(50);					// 50 us is required to reset LED modules
 
-	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::NeoPixel");
+//	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::NeoPixel");
+
 //	debug_sendLine(EXT_KIT_DEBUG_INFO "NeoPixel::mLedPort");
 //	debug_dumpPin(&mLedPort);
 
@@ -65,7 +65,7 @@ NeoPixel::~NeoPixel()
 	delete mLedBuffer;
 }
 
-/* Component */ void NeoPixel::start()
+/* Component */ void NeoPixel::doStart()
 {
 	fillColor(Color::black);
 	show();
@@ -106,7 +106,7 @@ void NeoPixel::show()
 		*dst++ = b;
 	}
 
-	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::show");
+//	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::show");
 
 //	debug_sendLine(EXT_KIT_DEBUG_INFO "NeoPixel::mLedBuffer");
 //	debug_sendMemoryDump(&mLedBuffer[0], mLedBufferLength);
@@ -135,7 +135,8 @@ NeoPixel::MaxBrightness NeoPixel::maxBrightness()
 
 void NeoPixel::fillColor(Color color)
 {
-	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::fillColor");
+//	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::fillColor");
+
 	fillColorDirectly(color);
 	mColorMode = kManual;
 }
@@ -155,7 +156,7 @@ void NeoPixel::fillColorDirectly(Color color)
 
 void NeoPixel::fillColorWithRainbow()
 {
-	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::fillColorWithRainbow");
+//	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::fillColorWithRainbow");
 
 	for(int i = 0; i < mLedCount; i++) {
 		setColorDirectly(i, Color(360, mLedHueUnit * i, 0xff, 0xff));
@@ -165,7 +166,7 @@ void NeoPixel::fillColorWithRainbow()
 
 void NeoPixel::setColor(int index, Color color)
 {
-	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::setColor");
+//	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::setColor");
 
 	setColorDirectly(index, color);
 	mColorMode = kManual;
@@ -238,7 +239,7 @@ void NeoPixel::rotateRight()
 
 void NeoPixel::setColorMapForIndicator(Color colorOff, Color colorOn)
 {
-	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::setColorMapForIndicator");
+//	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::setColorMapForIndicator");
 
 	mColorMap[0] = colorOff;
 	mColorMap[1] = colorOn;
@@ -250,7 +251,7 @@ void NeoPixel::setColorMapForIndicator(Color colorOff, Color colorOn)
 
 void NeoPixel::fillColorWithIndicatorPattern(uint32_t indicatorPattern)
 {
-	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::fillColorWithIndicatorPattern: 0x", string::hex(indicatorPattern).toCharArray());
+//	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::fillColorWithIndicatorPattern: 0x", string::hex(indicatorPattern).toCharArray());
 
 	mIndicatorPattern = indicatorPattern;
 	fillColorUsingColorMode();
@@ -258,7 +259,7 @@ void NeoPixel::fillColorWithIndicatorPattern(uint32_t indicatorPattern)
 
 void NeoPixel::setColorMapForFocus(Color colorOff, Color colorOn1, Color colorOn2, Color colorOn3)
 {
-	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::setColorMapForFocus");
+//	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::setColorMapForFocus");
 
 	mColorMap[0] = colorOff;
 	mColorMap[1] = colorOn1;
@@ -270,7 +271,7 @@ void NeoPixel::setColorMapForFocus(Color colorOff, Color colorOn1, Color colorOn
 
 void NeoPixel::setRainbowMapForFocus()
 {
-	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::setRainbowMapForFocus");
+//	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::setRainbowMapForFocus");
 
 	mColorMode = kRainbowMapForFocus;
 	fillColorUsingColorMode();
@@ -278,7 +279,7 @@ void NeoPixel::setRainbowMapForFocus()
 
 void NeoPixel::fillColorWithFocusDirection(Direction focusDirection)
 {
-	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::fillColorWithFocusDirection: 0x", string::hex(focusDirection).toCharArray());
+//	debug_sendLine(EXT_KIT_DEBUG_TRACE "NeoPixel::fillColorWithFocusDirection: 0x", string::hex(focusDirection).toCharArray());
 
 	mFocusDirection = focusDirection;
 	fillColorUsingColorMode();

@@ -27,19 +27,19 @@ namespace microbit_dal_ext_kit {
 class JoystickBit : public Component
 {
 public:
-	/// Inherited.
+	/// Inherited
 	static /* Component */ Features avaiableFeatures();
 
-	/// Inherited.
+	/// Inherited
 	static /* Component */ bool isConfigured();
 
-	/// Constructor.
+	/// Constructor
 	JoystickBit();
 
-	/// Read joystick buttons.
+	/// Read joystick buttons
 	Buttons readJoystickButtons();
 
-	/// Read joystick direction.
+	/// Read joystick direction
 	Direction readJoystickDirection();
 
 };	// JoystickBit

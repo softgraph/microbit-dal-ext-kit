@@ -22,10 +22,10 @@ namespace microbit_dal_ext_kit {
 /// Display utility
 namespace display {
 
-/// Set that the device is mounted upside down.
+/// Set that the device is mounted upside down
 void setUpsideDown();
 
-/// Check that the device is mounted upside down.
+/// Check that the device is mounted upside down
 bool isUpsideDown();
 
 void clear();

@@ -15,6 +15,7 @@
 
 namespace microbit_dal_ext_kit {
 
+static const char* isRegistered(bool registered);
 static void raiseFailedAssertion();
 static void raiseUnexpectedError();
 
@@ -25,7 +26,7 @@ SerialDebugger::SerialDebugger(const char* name)
 
 #if EXT_KIT_CONFIG_ENABLED(SERIAL_EXT_DEBUG)
 
-/* Component */ void SerialDebugger::start()
+/* Component */ void SerialDebugger::doStart()
 {
 	ExtKit& g = ExtKit::global();
 	g.messageBus().listen(MICROBIT_ID_SERIAL, MICROBIT_SERIAL_EVT_HEAD_MATCH, this, &SerialDebugger::handleSerialReceived);
@@ -35,9 +36,18 @@ SerialDebugger::SerialDebugger(const char* name)
 	doHandleSerialEnabled();
 }
 
+/* Component */ void SerialDebugger::doStop()
+{
+	///	@todo	ignore listener
+}
+
 #else	// SERIAL_EXT_DEBUG
 
-/* Component */ void SerialDebugger::start()
+/* Component */ void SerialDebugger::doStart()
+{
+}
+
+/* Component */ void SerialDebugger::doStop()
 {
 }
 
@@ -92,6 +102,11 @@ void SerialDebugger::handleSerialReceived(MicroBitEvent event)
 			debug_sendDeviceInfo();
 			break;
 		}
+		case 's':
+		case 'S': {
+			Statistics::debug_sendItems();
+			break;
+		}
 		case 'a':
 		case 'A': {
 			button::clickPseudoButton('a');
@@ -143,6 +158,7 @@ void SerialDebugger::handleSerialReceived(MicroBitEvent event)
 		"?: show this Help",
 		"c: show Configuration",
 		"d: show Device information",
+		"s: show Statistics",
 		"a: emulate button A clicked",
 		"b: emulate button B clicked",
 		"w: emulate button A + B clicked",
@@ -168,27 +184,11 @@ void SerialDebugger::handleSerialReceived(MicroBitEvent event)
 	debug_sendAppMode(0, feature::configured(), false);
 
 	debug_sendLine("--- Global object ---", false);
-	debug_sendLine("owner: ", g.owner(), false);
-	if(g.accelerometer()) {
-		debug_sendLine("accelerometer: registered", false);
-	} else {
-		debug_sendLine("accelerometer: not registered", false);
-	}
-	if(g.compass()) {
-		debug_sendLine("compass:       registered", false);
-	} else {
-		debug_sendLine("compass:       not registered", false);
-	}
-	if(g.radio()) {
-		debug_sendLine("radio:         registered", false);
-	} else {
-		debug_sendLine("radio:         not registered", false);
-	}
-	if(g.thermometer()) {
-		debug_sendLine("thermometer:   registered", false);
-	} else {
-		debug_sendLine("thermometer:   not registered", false);
-	}
+	debug_sendLine("owner:         ", g.owner(), false);
+	debug_sendLine("accelerometer: ", isRegistered(g.accelerometer()), false);
+	debug_sendLine("compass:       ", isRegistered(g.compass()), false);
+	debug_sendLine("radio:         ", isRegistered(g.radio()), false);
+	debug_sendLine("thermometer:   ", isRegistered(g.thermometer()), false);
 
 	debug_sendLine("--- Yotta Config (microbit-dal) ---", false);
 	debug_sendLine("CONFIG MICROBIT_SRAM_BASE:   0x", string::hex(MICROBIT_SRAM_BASE).toCharArray(), false);
@@ -239,8 +239,8 @@ void SerialDebugger::handleSerialReceived(MicroBitEvent event)
 	debug_sendLine("CONFIG SERIAL_RXBUF: ", ManagedString(EXT_KIT_CONFIG_VALUE(SERIAL_RXBUF)).toCharArray(), false);
 	debug_sendLine("CONFIG SERIAL_TXBUF: ", ManagedString(EXT_KIT_CONFIG_VALUE(SERIAL_TXBUF)).toCharArray(), false);
 
-	//	debug_sendLine("gSerial.getRxBufferSize(): ", ManagedString(gSerial.getRxBufferSize()).toCharArray(), false);
-	//	debug_sendLine("gSerial.getTxBufferSize(): ", ManagedString(gSerial.getTxBufferSize()).toCharArray(), false);
+//	debug_sendLine("gSerial.getRxBufferSize(): ", ManagedString(gSerial.getRxBufferSize()).toCharArray(), false);
+//	debug_sendLine("gSerial.getTxBufferSize(): ", ManagedString(gSerial.getTxBufferSize()).toCharArray(), false);
 }
 
 /* to be overridden */ void SerialDebugger::debug_sendDeviceInfo()
@@ -249,10 +249,26 @@ void SerialDebugger::handleSerialReceived(MicroBitEvent event)
 	debug_sendLine("Serial Number: 0x", string::hex(microbit_serial_number()).toCharArray(), false);
 	debug_sendLine("Friendly Name: ", microbit_friendly_name(), false);
 
+	debug_sendLine("--- Build Environment ---", false);
+	debug_sendLine("sizeof(bool):   ", ManagedString((int) sizeof(bool)).toCharArray(), false);
+	debug_sendLine("sizeof(int):    ", ManagedString((int) sizeof(int)).toCharArray(), false);
+	debug_sendLine("sizeof(void*):  ", ManagedString((int) sizeof(void*)).toCharArray(), false);
+	debug_sendLine("sizeof(size_t): ", ManagedString((int) sizeof(size_t)).toCharArray(), false);
+
+//	State<uint8_t> a[2] = { State<uint8_t>(0), State<uint8_t>(1) };
+//	debug_sendLine("sizeof(State<uint8_t>):    ", ManagedString((int) sizeof(a[0])).toCharArray(), false);
+//	debug_sendLine("sizeof(State<uint8_t>[2]): ", ManagedString((int) sizeof(a)).toCharArray(), false);
+
 	debug_sendLine("--- Software Information ---", false);
 	debug_sendLine("Build Date: ", __DATE__, " ", __TIME__, false);
+	debug_sendLine("mbed-classic version: " YOTTA_MBED_CLASSIC_VERSION_STRING, false);
 	debug_sendLine("microbit-dal version: ", microbit_dal_version(), false);
 	debug_sendLine("microbit_dal_ext_kit version: " YOTTA_MICROBIT_DAL_EXT_KIT_VERSION_STRING, false);
+}
+
+const char* isRegistered(bool registered)
+{
+	return registered ? "registered" : "not registered";
 }
 
 void raiseFailedAssertion()

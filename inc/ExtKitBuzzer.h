@@ -24,25 +24,25 @@ namespace microbit_dal_ext_kit {
 class Buzzer : public Component
 {
 public:
-	/// Check that a buzzer module is possibly available on the port and return available Features.
+	/// Check that a buzzer module is possibly available on the port and return available Features
 	static /* Component */ Features avaiableFeatures(MicroBitPin& analogPort);
 
-	/// Inherited.
+	/// Inherited
 	static /* Component */ bool isConfigured();
 
-	/// Constructor with an analog port.
+	/// Constructor with an analog port
 	Buzzer(const char* name, MicroBitPin& analogPort);
 
-	/// Destructor.
+	/// Destructor
 	~Buzzer();
 
-	/// Inherited.
-	/* Component */ void start();
-
-	/// Play a tone.
+	/// Play a tone
 	void playTone(PianoKeys& /* INOUT */ pianoKeys, Octave octave);
 
 protected:
+	/// Inherited
+	/* Component */ void doStart();
+
 	MicroBitPin&	mSoundPort;
 	PianoKeys		mCurrentTone;
 	Octave			mCurrentOctave;

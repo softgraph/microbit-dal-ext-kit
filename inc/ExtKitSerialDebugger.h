@@ -22,33 +22,36 @@ namespace microbit_dal_ext_kit {
 class SerialDebugger : public Component
 {
 public:
-	/// Constructor.
+	/// Constructor
 	SerialDebugger(const char* name);
 
-	/// Inherited.
-	/* Component */ void start();
-
 protected:
-	/// Called when the serial port is enabled.
+	/// Inherited
+	/* Component */ void doStart();
+
+	/// Inherited
+	/* Component */ void doStop();
+
+	/// Called when the serial port is enabled
 	virtual /* to be overridden */ void doHandleSerialEnabled();
 
-	/// Called when a character is received from the serial port.
+	/// Called when a character is received from the serial port
 	virtual /* to be overridden */ void doHandleSerialReceived(char c);
 
-	/// Called when a command is received from the serial port.
+	/// Called when a command is received from the serial port
 	virtual /* to be overridden */ void doHandleCommand(char c);
 
-	/// Called when Show Help command is received.
+	/// Called when Show Help command is received
 	virtual /* to be overridden */ void debug_sendCmdHelp();
 
-	/// Called when Show Configuration command is received.
+	/// Called when Show Configuration command is received
 	virtual /* to be overridden */ void debug_sendConfig();
 
-	/// Called when Show Device information command is received.
+	/// Called when Show Device information command is received
 	virtual /* to be overridden */ void debug_sendDeviceInfo();
 
 private:
-	/// Handle serial received event.
+	/// Handle serial received event
 	void handleSerialReceived(MicroBitEvent event);
 
 };	// SerialDebugger

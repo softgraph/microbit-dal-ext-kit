@@ -16,8 +16,8 @@ namespace microbit_dal_ext_kit {
 namespace serial {
 
 //																	 123456789abcdef012345
-EXT_KIT_DEFINE_LITERAL_MANAGED_STRING(static const, sendError1,	"\x15", "Serial Send Error 1: ")
-EXT_KIT_DEFINE_LITERAL_MANAGED_STRING(static const, sendError2,	"\x15", "Serial Send Error 2: ")
+EXT_KIT_DEFINE_LITERAL_MANAGED_STRING(static const, sSendError1,	"\x15", "Serial Send Error 1: ")
+EXT_KIT_DEFINE_LITERAL_MANAGED_STRING(static const, sSendError2,	"\x15", "Serial Send Error 2: ")
 
 static void checkSendError(int ret);
 static void dumpHexBlock(const uint8_t* buffer, size_t length);
@@ -111,10 +111,10 @@ void checkSendError(int ret)
 		// nothing to do
 	}
 	else if(ret == MICROBIT_INVALID_PARAMETER) {
-		Statistics::incrementItem(&sendError1);
+		Statistics::incrementItem(sSendError1);
 	}
 	else {
-		Statistics::incrementItem(&sendError2);
+		Statistics::incrementItem(sSendError2);
 	}
 }
 

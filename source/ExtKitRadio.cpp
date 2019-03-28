@@ -13,58 +13,51 @@
 #include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
+namespace radio {
 
-/**
-	@class	Radio
-*/
-
-static const Features kFeature = feature::kRadio;
-
-/* Component */ bool Radio::isConfigured()
+void prepare()
 {
-	return feature::isConfigured(kFeature);
-}
-
-Radio::Radio()
-	: Component("Radio")
-{
-	MicroBitRadio* r = ExtKit::global().radio();
-	EXT_KIT_ASSERT(r);
-}
-
-/* Component */ void Radio::start()
-{
-	MicroBitRadio* r = ExtKit::global().radio();
-	if(r) {
-		r->setGroup(EXT_KIT_CONFIG_VALUE(RADIO_GROUP));
-		r->enable();
-	}
-}
-
-void sendToRadio(const ManagedString& radioCmd)
-{
-	if(radioCmd.length() <= 0) {
+	static bool sPrepared = false;
+	if(sPrepared) {
 		return;
 	}
 
 	MicroBitRadio* r = ExtKit::global().radio();
-	if(r) {
-		r->datagram.send(radioCmd);
-		//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Radio Datagram: \'", radioCmd.toCharArray(), "\'");
+	if(!r) {
+		return;
 	}
+
+	sPrepared = true;
+	r->setGroup(EXT_KIT_CONFIG_VALUE(RADIO_GROUP));
+	r->enable();
 }
 
-ManagedString /*received */ recvFromRadio()
+void send(const ManagedString& command)
+{
+	if(command.length() <= 0) {
+		return;
+	}
+
+	MicroBitRadio* r = ExtKit::global().radio();
+	if(!r) {
+		return;
+	}
+
+	r->datagram.send(command);
+//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Radio Datagram: \'", command.toCharArray(), "\'");
+}
+
+ManagedString /*received */ recv()
 {
 	MicroBitRadio* r = ExtKit::global().radio();
-	if(r) {
-		ManagedString received = r->datagram.recv(); // return the data received, or an empty PacketBuffer if no data is available.
-		//	debug_sendLine(EXT_KIT_DEBUG_EVENT "Radio Datagram: \'", received.toCharArray(), "\'");
-		return received;
-	}
-	else {
+	if(!r) {
 		return ManagedString(ManagedString::EmptyString);
 	}
+
+	ManagedString received = r->datagram.recv(); // return the data received, or an empty PacketBuffer if no data is available.
+//	debug_sendLine(EXT_KIT_DEBUG_EVENT "Radio Datagram: \'", received.toCharArray(), "\'");
+	return received;
 }
 
+}	// radio
 }	// microbit_dal_ext_kit

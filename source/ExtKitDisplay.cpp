@@ -48,7 +48,7 @@ static const Graph sBarGraph[] = {
 	 0, 1,
 	 1, 1,
 	 1, 1},	// 5
-	{0, 01,
+	{0, 0,
 	 0, 0,
 	 1, 1,
 	 1, 1,
@@ -163,36 +163,36 @@ void showButton(Buttons buttons)
 	else											{ d.printChar('?'); }
 }
 
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, imageDirN,		0,1,1,1,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, imageDirE,		0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, imageDirW,		0,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, imageDirS,		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1,1,1,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, imageDirNE,	0,0,0,1,1, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, imageDirNW,	1,1,0,0,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, imageDirSE,	0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,1,1)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, imageDirSW,	0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,0, 1,1,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, imageDirLF,	1,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, imageDirLB,	0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, imageDirRF,	0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, imageDirRB,	0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,1)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirN,	0,1,1,1,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirE,	0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirW,	0,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 0,0,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirS,	0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1,1,1,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirNE,	0,0,0,1,1, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirNW,	1,1,0,0,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirSE,	0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,1,1)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirSW,	0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,0, 1,1,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirLF,	1,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirLB,	0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirRF,	0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirRB,	0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,1)
 
 void showDirection(Direction direction)
 {
 	MicroBitDisplay& d = ExtKit::global().display();
 	switch(direction) {
 		case direction::kCenter:	d.clear();				break;
-		case direction::kN:			d.print(imageDirN);		break;
-		case direction::kE:			d.print(imageDirE);		break;
-		case direction::kW:			d.print(imageDirW);		break;
-		case direction::kS:			d.print(imageDirS);		break;
-		case direction::kNE:		d.print(imageDirNE);	break;
-		case direction::kNW:		d.print(imageDirNW);	break;
-		case direction::kSE:		d.print(imageDirSE);	break;
-		case direction::kSW:		d.print(imageDirSW);	break;
-		case direction::kLF:		d.print(imageDirLF);	break;
-		case direction::kLB:		d.print(imageDirLB);	break;
-		case direction::kRF:		d.print(imageDirRF);	break;
-		case direction::kRB:		d.print(imageDirRB);	break;
+		case direction::kN:			d.print(sImageDirN);	break;
+		case direction::kE:			d.print(sImageDirE);	break;
+		case direction::kW:			d.print(sImageDirW);	break;
+		case direction::kS:			d.print(sImageDirS);	break;
+		case direction::kNE:		d.print(sImageDirNE);	break;
+		case direction::kNW:		d.print(sImageDirNW);	break;
+		case direction::kSE:		d.print(sImageDirSE);	break;
+		case direction::kSW:		d.print(sImageDirSW);	break;
+		case direction::kLF:		d.print(sImageDirLF);	break;
+		case direction::kLB:		d.print(sImageDirLB);	break;
+		case direction::kRF:		d.print(sImageDirRF);	break;
+		case direction::kRB:		d.print(sImageDirRB);	break;
 		case direction::kInvalid:	d.printChar('!');		break;
 		default:					d.printChar('?');		break;
 	}

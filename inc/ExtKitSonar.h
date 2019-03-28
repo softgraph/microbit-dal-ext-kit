@@ -26,25 +26,26 @@ namespace microbit_dal_ext_kit {
 class Sonar : public Component
 {
 public:
-	/// Handler Protocol.
-	/* abstract */ class HandlerProtocol
+	/// Handler Protocol
+	/* interface */ class HandlerProtocol
 	{
 	public:
-		/// Handle Sonar Echo.
-		virtual void handleSonarEcho(uint64_t durationInMs) = 0;
+		/// Handle Sonar Echo
+		virtual /* to be implemented */ void handleSonarEcho(uint64_t durationInMs) = 0;
 
 	};	// HandlerProtocol
 
-	/// Inherited.
+	/// Inherited
 	static /* Component */ bool isConfigured();
 
-	/// Constructor.
+	/// Constructor
 	Sonar(MicroBitPin& triggerOutput, MicroBitPin& echoInput, uint16_t echoInputEventID, HandlerProtocol& handler);
 
-	/// Trigger sonar.
+	/// Trigger sonar
 	void trigger();
 
 protected:
+	/// Handle Echo Input
 	void handleEchoInput(MicroBitEvent event);
 
 	MicroBitPin&		mTriggerOutputPort;

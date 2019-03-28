@@ -23,31 +23,31 @@ namespace microbit_dal_ext_kit {
 class Statistics
 {
 public:
-	/// Increment item count.
-	static void incrementItem(const ManagedString* title);
+	/// Increment item count
+	static void incrementItem(const ManagedString& title);
 
-	/// Set item value.
-	static void setItem(const ManagedString* title, uint16_t value);
+	/// Set item value
+	static void setItem(const ManagedString& title, uint16_t value);
 
-	/// Send changed items to the debugger.
+	/// Send changed items to the debugger
 	static void debug_sendItems();
 
 private:
 	/// Statistic Record
 	struct StatisticRecord : public Node
 	{
-		const ManagedString*	title;
+		const ManagedString&	title;
 		uint16_t				count;
 		uint16_t				total;
 
-		StatisticRecord();
-		StatisticRecord(const ManagedString* title);
+		StatisticRecord(const ManagedString& title);
 	};
 
-	/// Register item.
-	static StatisticRecord& registerItem(const ManagedString* title);
+	/// Prepare item
+	static StatisticRecord& prepareItem(const ManagedString& title);
 
-	static StatisticRecord		sRoot;
+	/// Root Node for `StatisticRecord`
+	static RootForDynamicNodes	sRoot;
 
 };	// Statistics
 

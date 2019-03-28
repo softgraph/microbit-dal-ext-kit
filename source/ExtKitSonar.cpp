@@ -14,8 +14,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/**
-	@class	Sonar
+/**	@class	Sonar
 	@sa	Microsoft pxt-sonar main.ts (MIT license)
 		- https://makecode.microbit.org/pkg/Microsoft/pxt-sonar
 		- https://github.com/Microsoft/pxt-sonar

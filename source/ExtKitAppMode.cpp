@@ -20,22 +20,21 @@ static void showCharFor(AppMode appMode);
 static void flashCharFor(AppMode appMode);
 static void debug_sendPossibleAppModes(const AppMode* appModes);
 
-void registerAppModeDescriber(const AppModeDescriberProtocol* describer)
+void registerAppModeDescriber(const AppModeDescriberProtocol& describer)
 {
-	EXT_KIT_ASSERT_SAFE_OBJECT(describer);
-
-	sDescriber = describer;
+	sDescriber = &describer;
 }
 
-const AppModeDescriberProtocol* appModeDescriber()
+const AppModeDescriberProtocol* appModeDescriber()	// returns null until `registerAppModeDescriber()` is called
 {
 	return sDescriber;
 }
 
-void selectAppModeFor(Features condition)
+void selectAppModeFor(Features condition, const AppModeDescriberProtocol& describer)
 {
-	EXT_KIT_ASSERT(sDescriber);	// ensure that setDescriber() has been called
 	EXT_KIT_ASSERT(condition);
+
+	registerAppModeDescriber(describer);
 
 	AppMode* selection = 0;
 	int count = sDescriber->appModesFor(condition, /* OUT new */ &selection);
@@ -82,17 +81,13 @@ void selectAppModeFor(Features condition)
 
 void showCharFor(AppMode appMode)
 {
-	EXT_KIT_ASSERT(sDescriber);	// ensure that setDescriber() has been called
-
-	char c = sDescriber->charFor(appMode);
+	char c = sDescriber ? sDescriber->charFor(appMode) : '?';
 	display::showChar(c);
 }
 
 void flashCharFor(AppMode appMode)
 {
-	EXT_KIT_ASSERT(sDescriber);	// ensure that setDescriber() has been called
-
-	char c = sDescriber->charFor(appMode);
+	char c = sDescriber ? sDescriber->charFor(appMode) : '?';
 	display::flashChar(c, 200);
 }
 

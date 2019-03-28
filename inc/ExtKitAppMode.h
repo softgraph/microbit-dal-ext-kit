@@ -16,34 +16,34 @@
 
 namespace microbit_dal_ext_kit {
 
-/// An App Mode is a set of Features.
+/// An App Mode is a set of Features
 typedef Features	AppMode;
 
-/// The Describer Protocol for App Mode.
-/* abstract */ class AppModeDescriberProtocol
+/// The Describer Protocol for App Mode
+/* interface */ class AppModeDescriberProtocol
 {
 public:
-	/// A character for App Mode.
+	/// A character for App Mode
 	virtual /* to be implemented */ char charFor(AppMode appMode) const = 0;
 
-	/// A name for App Mode.
+	/// A name for App Mode
 	virtual /* to be implemented */ const char* nameFor(AppMode appMode) const = 0;
 
-	/// Creates a new App Mode list which meets `condition`.
+	/// Creates a new App Mode list which meets `condition`
 	virtual /* to be implemented */ int /* count */ appModesFor(Features condition, AppMode** /* OUT new */ appModes) const = 0;
 
 };	// AppModeDescriberProtocol
 
-/// Register App Mode Describer
-void registerAppModeDescriber(const AppModeDescriberProtocol* describer);
+/// Active App Mode Describer.
+const AppModeDescriberProtocol* appModeDescriber();	// returns null until `registerAppModeDescriber()` or `selectAppModeFor()` is called
 
-/// App Mode Describer
-const AppModeDescriberProtocol* appModeDescriber();
+/// Register App Mode Describer
+void registerAppModeDescriber(const AppModeDescriberProtocol& describer);
 
 /// Select App Mode for the condition
-void selectAppModeFor(Features condition);
+void selectAppModeFor(Features condition, const AppModeDescriberProtocol& describer);
 
-/// Send App Moe information to the debugger.
+/// Send App Mode information to the debugger
 void debug_sendAppMode(const char* title, AppMode appMode, bool withDebugPrefix = true);
 
 }	// microbit_dal_ext_kit

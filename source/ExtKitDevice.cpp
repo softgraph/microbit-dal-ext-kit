@@ -79,7 +79,6 @@ PrimitiveExtKit::PrimitiveExtKit()
 	, buttonB(MICROBIT_PIN_BUTTON_B, MICROBIT_ID_BUTTON_B)
 	, buttonAB(MICROBIT_ID_BUTTON_A,MICROBIT_ID_BUTTON_B, MICROBIT_ID_BUTTON_AB)
 	, io(kId, kName, kCapability)
-	, mStatus(0)
 	, mExtKit(
 		"PrimitiveExtKit",
 		buttonA,
@@ -98,6 +97,7 @@ PrimitiveExtKit::PrimitiveExtKit()
 		0,	// radio
 		0	// thermometer
 	)
+	, status(0)
 {
 }
 
@@ -109,11 +109,11 @@ void PrimitiveExtKit::init()
 
 #endif	// MICROBIT_BLE_ENABLED || MICROBIT_BLE_PAIRING_MODE
 
-	if(mStatus & MICROBIT_INITIALIZED) {
+	if(status & MICROBIT_INITIALIZED) {
 		return;
 	}
 
-	mStatus |= MICROBIT_INITIALIZED;
+	status |= MICROBIT_INITIALIZED;
 
 	// Bring up soft reset functionality.
 	resetButton.mode(PullUp);

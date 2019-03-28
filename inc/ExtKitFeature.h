@@ -46,19 +46,19 @@ static const Features kRemoteRX			= kRemoteEventRx | kRemoteStateRx;
 /// The device is mounted upside down. micro:bit's button A is on the right.
 static const Features kInverted			= (1 << 5);
 
-/// NexPixel modules are connected to the device.
+/// NexPixel modules are connected to the device
 static const Features kNeoPixel			= (1 << 6);
 
-/// Buzzer module is connected to the device.
+/// Buzzer module is connected to the device
 static const Features kBuzzer			= (1 << 7);
 
-/// Sonar module is connected to the device.
+/// Sonar module is connected to the device
 static const Features kSonar			= (1 << 8);
 
-/// Auto detection for the extension board is not available.
+/// Auto detection for the extension board is not available
 static const Features kNoAutoDetection	= (1 << 9);
 
-/// No extension board is connected to the device.
+/// No extension board is connected to the device
 static const Features kMicroBitOnly		= (1 << 10);
 
 /// ElecFreaks' Joystick:bit board is connected to the device.
@@ -73,13 +73,13 @@ static const Features kTouchPiano		= (1 << 13);
 /// Kitronik's Zip Halo board is connected to the device.
 static const Features kZipHalo			= (1 << 14);
 
-/// Set the feature as configured.
+/// Set the feature as configured
 void setConfigured(Features features);
 
-/// Check whether the feature is configured.
+/// Check whether the feature is configured
 bool isConfigured(Features features);
 
-/// Configured features.
+/// Configured features
 Features configured();
 
 }	// features

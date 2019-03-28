@@ -29,43 +29,43 @@ namespace microbit_dal_ext_kit {
 class TouchPiano : public Component
 {
 public:
-	/// Inherited.
+	/// Inherited
 	static /* Component */ Features avaiableFeatures();
 
-	/// Inherited.
+	/// Inherited
 	static /* Component */ bool isConfigured();
 
-	/// Constructor.
+	/// Constructor
 	TouchPiano();
 
-	/// Read piano keys.
+	/// Read piano keys
 	void read(PianoKeys* /* OUT */ outKeys);
 
 };	// TouchPiano
 
-/// NeoPixel Component for TouchPiano.
+/// NeoPixel Component for TouchPiano
 class NeoPixelForTouchPiano : public NeoPixel
 {
 public:
-	/// Inherited.
+	/// Inherited
 	static /* Component */ bool isConfigured();
 
-	/// Constructor.
+	/// Constructor
 	NeoPixelForTouchPiano();
 
-	/// Inherited.
+	/// Inherited
 	/* NeoPixel */ void fillColorWithRainbow();
 
-	/// Fill all led modules using a indicator range.
+	/// Fill all led modules using a indicator range
 	void fillColorWithIndicatorRange(int indicatorRange /* 0-7 */);
 
 };	// NeoPixelForTouchPiano
 
-/// Buzzer Component for TouchPiano.
+/// Buzzer Component for TouchPiano
 class BuzzerForTouchPiano : public Buzzer
 {
 public:
-	/// Constructor.
+	/// Constructor
 	BuzzerForTouchPiano();
 
 };	// BuzzerForTouchPiano

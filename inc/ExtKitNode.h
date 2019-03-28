@@ -16,35 +16,50 @@
 
 namespace microbit_dal_ext_kit {
 
-/// Node. The base struct for any node which can be linked.
+/// Node - The base struct for any node which can be linked
 /* abstract */ struct Node
 {
 public:
-	/// Constructor.
+	/// Constructor
 	Node();
 
-	/// Destructor.
+	/// Destructor
 	virtual ~Node();
 
 	/// Check whether the node is valid or not. Pleaes note that a singleton node is not valid.
 	bool isValid();
 
-	/// Link after a node.
+	/// Link after a node
 	void linkAfter(Node& node);
 
-	/// Link before a node.
+	/// Link before a node
 	void linkBefore(Node& node);
 
-	/// Unlink.
+	/// Unlink
 	void unlink();
 
-	/// The previous node.
+	/// The previous node
 	Node* prev;
 
-	/// The next node.
+	/// The next node
 	Node* next;
 
 };	// Node
+
+/// Root for Dynamic (Heap Allocated) Nodes
+struct RootForDynamicNodes : public Node
+{
+public:
+	/// Destructor
+	~RootForDynamicNodes();
+
+};	// RootForDynamicNodes
+
+/// Root for Static Nodes
+struct RootForStaticNodes : public Node
+{
+
+};	// RootForStaticNodes
 
 }	// microbit_dal_ext_kit
 

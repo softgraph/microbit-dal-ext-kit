@@ -14,41 +14,31 @@
 
 namespace microbit_dal_ext_kit {
 
-/**
-	@struct StatisticRecord
+/**	@struct StatisticRecord
 */
 
-Statistics::StatisticRecord::StatisticRecord()
+Statistics::StatisticRecord::StatisticRecord(const ManagedString& title)
 	: Node()
+	, title(title)
+	, count(0)
+	, total(0)
 {
-	this->title = 0;
-	this->count = 0;
-	this->total = 0;
 }
 
-Statistics::StatisticRecord::StatisticRecord(const ManagedString* title)
-	: Node()
-{
-	this->title = title;
-	this->count = 0;
-	this->total = 0;
-}
-
-/**
-	@class Statistics
+/**	@class Statistics
 */
 
-Statistics::StatisticRecord		Statistics::sRoot;
+RootForDynamicNodes	Statistics::sRoot;
 
-void Statistics::incrementItem(const ManagedString* title)
+void Statistics::incrementItem(const ManagedString& title)
 {
-	StatisticRecord& r = registerItem(title);
+	StatisticRecord& r = prepareItem(title);
 	r.count++;
 }
 
-void Statistics::setItem(const ManagedString* title, uint16_t value)
+void Statistics::setItem(const ManagedString& title, uint16_t value)
 {
-	StatisticRecord& r = registerItem(title);
+	StatisticRecord& r = prepareItem(title);
 	r.count = value;
 }
 
@@ -65,19 +55,19 @@ void Statistics::debug_sendItems()
 		uint16_t count = r->count;
 		r->count = 0;
 		r->total += count;
-		debug_sendLine(EXT_KIT_DEBUG_STATISTICS, r->title->toCharArray(), "\t0x", string::hex(count).toCharArray());
+		debug_sendLine(EXT_KIT_DEBUG_STATISTICS, r->title.toCharArray(), "\t0x", string::hex(count).toCharArray());
 		// incrementItem() may be called inside this debug_sendLine() call.
 	}
 }
 
-Statistics::StatisticRecord& Statistics::registerItem(const ManagedString* title)
+Statistics::StatisticRecord& Statistics::prepareItem(const ManagedString& title)
 {
 	Node* p = &sRoot;
 	while((p = p->next) != &sRoot) {
 		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
 
 		StatisticRecord* r = static_cast<StatisticRecord*>(p);
-		if(r->title == title) {
+		if(&(r->title) == &title) {
 			return *r;
 		}
 	}

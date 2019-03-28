@@ -54,7 +54,7 @@ Buzzer::~Buzzer()
 {
 }
 
-/* Component */ void Buzzer::start()
+/* Component */ void Buzzer::doStart()
 {
 	mSoundPort.setAnalogValue(0);
 	mCurrentTone = pianoKey::kNone;
@@ -120,20 +120,20 @@ uint16_t /* duration in microseconds */ durationForPianoKeys(PianoKeys& /* INOUT
 	const uint16_t* p = durationTable[octave - octave::kLowest];
 	if(pianoKeys == pianoKey::kInvalid)		{	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: None");	*/	pianoKeys = pianoKey::kNone;	return 0; }
 	else if(pianoKeys == pianoKey::kNone)	{	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: None");	*/	pianoKeys = pianoKey::kNone;	return 0; }
-	else if(pianoKeys & pianoKey::kC)		{	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: C");		*/	pianoKeys = pianoKey::kC;		return p[0];  }
+	else if(pianoKeys & pianoKey::kC)		{	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: C");	*/	pianoKeys = pianoKey::kC;		return p[0];  }
 	else if(pianoKeys & pianoKey::kDb)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: Db");	*/	pianoKeys = pianoKey::kDb;		return p[1]; }
-	else if(pianoKeys & pianoKey::kD)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: D");		*/	pianoKeys = pianoKey::kD;		return p[2]; }
+	else if(pianoKeys & pianoKey::kD)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: D");	*/	pianoKeys = pianoKey::kD;		return p[2]; }
 	else if(pianoKeys & pianoKey::kEb)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: Eb");	*/	pianoKeys = pianoKey::kEb;		return p[3]; }
-	else if(pianoKeys & pianoKey::kE)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: E");		*/	pianoKeys = pianoKey::kE;		return p[4]; }
-	else if(pianoKeys & pianoKey::kF)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: F");		*/	pianoKeys = pianoKey::kF;		return p[5]; }
+	else if(pianoKeys & pianoKey::kE)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: E");	*/	pianoKeys = pianoKey::kE;		return p[4]; }
+	else if(pianoKeys & pianoKey::kF)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: F");	*/	pianoKeys = pianoKey::kF;		return p[5]; }
 	else if(pianoKeys & pianoKey::kGb)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: Gb");	*/	pianoKeys = pianoKey::kGb;		return p[6]; }
-	else if(pianoKeys & pianoKey::kG)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: G");		*/	pianoKeys = pianoKey::kG;		return p[7]; }
+	else if(pianoKeys & pianoKey::kG)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: G");	*/	pianoKeys = pianoKey::kG;		return p[7]; }
 	else if(pianoKeys & pianoKey::kAb)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: Ab");	*/	pianoKeys = pianoKey::kAb;		return p[8]; }
-	else if(pianoKeys & pianoKey::kA)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: A");		*/	pianoKeys = pianoKey::kA;		return p[9]; }
+	else if(pianoKeys & pianoKey::kA)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: A");	*/	pianoKeys = pianoKey::kA;		return p[9]; }
 	else if(pianoKeys & pianoKey::kBb)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: Bb");	*/	pianoKeys = pianoKey::kBb;		return p[10]; }
-	else if(pianoKeys & pianoKey::kB)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: B");		*/	pianoKeys = pianoKey::kB;		return p[11]; }
+	else if(pianoKeys & pianoKey::kB)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: B");	*/	pianoKeys = pianoKey::kB;		return p[11]; }
 	else if(pianoKeys & pianoKey::kCC)		{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: CC");	*/	pianoKeys = pianoKey::kCC;		return p[12]; }
-	else							{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: None");	*/	pianoKeys = pianoKey::kNone;	return 0; }
+	else							{ 	/* debug_sendLine(EXT_KIT_DEBUG_INFO "PianoKey: None");	*/			pianoKeys = pianoKey::kNone;	return 0; }
 }
 
 }	// microbit_dal_ext_kit

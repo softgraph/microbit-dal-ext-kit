@@ -28,22 +28,22 @@ namespace microbit_dal_ext_kit {
 class ZipHalo : public Component
 {
 public:
-	/// Inherited.
+	/// Inherited
 	static /* Component */ bool isConfigured();
 
-	/// Constructor.
+	/// Constructor
 	ZipHalo();
 
 };	// ZipHalo
 
-/// NeoPixel Component for ZipHalo.
+/// NeoPixel Component for ZipHalo
 class NeoPixelForZipHalo : public NeoPixel
 {
 public:
-	/// Inherited.
+	/// Inherited
 	static /* Component */ bool isConfigured();
 
-	/// Constructor.
+	/// Constructor
 	NeoPixelForZipHalo();
 
 	/// Reset max brightness value in percent. Call show() to apply the change.

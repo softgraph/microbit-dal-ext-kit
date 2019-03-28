@@ -33,10 +33,10 @@ enum PanicCode {
 ///	Error utility
 namespace error {
 
-/// Raise an error.
+/// Raise an error
 void raise(const char *desc, const char* file, int line, int panicCode = 0);
 
-/// Raise an error.
+/// Raise an error
 void raise(const char *desc, const char* name, const void* object, int panicCode = 0);
 
 }	// error

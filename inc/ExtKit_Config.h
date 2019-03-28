@@ -40,13 +40,13 @@
 #define		YOTTA_CFG_MICROBIT_DAL__EXT_KIT_SERIAL_TXBUF		80
 #endif	//	YOTTA_CFG_MICROBIT_DAL__EXT_KIT_SERIAL_TXBUF
 
-/// Check that the config feature is enabled.
+/// Check that the config feature is enabled
 #define EXT_KIT_CONFIG_ENABLED(xxx)		(YOTTA_CFG_MICROBIT_DAL__EXT_KIT_##xxx == 1)	// expects 0 or 1
 
-/// Check that the config port is valid.
+/// Check that the config port is valid
 #define EXT_KIT_CONFIG_PORT_VALID(xxx)	(YOTTA_CFG_MICROBIT_DAL__EXT_KIT_##xxx >= 0)	// expects -1, 0, 1, 2, ...
 
-/// Read the config value.
+/// Read the config value
 #define EXT_KIT_CONFIG_VALUE(xxx)		(YOTTA_CFG_MICROBIT_DAL__EXT_KIT_##xxx)
 
 #endif	// EXT_KIT__CONFIG_H

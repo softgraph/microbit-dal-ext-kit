@@ -2,7 +2,7 @@
 /**	@package	microbit_dal_ext_kit
 */
 
-/// ExtKit Common. The first include file for all microbit-dal-ext-kit interfaces
+/// ExtKit Common - The first include file for all microbit-dal-ext-kit interfaces
 /**	@file
 	@sa	Yotta config file and an example.
 		- config.json
