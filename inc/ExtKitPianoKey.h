@@ -13,11 +13,37 @@
 #define EXT_KIT_PIANO_KEY_H
 
 #include "ExtKit_Common.h"
+#include "ExtKitState.h"
 
 namespace microbit_dal_ext_kit {
 
 /// Piano Keys bit pattern
 typedef uint16_t	PianoKeys;
+
+/*
+	Extern Template Instantiation
+*/
+
+extern template class State<PianoKeys>;
+extern template class StateChange<PianoKeys>;
+
+/// State For PianoKeys
+class StateForPianoKeys : public State<PianoKeys>
+{
+public:
+	/// Constructor
+	StateForPianoKeys();
+
+};	// StateForPianoKeys
+
+/// State Change For PianoKeys
+class StateChangeForPianoKeys : public StateChange<PianoKeys>
+{
+public:
+	/// Constructor
+	StateChangeForPianoKeys();
+
+};	// StateChangeForPianoKeys
 
 /// Piano Key utility
 namespace pianoKey {

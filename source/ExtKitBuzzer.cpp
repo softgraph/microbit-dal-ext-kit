@@ -19,7 +19,7 @@ namespace microbit_dal_ext_kit {
 
 static const Features kFeature = feature::kBuzzer;
 
-static const int portValue = 2;
+static const int portValue = 10;
 
 static uint16_t durationForPianoKeys(PianoKeys& /* INOUT */ pianoKeys, Octave octave);
 

@@ -14,34 +14,29 @@
 #include "ExtKitState.cpp.h"
 
 namespace microbit_dal_ext_kit {
+namespace remoteState {
 
-/*
-	Explicit Template Instantiation for class `State<T>`
-*/
-
-template class State<uint8_t>;
-
-/**	@class	RemoteState::Transmitter
+/**	@class	remoteState::Transmitter
 */
 
 static const Features kFeatureTx = feature::kRemoteStateTx;
 
-RemoteState::Transmitter* RemoteState::Transmitter::sGlobal = 0;
+Transmitter* Transmitter::sGlobal = 0;
 
-RemoteState::Transmitter& RemoteState::Transmitter::global()
+Transmitter& Transmitter::global()
 {
 	EXT_KIT_ASSERT(sGlobal);
 
 	return *sGlobal;
 }
 
-/* Component */ bool RemoteState::Transmitter::isConfigured()
+/* Component */ bool Transmitter::isConfigured()
 {
 	return feature::isConfigured(kFeatureTx);
 }
 
-RemoteState::Transmitter::Transmitter()
-	: Component("RemoteState::Transmitter")
+Transmitter::Transmitter()
+	: Component("Transmitter")
 {
 	MicroBitRadio* r = ExtKit::global().radio();
 	EXT_KIT_ASSERT(r);
@@ -51,23 +46,23 @@ RemoteState::Transmitter::Transmitter()
 	sGlobal = this;
 }
 
-/* Component */ void RemoteState::Transmitter::doStart()
+/* Component */ void Transmitter::doStart()
 {
 	// Listen to radio datagrams from the receiver
 	MicroBitMessageBus& mb = ExtKit::global().messageBus();
-	mb.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &RemoteState::Transmitter::handleRadioDatagramReceived);
+	mb.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &Transmitter::handleRadioDatagramReceived);
 
 	radio::prepare();
 }
 
-/* Component */ void RemoteState::Transmitter::doStop()
+/* Component */ void Transmitter::doStop()
 {
 	// Ignore radio datagrams from the receiver
 	MicroBitMessageBus& mb = ExtKit::global().messageBus();
-	mb.ignore(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &RemoteState::Transmitter::handleRadioDatagramReceived);
+	mb.ignore(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &Transmitter::handleRadioDatagramReceived);
 }
 
-void RemoteState::Transmitter::listen(char category, Protocol& protocol)
+void Transmitter::listen(char category, Protocol& protocol)
 {
 	Node* p = new Record(category, protocol);
 	EXT_KIT_ASSERT_OR_PANIC(p, kPanicOutOfMemory);
@@ -75,7 +70,7 @@ void RemoteState::Transmitter::listen(char category, Protocol& protocol)
 	p->linkBefore(mRoot);
 }
 
-void RemoteState::Transmitter::ignore(char category)
+void Transmitter::ignore(char category)
 {
 	Node* p = &mRoot;
 	while((p = p->next) != &mRoot) {
@@ -90,7 +85,7 @@ void RemoteState::Transmitter::ignore(char category)
 	}
 }
 
-void RemoteState::Transmitter::requestToSend(char category)
+void Transmitter::requestToSend(char category)
 {
 	Node* p = &mRoot;
 	while((p = p->next) != &mRoot) {
@@ -104,7 +99,7 @@ void RemoteState::Transmitter::requestToSend(char category)
 	}
 }
 
-void RemoteState::Transmitter::handleRadioDatagramReceived(MicroBitEvent /* event */)
+void Transmitter::handleRadioDatagramReceived(MicroBitEvent /* event */)
 {
 	ManagedString received = radio::recv();
 	if(received.length() <= 1) {
@@ -124,23 +119,23 @@ void RemoteState::Transmitter::handleRadioDatagramReceived(MicroBitEvent /* even
 	}
 }
 
-/**	@class	RemoteState::Transmitter::Record
+/**	@class	Transmitter::Record
 */
 
-RemoteState::Transmitter::Record::Record(char category, RemoteState::Transmitter::Protocol& protocol)
+Transmitter::Record::Record(char category, Transmitter::Protocol& protocol)
 	: protocol(protocol)
 	, category(category)
 	, mSequence(0)
 {
 }
 
-void RemoteState::Transmitter::Record::requestToSend(bool asResponse)
+void Transmitter::Record::requestToSend(bool asResponse)
 {
 	ManagedString s = protocol.remoteState();
 	send(s, asResponse);
 }
 
-void RemoteState::Transmitter::Record::send(const ManagedString& remoteState, bool asResponse)
+void Transmitter::Record::send(const ManagedString& remoteState, bool asResponse)
 {
 	ManagedString s(category);
 	char sequenceMarker;
@@ -156,7 +151,7 @@ void RemoteState::Transmitter::Record::send(const ManagedString& remoteState, bo
 	radio::send(s);
 }
 
-void RemoteState::Transmitter::Record::handleRadioCommandReceived(ManagedString& received)
+void Transmitter::Record::handleRadioCommandReceived(ManagedString& received)
 {
 	char marker = received.charAt(1);
 	if(marker != kMarkerRequest) {
@@ -166,27 +161,27 @@ void RemoteState::Transmitter::Record::handleRadioCommandReceived(ManagedString&
 	requestToSend(/* asResponse*/ true);
 }
 
-/**	@class	RemoteState::Receiver
+/**	@class	remoteState::Receiver
 */
 
 static const Features kFeatureRx = feature::kRemoteStateRx;
 
-RemoteState::Receiver* RemoteState::Receiver::sGlobal = 0;
+Receiver* Receiver::sGlobal = 0;
 
-RemoteState::Receiver& RemoteState::Receiver::global()
+Receiver& Receiver::global()
 {
 	EXT_KIT_ASSERT(sGlobal);
 
 	return *sGlobal;
 }
 
-/* Component */ bool RemoteState::Receiver::isConfigured()
+/* Component */ bool Receiver::isConfigured()
 {
 	return feature::isConfigured(kFeatureRx);
 }
 
-RemoteState::Receiver::Receiver()
-	: Component("RemoteState::Receiver")
+Receiver::Receiver()
+	: Component("Receiver")
 {
 	MicroBitRadio* r = ExtKit::global().radio();
 	EXT_KIT_ASSERT(r);
@@ -195,33 +190,33 @@ RemoteState::Receiver::Receiver()
 	sGlobal = this;
 }
 
-/* Component */ void RemoteState::Receiver::doStart()
+/* Component */ void Receiver::doStart()
 {
 	radio::prepare();
 
 	// Listen to radio datagrams from the transmitter
 	MicroBitMessageBus& mb = ExtKit::global().messageBus();
-	mb.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &RemoteState::Receiver::handleRadioDatagramReceived);
+	mb.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &Receiver::handleRadioDatagramReceived);
 
 	// Listen Periodic Observer
 	PeriodicObserver::Handler::listen(PeriodicObserver::kUnit100ms, *this, PeriodicObserver::Handler::kPriorityLow);
 
-//	debug_sendLine(EXT_KIT_DEBUG_TRACE "RemoteState::Receiver::doStart");
+//	debug_sendLine(EXT_KIT_DEBUG_TRACE "Receiver::doStart");
 }
 
-/* Component */ void RemoteState::Receiver::doStop()
+/* Component */ void Receiver::doStop()
 {
 	// Ignore Periodic Observer
 	PeriodicObserver::Handler::listen(PeriodicObserver::kUnit100ms, *this);
 
 	// Ignore radio datagrams from the transmitter
 	MicroBitMessageBus& mb = ExtKit::global().messageBus();
-	mb.ignore(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &RemoteState::Receiver::handleRadioDatagramReceived);
+	mb.ignore(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &Receiver::handleRadioDatagramReceived);
 
-//	debug_sendLine(EXT_KIT_DEBUG_TRACE "RemoteState::Receiver::doStop");
+//	debug_sendLine(EXT_KIT_DEBUG_TRACE "Receiver::doStop");
 }
 
-void RemoteState::Receiver::listen(char category, Protocol& protocol)
+void Receiver::listen(char category, Protocol& protocol)
 {
 	Node* p = new Record(category, protocol);
 	EXT_KIT_ASSERT_OR_PANIC(p, kPanicOutOfMemory);
@@ -229,7 +224,7 @@ void RemoteState::Receiver::listen(char category, Protocol& protocol)
 	p->linkBefore(mRoot);
 }
 
-void RemoteState::Receiver::ignore(char category)
+void Receiver::ignore(char category)
 {
 	Node* p = &mRoot;
 	while((p = p->next) != &mRoot) {
@@ -244,9 +239,9 @@ void RemoteState::Receiver::ignore(char category)
 	}
 }
 
-void RemoteState::Receiver::handleRadioDatagramReceived(MicroBitEvent /* event */)
+void Receiver::handleRadioDatagramReceived(MicroBitEvent /* event */)
 {
-//	debug_sendLine(EXT_KIT_DEBUG_TRACE "RemoteState::Receiver::handleRadioDatagramReceived");
+//	debug_sendLine(EXT_KIT_DEBUG_TRACE "Receiver::handleRadioDatagramReceived");
 
 	ManagedString received = radio::recv();
 	if(received.length() <= 1) {
@@ -266,7 +261,7 @@ void RemoteState::Receiver::handleRadioDatagramReceived(MicroBitEvent /* event *
 	}
 }
 
-/* PeriodicObserver::Handler::Protocol */ void RemoteState::Receiver::handlePeriodicEvent(uint32_t count, PeriodicObserver::PeriodUnit unit)
+/* PeriodicObserver::Handler::Protocol */ void Receiver::handlePeriodicEvent(uint32_t count, PeriodicObserver::PeriodUnit unit)
 {
 	Node* p = &mRoot;
 	while((p = p->next) != &mRoot) {
@@ -277,7 +272,7 @@ void RemoteState::Receiver::handleRadioDatagramReceived(MicroBitEvent /* event *
 	}
 }
 
-/**	@class	RemoteState::Receiver::Record
+/**	@class	remoteState::Receiver::Record
 */
 
 //																						 123456789abcdef0
@@ -287,7 +282,7 @@ EXT_KIT_DEFINE_LITERAL_MANAGED_STRING(static const, sStatisticsRecoveryCount,	"\
 /// Initial Sync Duration in 100 milliseconds
 static const uint16_t kSyncDurationInitial	= 4;
 
-RemoteState::Receiver::Record::Record(char category, RemoteState::Receiver::Protocol& protocol)
+Receiver::Record::Record(char category, Receiver::Protocol& protocol)
 	: protocol(protocol)
 	, category(category)
 	, mSequence(0)
@@ -298,16 +293,16 @@ RemoteState::Receiver::Record::Record(char category, RemoteState::Receiver::Prot
 {
 }
 
-void RemoteState::Receiver::Record::requestToSend()
+void Receiver::Record::requestToSend()
 {
 	char buf[3] = { category, kMarkerRequest, 0 };
 	ManagedString s(buf);
 	radio::send(s);
 }
 
-void RemoteState::Receiver::Record::handleRadioCommandReceived(ManagedString& received)
+void Receiver::Record::handleRadioCommandReceived(ManagedString& received)
 {
-//	debug_sendLine(EXT_KIT_DEBUG_TRACE "RemoteState::Receiver::Record::handleRadioCommandReceived");
+//	debug_sendLine(EXT_KIT_DEBUG_TRACE "Receiver::Record::handleRadioCommandReceived");
 
 	char marker = received.charAt(1);
 	if((marker != kMarkerResponse) && (marker != kMarkerNotification)) {
@@ -337,7 +332,7 @@ void RemoteState::Receiver::Record::handleRadioCommandReceived(ManagedString& re
 	protocol.handleRemoteState(received);
 }
 
-void RemoteState::Receiver::Record::handlePeriodicEvent(uint32_t count, PeriodicObserver::PeriodUnit /* unit */)
+void Receiver::Record::handlePeriodicEvent(uint32_t count, PeriodicObserver::PeriodUnit /* unit */)
 {
 	if(mSyncDuration == 0) {
 		return;	// synchronization is not started
@@ -357,4 +352,5 @@ void RemoteState::Receiver::Record::handlePeriodicEvent(uint32_t count, Periodic
 	requestToSend();
 }
 
+}	// remoteState
 }	// microbit_dal_ext_kit

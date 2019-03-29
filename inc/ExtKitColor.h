@@ -20,7 +20,9 @@ namespace microbit_dal_ext_kit {
 struct Color
 {
 public:
-	// Well known color names
+	/*
+		Well known color names
+	*/
 
 	/// CSS 1 & BW Color White
 	static const Color white;

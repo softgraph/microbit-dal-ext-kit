@@ -13,6 +13,23 @@
 #include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
+
+/**	@class	StateForButtons
+*/
+
+StateForButtons::StateForButtons()
+	: State<Buttons>(button::kNone)
+{
+}
+
+/**	@class	StateChangeForButtons
+*/
+
+StateChangeForButtons::StateChangeForButtons()
+	: StateChange<Buttons>(button::kNone)
+{
+}
+
 namespace button {
 
 static bool hasPseudoButtonAClicked = false;

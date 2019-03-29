@@ -14,6 +14,22 @@
 
 namespace microbit_dal_ext_kit {
 
+/**	@class	StateForSonarDuration
+*/
+
+StateForSonarDuration::StateForSonarDuration()
+	: State<uint32_t>(0)
+{
+}
+
+/**	@class	StateChangeForSonarDuration
+*/
+
+StateChangeForSonarDuration::StateChangeForSonarDuration()
+	: StateChange<uint32_t>(0)
+{
+}
+
 /**	@class	Sonar
 	@sa	Microsoft pxt-sonar main.ts (MIT license)
 		- https://makecode.microbit.org/pkg/Microsoft/pxt-sonar
@@ -48,8 +64,10 @@ void Sonar::trigger()
 
 void Sonar::handleEchoInput(MicroBitEvent event)
 {
-	uint64_t durationInMs = event.timestamp;
-	mHandler.handleSonarEcho(durationInMs);
+	uint64_t duration = event.timestamp;
+	if(duration < UINT32_MAX) {
+		mHandler.handleSonarEcho((uint32_t) duration);
+	}
 }
 
 }	// microbit_dal_ext_kit

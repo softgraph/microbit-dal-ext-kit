@@ -25,208 +25,205 @@ class MicroBitEvent;
 namespace microbit_dal_ext_kit {
 
 /*
-	Extern Template Instantiation for class `State<T>`
+	Extern Template Instantiation
 */
 
 extern template class State<uint8_t>;
 
-/// Remote State utility
-/* abstract */ class RemoteState
+namespace remoteState {
+
+/// Remote State Request Marker
+/**
+	The radio command with the marker, sent by the Remote State Receiver, is as follows:<br>
+	CategoryCharacter `kMarkerRequest`
+*/
+static const char kMarkerRequest		= '?';
+
+/// Remote State Response Marker followed by a sequence number
+/**
+	The radio command with the marker, sent by the Remote State Transmitter, is as follows:<br>
+	CategoryCharacter `kMarkerResponse` [0-9a-f]+ (OtherMarkerCharacter [0-9a-f]+)+
+*/
+static const char kMarkerResponse		= '!';
+
+/// Remote State Notification Marker followed by a sequence number
+/**
+	The radio command with the marker, sent by the Remote State Transmitter, is as follows:<br>
+	CategoryCharacter `kMarkerNotification` [0-9a-f]+ (OtherMarkerCharacter [0-9a-f]+)+
+*/
+static const char kMarkerNotification	= '@';
+
+/// Remote State Transmitter Component
+class Transmitter : public Component
 {
 public:
-	/// Remote State Request Marker
-	/**
-		The radio command with the marker, sent by the Remote State Receiver, is as follows:<br>
-		CategoryCharacter `kMarkerRequest`
-	*/
-	static const char kMarkerRequest		= '?';
+	/// Get global instance. Valid only after an instance of class `RemoteState` is created.
+	static Transmitter& global();
 
-	/// Remote State Response Marker followed by a sequence number
-	/**
-		The radio command with the marker, sent by the Remote State Transmitter, is as follows:<br>
-		CategoryCharacter `kMarkerResponse` [0-9a-f]+ (OtherMarkerCharacter [0-9a-f]+)+
-	*/
-	static const char kMarkerResponse		= '!';
+	/// Inherited
+	static /* Component */ bool isConfigured();
 
-	/// Remote State Notification Marker followed by a sequence number
-	/**
-		The radio command with the marker, sent by the Remote State Transmitter, is as follows:<br>
-		CategoryCharacter `kMarkerNotification` [0-9a-f]+ (OtherMarkerCharacter [0-9a-f]+)+
-	*/
-	static const char kMarkerNotification	= '@';
+	/// Constructor
+	Transmitter();
 
-	/// Transmitter Component
-	class Transmitter : public Component
+	/// Protocol
+	/* interface */ class Protocol
 	{
 	public:
-		/// Get global instance. Valid only after an instance of class `RemoteState` is created.
-		static Transmitter& global();
+		/// Remote State to be sent
+		virtual /* to be implemented */ ManagedString remoteState() = 0;
 
-		/// Inherited
-		static /* Component */ bool isConfigured();
+	};	// Protocol
 
+	/// Listen
+	void listen(char category, Protocol& transmitter);
+
+	/// Ignore
+	void ignore(char category);
+
+	/// Request To Send
+	void requestToSend(char category);
+
+protected:
+	/// Inherited
+	/* Component */ void doStart();
+
+	/// Inherited
+	/* Component */ void doStop();
+
+private:
+	/// Record
+	struct Record : public Node
+	{
+	public:
 		/// Constructor
-		Transmitter();
-
-		/// Protocol
-		/* interface */ class Protocol
-		{
-		public:
-			/// Remote State to be sent
-			virtual /* to be implemented */ ManagedString remoteState() = 0;
-
-		};	// Protocol
-
-		/// Listen
-		void listen(char category, Protocol& transmitter);
-
-		/// Ignore
-		void ignore(char category);
+		Record(char category, Protocol& protocol);
 
 		/// Request To Send
-		void requestToSend(char category);
+		void requestToSend(bool asResponse);
 
-	protected:
-		/// Inherited
-		/* Component */ void doStart();
+		/// Send
+		void send(const ManagedString& remoteState, bool asResponse);
 
-		/// Inherited
-		/* Component */ void doStop();
-
-	private:
-		/// Record
-		struct Record : public Node
-		{
-		public:
-			/// Constructor
-			Record(char category, Protocol& protocol);
-
-			/// Request To Send
-			void requestToSend(bool asResponse);
-
-			/// Send
-			void send(const ManagedString& remoteState, bool asResponse);
-
-			/// Handle Radio Command Received
-			void handleRadioCommandReceived(ManagedString& received);
-
-			/// Protocol
-			Protocol&	protocol;
-
-			/// Category
-			char	category;
-
-		private:
-			/// Sequence Number
-			uint8_t		mSequence;
-
-		};	// Record
-
-		/// Handle Radio Datagram Received
-		void handleRadioDatagramReceived(MicroBitEvent event);
-
-		/// Global instance
-		static Transmitter*	sGlobal;
-
-		/// Root Node for `Record`
-		RootForDynamicNodes	mRoot;
-
-	};	// Transmitter
-
-	/// Receiver Component
-	class Receiver : public Component, PeriodicObserver::Handler::Protocol
-	{
-	public:
-		/// Get global instance. Valid only after an instance of class `RemoteState` is created.
-		static Receiver& global();
-
-		/// Inherited
-		static /* Component */ bool isConfigured();
-
-		/// Constructor
-		Receiver();
+		/// Handle Radio Command Received
+		void handleRadioCommandReceived(ManagedString& received);
 
 		/// Protocol
-		/* interface */ class Protocol
-		{
-		public:
-			/// Handle Remote State received
-			virtual /* to be implemented */ void handleRemoteState(ManagedString& received) = 0;
+		Protocol&	protocol;
 
-		};	// Protocol
-
-		/// Listen
-		void listen(char category, Protocol& receiver);
-
-		/// Ignore
-		void ignore(char category);
-
-	protected:
-		/// Inherited
-		/* Component */ void doStart();
-
-		/// Inherited
-		/* Component */ void doStop();
+		/// Category
+		char	category;
 
 	private:
-		/// Record
-		struct Record : public Node
-		{
-		public:
-			/// Constructor
-			Record(char category, Protocol& protocol);
+		/// Sequence Number
+		uint8_t		mSequence;
 
-			/// Request To Send
-			void requestToSend();
+	};	// Record
 
-			/// Handle Radio Command Received
-			void handleRadioCommandReceived(ManagedString& received);
+	/// Handle Radio Datagram Received
+	void handleRadioDatagramReceived(MicroBitEvent event);
 
-			/// Handle Periodic Event
-			void handlePeriodicEvent(uint32_t count, PeriodicObserver::PeriodUnit unit);
+	/// Global instance
+	static Transmitter*	sGlobal;
 
-		public:
-			/// Protocol
-			Protocol&	protocol;
+	/// Root Node for `Record`
+	RootForDynamicNodes	mRoot;
 
-			/// Category
-			char	category;
+};	// Transmitter
 
-		private:
-			/// Sequence Number
-			State<uint8_t>	mSequence;
+/// Remote State Receiver Component
+class Receiver : public Component, PeriodicObserver::Handler::Protocol
+{
+public:
+	/// Get global instance. Valid only after an instance of class `RemoteState` is created.
+	static Receiver& global();
 
-			/// Sync Duration in `PeriodicObserver::kUnit100ms`
-			uint16_t	mSyncDuration;
+	/// Inherited
+	static /* Component */ bool isConfigured();
 
-			/// Sync Next Count in `PeriodicObserver::kUnit100ms`
-			uint32_t	mSyncNextCount;
+	/// Constructor
+	Receiver();
 
-			/// Statistics Key String for Sync Duration
-			ManagedString	mStatisticsSyncDuration;
+	/// Protocol
+	/* interface */ class Protocol
+	{
+	public:
+		/// Handle Remote State received
+		virtual /* to be implemented */ void handleRemoteState(ManagedString& received) = 0;
 
-			/// Statistics Key String for Recovery Count
-			ManagedString	mStatisticsRecoveryCount;
+	};	// Protocol
 
-		};	// Record
+	/// Listen
+	void listen(char category, Protocol& receiver);
 
-		/// Handle Radio Datagram Received
-		void handleRadioDatagramReceived(MicroBitEvent event);
+	/// Ignore
+	void ignore(char category);
 
-		/// Inherited
-		/* PeriodicObserver::Handler::Protocol */ void handlePeriodicEvent(uint32_t count, PeriodicObserver::PeriodUnit unit);
+protected:
+	/// Inherited
+	/* Component */ void doStart();
 
-		private:
-		/// Global instance
-		static Receiver*	sGlobal;
+	/// Inherited
+	/* Component */ void doStop();
 
-		/// Root Node for `Record`
-		RootForDynamicNodes mRoot;
+private:
+	/// Record
+	struct Record : public Node
+	{
+	public:
+		/// Constructor
+		Record(char category, Protocol& protocol);
 
-	};	// Receiver
+		/// Request To Send
+		void requestToSend();
 
-};	// RemoteState
+		/// Handle Radio Command Received
+		void handleRadioCommandReceived(ManagedString& received);
 
+		/// Handle Periodic Event
+		void handlePeriodicEvent(uint32_t count, PeriodicObserver::PeriodUnit unit);
+
+	public:
+		/// Protocol
+		Protocol&	protocol;
+
+		/// Category
+		char	category;
+
+	private:
+		/// Sequence Number
+		State<uint8_t>	mSequence;
+
+		/// Sync Duration in `PeriodicObserver::kUnit100ms`
+		uint16_t	mSyncDuration;
+
+		/// Sync Next Count in `PeriodicObserver::kUnit100ms`
+		uint32_t	mSyncNextCount;
+
+		/// Statistics Key String for Sync Duration
+		ManagedString	mStatisticsSyncDuration;
+
+		/// Statistics Key String for Recovery Count
+		ManagedString	mStatisticsRecoveryCount;
+
+	};	// Record
+
+	/// Handle Radio Datagram Received
+	void handleRadioDatagramReceived(MicroBitEvent event);
+
+	/// Inherited
+	/* PeriodicObserver::Handler::Protocol */ void handlePeriodicEvent(uint32_t count, PeriodicObserver::PeriodUnit unit);
+
+	private:
+	/// Global instance
+	static Receiver*	sGlobal;
+
+	/// Root Node for `Record`
+	RootForDynamicNodes mRoot;
+
+};	// Receiver
+
+}	// remoteState
 }	// microbit_dal_ext_kit
 
 #endif	// EXT_KIT_REMOTE_STATE_H

@@ -13,11 +13,37 @@
 #define EXT_KIT_BUTTON_H
 
 #include "ExtKit_Common.h"
+#include "ExtKitState.h"
 
 namespace microbit_dal_ext_kit {
 
 /// Buttons
 typedef uint16_t	Buttons;
+
+/*
+	Extern Template Instantiation
+*/
+
+extern template class State<uint16_t>;
+extern template class StateChange<uint16_t>;
+
+/// State For Buttons
+class StateForButtons : public State<Buttons>
+{
+public:
+	/// Constructor
+	StateForButtons();
+
+};	// StateForButtons
+
+/// State Change For Buttons
+class StateChangeForButtons : public StateChange<Buttons>
+{
+public:
+	/// Constructor
+	StateChangeForButtons();
+
+};	// StateChangeForButtons
 
 /// Button utility
 namespace button {

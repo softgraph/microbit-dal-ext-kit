@@ -13,11 +13,37 @@
 #define EXT_KIT_DIRECTION_H
 
 #include "ExtKit_Common.h"
+#include "ExtKitState.h"
 
 namespace microbit_dal_ext_kit {
 
 /// Direction
 typedef uint16_t	Direction;
+
+/*
+	Extern Template Instantiation
+*/
+
+extern template class State<Direction>;
+extern template class StateChange<Direction>;
+
+/// State For Direction
+class StateForDirection : public State<Direction>
+{
+public:
+	/// Constructor
+	StateForDirection();
+
+};	// StateForDirection
+
+/// State Change For Direction
+class StateChangeForDirection : public StateChange<Direction>
+{
+public:
+	/// Constructor
+	StateChangeForDirection();
+
+};	// StateChangeForDirection
 
 /// Direction values
 namespace direction {

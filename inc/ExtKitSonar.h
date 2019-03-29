@@ -13,11 +13,40 @@
 #define EXT_KIT_SONAR_H
 
 #include "ExtKitComponent.h"
+#include "ExtKitState.h"
 
 class MicroBitEvent;
 class MicroBitPin;
 
 namespace microbit_dal_ext_kit {
+
+///	Sonar Duration in milliseconds
+typedef uint32_t	SonarDuration;
+
+/*
+	Extern Template Instantiation
+*/
+
+extern template class State<SonarDuration>;
+extern template class StateChange<SonarDuration>;
+
+/// State For Sonar Duration
+class StateForSonarDuration : public State<SonarDuration>
+{
+public:
+	/// Constructor
+	StateForSonarDuration();
+
+};	// StateForSonarDuration
+
+/// State Change For Sonar Duration
+class StateChangeForSonarDuration : public StateChange<SonarDuration>
+{
+public:
+	/// Constructor
+	StateChangeForSonarDuration();
+
+};	// StateChangeForSonarDuration
 
 /// Sonar Component
 /**
@@ -31,7 +60,7 @@ public:
 	{
 	public:
 		/// Handle Sonar Echo
-		virtual /* to be implemented */ void handleSonarEcho(uint64_t durationInMs) = 0;
+		virtual /* to be implemented */ void handleSonarEcho(SonarDuration duration) = 0;
 
 	};	// HandlerProtocol
 

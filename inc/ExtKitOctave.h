@@ -13,11 +13,37 @@
 #define EXT_KIT_OCTAVE_H
 
 #include "ExtKit_Common.h"
+#include "ExtKitState.h"
 
 namespace microbit_dal_ext_kit {
 
 ///	Ocrave value
 typedef uint16_t	Octave;
+
+/*
+	Extern Template Instantiation
+*/
+
+extern template class State<Octave>;
+extern template class StateChange<Octave>;
+
+/// State For Octave
+class StateForOctave : public State<Octave>
+{
+public:
+	/// Constructor
+	StateForOctave();
+
+};	// StateForOctave
+
+/// State Change For Octave
+class StateChangeForOctave : public StateChange<Octave>
+{
+public:
+	/// Constructor
+	StateChangeForOctave();
+
+};	// StateChangeForOctave
 
 ///	Ocrave utility
 namespace octave {
