@@ -62,9 +62,9 @@ Transmitter::Transmitter()
 	mb.ignore(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &Transmitter::handleRadioDatagramReceived);
 }
 
-void Transmitter::listen(char category, Protocol& protocol)
+void Transmitter::listen(char category, CategoryProtocol& protocol)
 {
-	Node* p = new Record(category, protocol);
+	Node* p = new CategoryRecord(category, protocol);
 	EXT_KIT_ASSERT_OR_PANIC(p, kPanicOutOfMemory);
 
 	p->linkBefore(mRoot);
@@ -76,7 +76,7 @@ void Transmitter::ignore(char category)
 	while((p = p->next) != &mRoot) {
 		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
 
-		Record* r = static_cast<Record*>(p);
+		CategoryRecord* r = static_cast<CategoryRecord*>(p);
 		if(r->category == category) {
 			p = r->prev;	// rewind p
 			r->unlink();	// unlink and delete r
@@ -91,7 +91,7 @@ void Transmitter::requestToSend(char category)
 	while((p = p->next) != &mRoot) {
 		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
 
-		Record* r = static_cast<Record*>(p);
+		CategoryRecord* r = static_cast<CategoryRecord*>(p);
 		if(r->category == category) {
 			r->requestToSend(/* asResponse*/ false);
 			break;
@@ -111,7 +111,7 @@ void Transmitter::handleRadioDatagramReceived(MicroBitEvent /* event */)
 	while((p = p->next) != &mRoot) {
 		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
 
-		Record* r = static_cast<Record*>(p);
+		CategoryRecord* r = static_cast<CategoryRecord*>(p);
 		if(r->category == category) {
 			r->handleRadioCommandReceived(received);
 			break;
@@ -119,23 +119,33 @@ void Transmitter::handleRadioDatagramReceived(MicroBitEvent /* event */)
 	}
 }
 
-/**	@class	Transmitter::Record
+/**	@class	remoteState::Transmitter::CategoryBase
 */
 
-Transmitter::Record::Record(char category, Transmitter::Protocol& protocol)
+Transmitter::CategoryBase::CategoryBase(char category)
+	: mTransmitter(remoteState::Transmitter::global())
+	, mCategory(category)
+{
+	mTransmitter.listen(mCategory, *this);
+}
+
+/**	@class	remoteState::Transmitter::CategoryRecord
+*/
+
+Transmitter::CategoryRecord::CategoryRecord(char category, Transmitter::CategoryProtocol& protocol)
 	: protocol(protocol)
 	, category(category)
 	, mSequence(0)
 {
 }
 
-void Transmitter::Record::requestToSend(bool asResponse)
+void Transmitter::CategoryRecord::requestToSend(bool asResponse)
 {
 	ManagedString s = protocol.remoteState();
 	send(s, asResponse);
 }
 
-void Transmitter::Record::send(const ManagedString& remoteState, bool asResponse)
+void Transmitter::CategoryRecord::send(const ManagedString& remoteState, bool asResponse)
 {
 	ManagedString s(category);
 	char sequenceMarker;
@@ -151,7 +161,7 @@ void Transmitter::Record::send(const ManagedString& remoteState, bool asResponse
 	radio::send(s);
 }
 
-void Transmitter::Record::handleRadioCommandReceived(ManagedString& received)
+void Transmitter::CategoryRecord::handleRadioCommandReceived(ManagedString& received)
 {
 	char marker = received.charAt(1);
 	if(marker != kMarkerRequest) {
@@ -216,9 +226,9 @@ Receiver::Receiver()
 //	debug_sendLine(EXT_KIT_DEBUG_TRACE "Receiver::doStop");
 }
 
-void Receiver::listen(char category, Protocol& protocol)
+void Receiver::listen(char category, CategoryProtocol& protocol)
 {
-	Node* p = new Record(category, protocol);
+	Node* p = new CategoryRecord(category, protocol);
 	EXT_KIT_ASSERT_OR_PANIC(p, kPanicOutOfMemory);
 
 	p->linkBefore(mRoot);
@@ -230,7 +240,7 @@ void Receiver::ignore(char category)
 	while((p = p->next) != &mRoot) {
 		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
 
-		Record* r = static_cast<Record*>(p);
+		CategoryRecord* r = static_cast<CategoryRecord*>(p);
 		if(r->category == category) {
 			p = r->prev;	// rewind p
 			r->unlink();	// unlink and delete r
@@ -253,7 +263,7 @@ void Receiver::handleRadioDatagramReceived(MicroBitEvent /* event */)
 	while((p = p->next) != &mRoot) {
 		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
 
-		Record* r = static_cast<Record*>(p);
+		CategoryRecord* r = static_cast<CategoryRecord*>(p);
 		if(r->category == category) {
 			r->handleRadioCommandReceived(received);
 			break;
@@ -267,12 +277,22 @@ void Receiver::handleRadioDatagramReceived(MicroBitEvent /* event */)
 	while((p = p->next) != &mRoot) {
 		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
 
-		Record* r = static_cast<Record*>(p);
+		CategoryRecord* r = static_cast<CategoryRecord*>(p);
 		r->handlePeriodicEvent(count, unit);
 	}
 }
 
-/**	@class	remoteState::Receiver::Record
+/**	@class	remoteState::Receiver::CategoryBase
+*/
+
+Receiver::CategoryBase::CategoryBase(char category)
+	: mReceiver(remoteState::Receiver::global())
+	, mCategory(category)
+{
+	mReceiver.listen(mCategory, *this);
+}
+
+/**	@class	remoteState::Receiver::CategoryRecord
 */
 
 //																						 123456789abcdef0
@@ -282,7 +302,7 @@ EXT_KIT_DEFINE_LITERAL_MANAGED_STRING(static const, sStatisticsRecoveryCount,	"\
 /// Initial Sync Duration in 100 milliseconds
 static const uint16_t kSyncDurationInitial	= 4;
 
-Receiver::Record::Record(char category, Receiver::Protocol& protocol)
+Receiver::CategoryRecord::CategoryRecord(char category, Receiver::CategoryProtocol& protocol)
 	: protocol(protocol)
 	, category(category)
 	, mSequence(0)
@@ -293,14 +313,14 @@ Receiver::Record::Record(char category, Receiver::Protocol& protocol)
 {
 }
 
-void Receiver::Record::requestToSend()
+void Receiver::CategoryRecord::requestToSend()
 {
 	char buf[3] = { category, kMarkerRequest, 0 };
 	ManagedString s(buf);
 	radio::send(s);
 }
 
-void Receiver::Record::handleRadioCommandReceived(ManagedString& received)
+void Receiver::CategoryRecord::handleRadioCommandReceived(ManagedString& received)
 {
 //	debug_sendLine(EXT_KIT_DEBUG_TRACE "Receiver::Record::handleRadioCommandReceived");
 
@@ -332,7 +352,7 @@ void Receiver::Record::handleRadioCommandReceived(ManagedString& received)
 	protocol.handleRemoteState(received);
 }
 
-void Receiver::Record::handlePeriodicEvent(uint32_t count, PeriodicObserver::PeriodUnit /* unit */)
+void Receiver::CategoryRecord::handlePeriodicEvent(uint32_t count, PeriodicObserver::PeriodUnit /* unit */)
 {
 	if(mSyncDuration == 0) {
 		return;	// synchronization is not started

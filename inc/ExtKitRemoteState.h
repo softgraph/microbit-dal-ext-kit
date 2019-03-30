@@ -66,17 +66,32 @@ public:
 	/// Constructor
 	Transmitter();
 
-	/// Protocol
-	/* interface */ class Protocol
+	/// Category Protocol
+	/* interface */ class CategoryProtocol
 	{
 	public:
 		/// Remote State to be sent
 		virtual /* to be implemented */ ManagedString remoteState() = 0;
 
-	};	// Protocol
+	};	// CategoryProtocol
+
+	/// Category Category Base
+	/* abstract */ class CategoryBase : public CategoryProtocol
+	{
+	protected:
+		/// Constructor
+		CategoryBase(char category);
+
+		/// Transmitter
+		Transmitter&	mTransmitter;
+
+		/// Category
+		char	mCategory;
+
+	};	// CategoryBase
 
 	/// Listen
-	void listen(char category, Protocol& transmitter);
+	void listen(char category, CategoryProtocol& transmitter);
 
 	/// Ignore
 	void ignore(char category);
@@ -92,12 +107,12 @@ protected:
 	/* Component */ void doStop();
 
 private:
-	/// Record
-	struct Record : public Node
+	/// Category Record
+	struct CategoryRecord : public Node
 	{
 	public:
 		/// Constructor
-		Record(char category, Protocol& protocol);
+		CategoryRecord(char category, CategoryProtocol& protocol);
 
 		/// Request To Send
 		void requestToSend(bool asResponse);
@@ -108,8 +123,8 @@ private:
 		/// Handle Radio Command Received
 		void handleRadioCommandReceived(ManagedString& received);
 
-		/// Protocol
-		Protocol&	protocol;
+		/// Category Protocol
+		CategoryProtocol&	protocol;
 
 		/// Category
 		char	category;
@@ -118,7 +133,7 @@ private:
 		/// Sequence Number
 		uint8_t		mSequence;
 
-	};	// Record
+	};	// CategoryRecord
 
 	/// Handle Radio Datagram Received
 	void handleRadioDatagramReceived(MicroBitEvent event);
@@ -126,7 +141,7 @@ private:
 	/// Global instance
 	static Transmitter*	sGlobal;
 
-	/// Root Node for `Record`
+	/// Root Node for `CategoryRecord`
 	RootForDynamicNodes	mRoot;
 
 };	// Transmitter
@@ -144,17 +159,32 @@ public:
 	/// Constructor
 	Receiver();
 
-	/// Protocol
-	/* interface */ class Protocol
+	/// Category Protocol
+	/* interface */ class CategoryProtocol
 	{
 	public:
 		/// Handle Remote State received
 		virtual /* to be implemented */ void handleRemoteState(ManagedString& received) = 0;
 
-	};	// Protocol
+	};	// CategoryProtocol
+
+	/// Category Base
+	/* abstract */ class CategoryBase : public CategoryProtocol
+	{
+	protected:
+		/// Constructor
+		CategoryBase(char category);
+
+		/// Receiver
+		Receiver&	mReceiver;
+
+		/// Category
+		char	mCategory;
+
+	};	// CategoryBase
 
 	/// Listen
-	void listen(char category, Protocol& receiver);
+	void listen(char category, CategoryProtocol& receiver);
 
 	/// Ignore
 	void ignore(char category);
@@ -167,12 +197,12 @@ protected:
 	/* Component */ void doStop();
 
 private:
-	/// Record
-	struct Record : public Node
+	/// Category Record
+	struct CategoryRecord : public Node
 	{
 	public:
 		/// Constructor
-		Record(char category, Protocol& protocol);
+		CategoryRecord(char category, CategoryProtocol& protocol);
 
 		/// Request To Send
 		void requestToSend();
@@ -184,8 +214,8 @@ private:
 		void handlePeriodicEvent(uint32_t count, PeriodicObserver::PeriodUnit unit);
 
 	public:
-		/// Protocol
-		Protocol&	protocol;
+		/// Category Protocol
+		CategoryProtocol&	protocol;
 
 		/// Category
 		char	category;
@@ -206,7 +236,7 @@ private:
 		/// Statistics Key String for Recovery Count
 		ManagedString	mStatisticsRecoveryCount;
 
-	};	// Record
+	};	// CategoryRecord
 
 	/// Handle Radio Datagram Received
 	void handleRadioDatagramReceived(MicroBitEvent event);
@@ -218,7 +248,7 @@ private:
 	/// Global instance
 	static Receiver*	sGlobal;
 
-	/// Root Node for `Record`
+	/// Root Node for `CategoryRecord`
 	RootForDynamicNodes mRoot;
 
 };	// Receiver
