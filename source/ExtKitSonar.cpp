@@ -31,7 +31,7 @@ StateChangeForSonarDuration::StateChangeForSonarDuration()
 }
 
 /**	@class	Sonar
-	@sa	Microsoft pxt-sonar main.ts (MIT license)
+	@reference	Microsoft pxt-sonar main.ts (MIT license)
 		- https://makecode.microbit.org/pkg/Microsoft/pxt-sonar
 		- https://github.com/Microsoft/pxt-sonar
 		- https://github.com/Microsoft/pxt-sonar/blob/master/main.ts

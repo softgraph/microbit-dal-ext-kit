@@ -31,6 +31,7 @@ public:
 	bool /* changed */ set(T newValue);
 
 protected:
+	/// Value
 	T mValue;
 
 };	// State<T>
@@ -50,6 +51,7 @@ public:
 	bool /* changed */ read(T& /* OUT */ readValue);
 
 protected:
+	/// Last Value
 	T mLastValue;
 
 };	// State<T>

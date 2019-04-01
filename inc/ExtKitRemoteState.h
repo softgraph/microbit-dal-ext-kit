@@ -30,28 +30,29 @@ namespace microbit_dal_ext_kit {
 
 extern template class State<uint8_t>;
 
+/// Remote State
 namespace remoteState {
 
 /// Remote State Request Marker
 /**
 	The radio command with the marker, sent by the Remote State Receiver, is as follows:<br>
-	CategoryCharacter `kMarkerRequest`
+	CATEGORY_CHARACTER `kMarkerRequest`
 */
-static const char kMarkerRequest		= '?';
+const char kMarkerRequest		= '?';
 
 /// Remote State Response Marker followed by a sequence number
 /**
 	The radio command with the marker, sent by the Remote State Transmitter, is as follows:<br>
-	CategoryCharacter `kMarkerResponse` [0-9a-f]+ (OtherMarkerCharacter [0-9a-f]+)+
+	CATEGORY_CHARACTER `kMarkerResponse` [0-9a-f]+ (OTHER_MARKER_CHARACTER [0-9a-f]+)+
 */
-static const char kMarkerResponse		= '!';
+const char kMarkerResponse		= '!';
 
 /// Remote State Notification Marker followed by a sequence number
 /**
 	The radio command with the marker, sent by the Remote State Transmitter, is as follows:<br>
-	CategoryCharacter `kMarkerNotification` [0-9a-f]+ (OtherMarkerCharacter [0-9a-f]+)+
+	CATEGORY_CHARACTER `kMarkerNotification` [0-9a-f]+ (OTHER_MARKER_CHARACTER [0-9a-f]+)+
 */
-static const char kMarkerNotification	= '@';
+const char kMarkerNotification	= '@';
 
 /// Remote State Transmitter Component
 class Transmitter : public Component

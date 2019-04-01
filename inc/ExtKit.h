@@ -9,41 +9,38 @@
 	@note	Run Doxygen (http://www.doxygen.nl) with `Doxyfile` in the project root to generate the documentation.
 */
 
+#ifndef EXT_KIT_H
+#define EXT_KIT_H
+
+namespace microbit_dal_ext_kit {
+
 /**	@page	ExtKit_Headers	Header files of microbit-dal-ext-kit
 	The interfaces of `microbit-dal-ext-kit` are provided by the following header files.
 
 	# Device class
+		@ref	ExtKit_Device
 		- ExtKitDevice.h
 		.
-	# Global variables
+
+	# Global instance
+		@ref	ExtKit_Global
 		- ExtKitGlobal.h
 		.
+
 	# Components
-		- Components dedicated to extensiton boards or hardware modules
-			- ExtKitBuzzer.h <br>
-				Generic Buzzer
-			- ExtKitJoystickBit.h <br>
-				ElecFreaks' Joystick:bit
-			- ExtKitMotoBit.h <br>
-				SparkFun's moto:bit
-			- ExtKitNeoPixel.h <br>
-				Generic NeoPixel (WS2812B) LED strip
-			- ExtKitSonar.h <br>
-				Generic Sonar module (HC-SR04)
-			- ExtKitTouchPiano.h <br>
-				Waveshare's Mini Piano Module
-			- ExtKitZipHalo.h <br>
-				Kitronik's Zip Halo
-			.
-		- Generic components
-			- ExtKitComponent.h <br>
-				the base class
-			- ExtKitPeriodicObserver.h
-			- ExtKitRemoteState.h <br>
-				Transmitter and Receiver
-			- ExtKitSerialDebugger.h
-			.
+		@ref	ExtKit_Components
+		- ExtKitBuzzer.h
+		- ExtKitJoystickBit.h
+		- ExtKitMotoBit.h
+		- ExtKitNeoPixel.h
+		- ExtKitPeriodicObserver.h
+		- ExtKitRemoteState.h
+		- ExtKitSerialDebugger.h
+		- ExtKitSonar.h
+		- ExtKitTouchPiano.h
+		- ExtKitZipHalo.h
 		.
+
 	# Utilities
 		- ExtKitAppMode.h
 		- ExtKitAssert.h
@@ -67,15 +64,16 @@
 		- ExtKitString.h
 		- ExtKitTime.h
 		.
+
 	# Others
 		- ExtKit_Common.h
 		- ExtKit_Config.h
 		- ExtKit.h
+		- ExtKitComponent.h
 		.
 */
 
-#ifndef EXT_KIT_H
-#define EXT_KIT_H
+}	// microbit_dal_ext_kit
 
 // MicroBit and other classes
 

@@ -15,7 +15,7 @@
 namespace microbit_dal_ext_kit {
 
 /**	@class	Color
-	@sa	Color Names
+	@reference	Color Names
 		- https://en.wikipedia.org/wiki/Web_colors
 		- https://en.wikipedia.org/wiki/Web_colors#HTML_color_names
 		- https://en.wikipedia.org/wiki/Web_colors#CSS_colors

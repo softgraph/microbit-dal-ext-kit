@@ -14,8 +14,8 @@
 
 namespace microbit_dal_ext_kit {
 
-/*	@class	MotoBit
-	@sa	sparkfun pxt-moto-bit motobit.ts (MIT license)
+/**	@class	MotoBit
+	@reference	sparkfun pxt-moto-bit motobit.ts (MIT license)
 		- https://makecode.microbit.org/pkg/sparkfun/pxt-moto-bit
 		- https://github.com/sparkfun/pxt-moto-bit
 		- https://github.com/sparkfun/pxt-moto-bit/blob/master/motobit.ts

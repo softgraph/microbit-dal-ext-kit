@@ -15,7 +15,8 @@
 namespace microbit_dal_ext_kit {
 
 /**	@class	NeoPixel
-	@sa	Microsoft pxt-ws2812b sendBuffer.asm (MIT license)
+	@reference	Microsoft pxt-ws2812b sendBuffer.asm (MIT license)
+		- https://makecode.microbit.org/pkg/Microsoft/pxt-ws2812b
 		- https://github.com/Microsoft/pxt-ws2812b
 		- https://github.com/Microsoft/pxt-ws2812b/blob/master/sendBuffer.asm
 */
@@ -413,7 +414,7 @@ void NeoPixel::debug_dumpPin(MicroBitPin* pin)
 #endif	// 0
 
 /**
-	@sa	Microsoft pxt-ws2812b sendBuffer.asm (MIT license)
+	@reference	Microsoft pxt-ws2812b sendBuffer.asm (MIT license)
 		- https://github.com/Microsoft/pxt-ws2812b
 		- https://github.com/Microsoft/pxt-ws2812b/blob/master/sendBuffer.asm
 */

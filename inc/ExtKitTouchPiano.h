@@ -22,7 +22,7 @@ namespace microbit_dal_ext_kit {
 /// TouchPiano Component
 /**
 	Support for Waveshare's Mini Piano Module for micro:bit.
-	@sa	Waveshare Mini Piano Module for micro:bit
+	@reference	Waveshare Mini Piano Module for micro:bit
 		- https://www.waveshare.com/piano-for-micro-bit.htm
 		- https://www.waveshare.com/wiki/Piano_for_micro_bit
 */

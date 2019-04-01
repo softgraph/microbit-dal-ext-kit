@@ -45,7 +45,7 @@ public:
 
 };	// StateChangeForDirection
 
-/// Direction values
+/// Direction utility
 namespace direction {
 
 const Direction kInvalid	= (Direction) -1;

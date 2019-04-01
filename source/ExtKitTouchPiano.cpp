@@ -15,7 +15,7 @@
 namespace microbit_dal_ext_kit {
 
 /**	@class	TouchPiano
-	@sa	Waveshare TouchPiano WSTouchPiano.ts (MIT License)
+	@reference	Waveshare TouchPiano WSTouchPiano.ts (MIT License)
 		- https://github.com/waveshare/TouchPiano
 		- https://github.com/waveshare/TouchPiano/blob/master/WSTouchPiano.ts
 */

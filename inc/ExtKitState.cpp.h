@@ -16,7 +16,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/**	@class State<T>
+/**	@class State
 */
 
 template <class T>
@@ -41,7 +41,7 @@ bool /* changed */ State<T>::set(T newValue)
 	return true;
 }
 
-/**	@class StateChange<T>
+/**	@class StateChange
 */
 
 template <class T>
