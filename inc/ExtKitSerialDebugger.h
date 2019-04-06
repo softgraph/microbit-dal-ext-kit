@@ -1,4 +1,4 @@
-/// Yotta module microbit-dal-ext-kit
+/// The set of components and utilities for C++ applications using `microbit-dal` (also known as micro:bit runtime)
 /**	@package	microbit_dal_ext_kit
 */
 
@@ -11,6 +11,8 @@
 
 #ifndef EXT_KIT_SERIAL_DEBUGGER_H
 #define EXT_KIT_SERIAL_DEBUGGER_H
+
+#include "ManagedString.h"
 
 #include "ExtKitComponent.h"
 
@@ -32,14 +34,20 @@ protected:
 	/// Inherited
 	/* Component */ void doStop();
 
-	/// Called when the serial port is enabled
-	virtual /* to be overridden */ void doHandleSerialEnabled();
+	/// Called when the serial debugger is enabled (ready to activate)
+	virtual /* to be overridden */ void doHandleSerialDebuggerEnabled();
+
+	/// Called when the serial debugger is disabled
+	virtual /* to be overridden */ void doHandleSerialDebuggerDisabled();
 
 	/// Called when a character is received from the serial port
 	virtual /* to be overridden */ void doHandleSerialReceived(char c);
 
-	/// Called when a command is received from the serial port
-	virtual /* to be overridden */ void doHandleCommand(char c);
+	/// Called when a command for Direct Input Mode is ready to evaluate
+	virtual /* to be overridden */ bool /* consumed */ doHandleDirectCommand(ManagedString command);
+
+	/// Called when a command for Line Input Mode is ready to evaluate
+	virtual /* to be overridden */ bool /* consumed */ doHandleLineCommand(ManagedString command);
 
 	/// Called when Show Help command is received
 	virtual /* to be overridden */ void debug_sendCmdHelp();
@@ -49,6 +57,15 @@ protected:
 
 	/// Called when Show Device information command is received
 	virtual /* to be overridden */ void debug_sendDeviceInfo();
+
+	/// Command string buffer
+	ManagedString mCommand;
+
+	/// Previous character
+	char mPrevChar;
+
+	/// Mode character of Line Input Mode. 0 means Direct Mode.
+	char mLineModeChar;
 
 private:
 	/// Handle serial received event

@@ -1,4 +1,4 @@
-/// Yotta module microbit-dal-ext-kit
+/// The set of components and utilities for C++ applications using `microbit-dal` (also known as micro:bit runtime)
 /**	@package	microbit_dal_ext_kit
 */
 
@@ -21,6 +21,9 @@ static void raiseUnexpectedError();
 
 SerialDebugger::SerialDebugger(const char* name)
 	: Component(name)
+	, mCommand("")
+	, mPrevChar(0)
+	, mLineModeChar(0)
 {
 }
 
@@ -33,12 +36,15 @@ SerialDebugger::SerialDebugger(const char* name)
 	serial::initializeRx();		// required for receivng the event
 	g.serial().eventAfter(1 /* character */);
 
-	doHandleSerialEnabled();
+	/* virtual */ doHandleSerialDebuggerEnabled();
 }
 
 /* Component */ void SerialDebugger::doStop()
 {
-	///	@todo	ignore listener
+	/* virtual */ doHandleSerialDebuggerDisabled();
+
+	ExtKit& g = ExtKit::global();
+	g.messageBus().ignore(MICROBIT_ID_SERIAL, MICROBIT_SERIAL_EVT_HEAD_MATCH, this, &SerialDebugger::handleSerialReceived);
 }
 
 #else	// SERIAL_EXT_DEBUG
@@ -52,6 +58,16 @@ SerialDebugger::SerialDebugger(const char* name)
 }
 
 #endif	// SERIAL_EXT_DEBUG
+
+/* to be overridden */ void SerialDebugger::doHandleSerialDebuggerEnabled()
+{
+	serial::sendLine("*** Hit any key to activate the serial debugger ***");
+}
+
+/* to be overridden */ void SerialDebugger::doHandleSerialDebuggerDisabled()
+{
+	serial::sendLine("*** The serial debugger is disabled ***");
+}
 
 void SerialDebugger::handleSerialReceived(MicroBitEvent event)
 {
@@ -68,109 +84,240 @@ void SerialDebugger::handleSerialReceived(MicroBitEvent event)
 	doHandleSerialReceived(c);
 }
 
-/* to be overridden */ void SerialDebugger::doHandleSerialEnabled()
-{
-	serial::sendLine("*** Hit Enter to enable the serial debugger ***");
-}
+#define BS	0x08	// ctrl-h / BackSpace
+#define LF	0x0a	// ctrl-j / Line Feed
+#define CR	0x0d	// ctrl-m / Carriage Return
+#define ESC	0x1b	// Escape
+#define DEL	0x7f	// Delete
 
 /* to be overridden */ void SerialDebugger::doHandleSerialReceived(char c)
 {
-	if(!debug_isDebuggerEnabled()) {
-		debug_setDebugger(true);
+	// Activate debugger if it is not activated
+	if(!debug_isDebuggerActive()) {
+		debug_activateDebugger(true);
 		debug_sendCmdHelp();
 		return;
 	}
 
-	doHandleCommand(c);
-}
+	// Ignore LF if the previous character is CR
+	if((mPrevChar == CR) && (c == LF)) {
+		mPrevChar = c;
+		return;
+	}
 
-/* to be overridden */ void SerialDebugger::doHandleCommand(char c)
-{
-	serial::sendLine(c);
+	// Save the previous character
+	mPrevChar = c;
+
+	// Convert LF to CR
+	if(c == LF) {
+		c = CR;
+	}
+
+	// Echo to the terminal
 	switch(c) {
-		case '?': {
-			debug_sendCmdHelp();
+		case BS:
+		case DEL: {
+			serial::sendChar(BS);
+			serial::sendChar(' ');
+			serial::sendChar(BS);
+			int16_t length = mCommand.length();
+			if(length > 0) {
+				length--;
+				if(length) {
+					// Delete the last character of the buffer
+					mCommand = mCommand.substring(0, length);
+				}
+				else {
+					goto clear_buffer;	// consumed
+				}
+			}
+			return;
+		}
+		case CR:
+		case ESC: {
+			serial::sendLine("");
 			break;
 		}
-		case 'c':
-		case 'C': {
-			debug_sendConfig();
-			break;
-		}
-		case 'd':
-		case 'D': {
-			debug_sendDeviceInfo();
-			break;
-		}
-		case 's':
-		case 'S': {
-			Statistics::debug_sendItems();
-			break;
-		}
-		case 'a':
-		case 'A': {
-			button::clickPseudoButton('a');
-			break;
-		}
-		case 'b':
-		case 'B': {
-			button::clickPseudoButton('b');
-			break;
-		}
-		case 'w':
-		case 'W': {
-			button::clickPseudoButton('w');
-			break;
-		}
-		case 'f':
-		case 'F': {
-			create_fiber(raiseFailedAssertion);
-			break;
-		}
-		case 'u':
-		case 'U': {
-			create_fiber(raiseUnexpectedError);
-			break;
-		}
-		case 'i':
-		case 'I': {
-			display::scrollString("-");
-			debug_sendLine("Identified", false);
-			break;
-		}
-		case 'r':
-		case 'R': {
-			microbit_reset();
-			break;
-		}
-		case 'q':
-		case 'Q': {
-			debug_setDebugger(false);
+		default: {
+			serial::sendChar(c);
 			break;
 		}
 	}
+
+	// Switch mode if the line starts with one of the mode characters
+	if(mCommand.length() == 0) {
+		switch(c) {
+			case ':': {
+				mCommand = ManagedString(c);
+				mLineModeChar = c;
+				return;
+			}
+		}
+	}
+
+	// Terminate the command by CR or ESC
+	switch(c) {
+		case CR: {
+			if(mLineModeChar) {
+				// Evaluate the buffer
+				doHandleLineCommand(mCommand);
+			}
+			// continue
+		}
+		case ESC: {
+			goto clear_buffer;	// consumed
+		}
+	}
+
+	// Update the command string buffer
+	mCommand = mCommand + ManagedString(c);
+
+	// Keep the buffer if Line Input Mode is on
+	if(mLineModeChar) {
+		return;
+	}
+
+	// Keep the buffer if the command is not handled
+	if(!doHandleDirectCommand(mCommand)) {
+		return;
+	}
+
+clear_buffer:
+	// Clear the buffer and Line Input Mode
+	mCommand = ManagedString::EmptyString;
+	mLineModeChar = 0;
+}
+
+/* to be overridden */ bool /* consumed */ SerialDebugger::doHandleDirectCommand(ManagedString command)
+{
+	if(command.length() == 1) {
+		const char c0 = command.charAt(0);
+		switch(c0) {
+			case '?': {
+				debug_sendLine("", false);
+				debug_sendCmdHelp();
+				return true;	// consumed
+			}
+			case 'a':
+			case 'A': {
+				debug_sendLine("", false);
+				button::clickPseudoButton('a');
+				return true;	// consumed
+			}
+			case 'b':
+			case 'B': {
+				debug_sendLine("", false);
+				button::clickPseudoButton('b');
+				return true;	// consumed
+			}
+			case 'w':
+			case 'W': {
+				debug_sendLine("", false);
+				button::clickPseudoButton('w');
+				return true;	// consumed
+			}
+		}
+	}
+	else if(command.length() == 2) {
+		const char c0 = command.charAt(0);
+		const char c1 = command.charAt(1);
+		switch(c0) {
+			case 'x':
+			case 'X': {
+				debug_sendLine("", false);
+				debug_sendLine("Key Code: 0x", string::hex(c1).toCharArray(), false);
+				return true;	// consumed
+			}
+		}
+	}
+	return false;	// not consumed
+}
+
+/* to be overridden */ bool /* consumed */ SerialDebugger::doHandleLineCommand(ManagedString command)
+{
+	if(command.length() < 2) {
+		return false;	// not consumed
+	}
+
+	const char c0 = command.charAt(0);
+	if(c0 != ':') {
+		return false;	// not consumed
+	}
+
+	if(command.length() == 2) {
+		const char c1 = command.charAt(1);
+		if((c1 == 'q') || (c1 == 'Q')) {	// Show Configuration
+			debug_activateDebugger(false);
+			return true;	// consumed
+		}
+	}
+	else if(command.length() == 3) {
+		const char c1 = command.charAt(1);
+		const char c2 = command.charAt(2);
+		if((c1 == 's') || (c1 == 'S')) {
+			if((c2 == 'c') || (c2 == 'C')) {	// Show Configuration
+				debug_sendConfig();
+				return true;	// consumed
+			}
+			else if((c2 == 'd') || (c2 == 'D')) {	// Show Device information
+				debug_sendDeviceInfo();
+				return true;	// consumed
+			}
+			else if((c2 == 's') || (c2 == 'S')) {	// Show Statistics
+				Statistics::debug_sendItems();
+				return true;	// consumed
+			}
+		}
+		else if((c1 == 'e') || (c1 == 'E')) {
+			if((c2 == 'f') || (c2 == 'F')) {		// Emulate Failed assertion
+				create_fiber(raiseFailedAssertion);
+				return true;	// consumed
+			}
+			else if((c2 == 'p') || (c2 == 'P')) {	// Emulate Panic (Unexpected Error)
+				create_fiber(raiseUnexpectedError);
+				return true;	// consumed
+			}
+		}
+		else if((c1 == 'i') || (c1 == 'I')) {
+			if((c2 == 'd') || (c2 == 'D')) {	// Identify the Device
+				display::scrollString("-");
+				debug_sendLine("Identified", false);
+				return true;	// consumed
+			}
+		}
+		else if((c1 == 'r') || (c1 == 'R')) {
+			if((c2 == 'd') || (c2 == 'D')) {	// Reset the Device
+				microbit_reset();
+ 				return true;	// consumed
+			}
+		}
+	}
+	return false;	// not consumed
 }
 
 /* to be overridden */ void SerialDebugger::debug_sendCmdHelp()
 {
-	static const char* serialCmdHelp[] = {
+	static const char* cmdHelp[] = {
 		"--- Help ---",
-		"?: show this Help",
-		"c: show Configuration",
-		"d: show Device information",
-		"s: show Statistics",
-		"a: emulate button A clicked",
-		"b: emulate button B clicked",
-		"w: emulate button A + B clicked",
-		"f: emulate Failed assertion",
-		"u: emulate Unexpected error",
-		"i: Identify the device",
-		"r: Reset the device",
-		"q: Quit the debugger",
-		NULL
+		"-- Direct Commands (No Enter key is required)",
+		"?   show this Help",
+		"a   emulate button A clicked",
+		"b   emulate button B clicked",
+		"w   emulate button A + B clicked",
+		"x_  eXamine the key code of the following character at _",
+		"-- Line Commands (Enter key is required)",
+		":sc     Show Configuration",
+		":sd     Show Device information",
+		":ss     Show Statistics",
+		":ef     Emulate Failed assertion",
+		":ep     Emulate Panic (Unexpected Error)",
+		":id     Identify the Device",
+		":rd     Reset the Device",
+		":q      Quit the debugger",
+		0
 	};
 
-	const char** p = serialCmdHelp;
+	const char** p = cmdHelp;
 	while (*p) {
 		debug_sendLine(*p++, false);
 	}
