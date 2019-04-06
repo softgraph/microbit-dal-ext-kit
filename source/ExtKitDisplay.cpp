@@ -1,4 +1,4 @@
-/// Yotta module microbit-dal-ext-kit
+/// The set of components and utilities for C++ applications using `microbit-dal` (also known as micro:bit runtime)
 /**	@package	microbit_dal_ext_kit
 */
 
@@ -70,18 +70,24 @@ static const Graph sBarGraph[] = {
 	 1, 1}	// 9
 };
 
-static bool sIsUpsideDown = false;
+static DisplayRotation  sDisplayRotation = MICROBIT_DISPLAY_ROTATION_0;
 
-void setUpsideDown()
+void setDisplayRotation(DisplayRotation displayRotation)
 {
-	sIsUpsideDown = true;
+	sDisplayRotation = displayRotation;
+
 	MicroBitDisplay& d = ExtKit::global().display();
-	d.rotateTo(MICROBIT_DISPLAY_ROTATION_180);
+	d.rotateTo(displayRotation);
+}
+
+DisplayRotation displayRotation()
+{
+	return sDisplayRotation;
 }
 
 bool isUpsideDown()
 {
-	return sIsUpsideDown;
+	return (sDisplayRotation == MICROBIT_DISPLAY_ROTATION_180);
 }
 
 void clear()
