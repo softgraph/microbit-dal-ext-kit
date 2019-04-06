@@ -1,4 +1,4 @@
-/// Yotta module microbit-dal-ext-kit
+/// The set of components and utilities for C++ applications using `microbit-dal` (also known as micro:bit runtime)
 /**	@package	microbit_dal_ext_kit
 */
 
@@ -38,16 +38,16 @@ const Features kRemoteStateTx	= (1 << 3) | kRadio;
 const Features kRemoteStateRx	= (1 << 4) | kRadio;
 
 /// Remote Tx (Transmitter) using radio
-const Features kRemoteTx			= kRemoteEventTx | kRemoteStateTx;
+const Features kRemoteTx		= kRemoteEventTx | kRemoteStateTx;
 
 /// Remote Rx (Receiver) using radio
-const Features kRemoteRX			= kRemoteEventRx | kRemoteStateRx;
+const Features kRemoteRX		= kRemoteEventRx | kRemoteStateRx;
 
 /// The device is mounted upside down. micro:bit's button A is on the right.
-const Features kInverted			= (1 << 5);
+const Features kInverted		= (1 << 5);
 
 /// NexPixel modules are connected to the device
-const Features kNeoPixel			= (1 << 6);
+const Features kNeoPixel		= (1 << 6);
 
 /// Buzzer module is connected to the device
 const Features kBuzzer			= (1 << 7);
@@ -59,7 +59,7 @@ const Features kSonar			= (1 << 8);
 const Features kNoAutoDetection	= (1 << 9);
 
 /// No extension board is connected to the device
-const Features kMicroBitOnly		= (1 << 10);
+const Features kMicroBitOnly	= (1 << 10);
 
 /// ElecFreaks' Joystick:bit board is connected to the device.
 const Features kJoystickBit		= (1 << 11);
@@ -72,6 +72,18 @@ const Features kTouchPiano		= (1 << 13);
 
 /// Kitronik's Zip Halo board is connected to the device.
 const Features kZipHalo			= (1 << 14);
+
+/// Reserved for App #3.
+const Features kReservedForApp3	= (1 << 28);
+
+/// Reserved for App #2.
+const Features kReservedForApp2	= (1 << 29);
+
+/// Reserved for App #1.
+const Features kReservedForApp1	= (1 << 30);
+
+/// Reserved for App #0.
+const Features kReservedForApp0	= (1 << 31);
 
 /// Set the feature as configured
 void setConfigured(Features features);
