@@ -1,4 +1,4 @@
-/// Yotta module microbit-dal-ext-kit
+/// The set of components and utilities for C++ applications using `microbit-dal` (also known as micro:bit runtime)
 /**	@package	microbit_dal_ext_kit
 */
 
@@ -50,7 +50,7 @@ void initializeTx()
 	}
 }
 
-void send(char c)
+void sendChar(char c)
 {
 	static char s[2] = {};
 	s[0] = c;

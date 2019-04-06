@@ -1,4 +1,4 @@
-/// Yotta module microbit-dal-ext-kit
+/// The set of components and utilities for C++ applications using `microbit-dal` (also known as micro:bit runtime)
 /**	@package	microbit_dal_ext_kit
 */
 
@@ -27,16 +27,16 @@ void initializeRx();
 /// Initialize TX
 void initializeTx();
 
-/// Send data to the serial port
-void send(char c);
+/// Send a character to the serial port
+void sendChar(char c);
 
-/// Send data to the serial port
+/// Send a number to the serial port as a string
 void send(int i);
 
-/// Send data to the serial port
+/// Send a string to the serial port
 void send(const char* s);
 
-/// Send data to the serial port
+/// Send a string to the serial port
 void send(const ManagedString& s);
 
 /// Send a line to the serial port
