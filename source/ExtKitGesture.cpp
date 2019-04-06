@@ -1,4 +1,4 @@
-/// Yotta module microbit-dal-ext-kit
+/// The set of components and utilities for C++ applications using `microbit-dal` (also known as micro:bit runtime)
 /**	@package	microbit_dal_ext_kit
 */
 
@@ -15,14 +15,47 @@
 namespace microbit_dal_ext_kit {
 namespace gesture {
 
-int microBitGestureEventTiltLeft()	// for MICROBIT_ID_GESTURE
+int microBitGestureEventTiltLeft()
 {
-	return display::isUpsideDown() ? MICROBIT_ACCELEROMETER_EVT_TILT_RIGHT : MICROBIT_ACCELEROMETER_EVT_TILT_LEFT;
+	switch(display::displayRotation()) {
+		default:
+		case MICROBIT_DISPLAY_ROTATION_0:	return MICROBIT_ACCELEROMETER_EVT_TILT_LEFT;
+		case MICROBIT_DISPLAY_ROTATION_90:	return MICROBIT_ACCELEROMETER_EVT_TILT_DOWN;	// = TOP
+		case MICROBIT_DISPLAY_ROTATION_180:	return MICROBIT_ACCELEROMETER_EVT_TILT_RIGHT;
+		case MICROBIT_DISPLAY_ROTATION_270:	return MICROBIT_ACCELEROMETER_EVT_TILT_UP;		// = BOTTOM
+	}
 }
 
-int microBitGestureEventTiltRight()	// for MICROBIT_ID_GESTURE
+int microBitGestureEventTiltTop()
 {
-	return display::isUpsideDown() ? MICROBIT_ACCELEROMETER_EVT_TILT_LEFT : MICROBIT_ACCELEROMETER_EVT_TILT_RIGHT;
+	switch(display::displayRotation()) {
+		case MICROBIT_DISPLAY_ROTATION_270:	return MICROBIT_ACCELEROMETER_EVT_TILT_LEFT;
+		default:
+		case MICROBIT_DISPLAY_ROTATION_0:	return MICROBIT_ACCELEROMETER_EVT_TILT_DOWN;	// = TOP
+		case MICROBIT_DISPLAY_ROTATION_90:	return MICROBIT_ACCELEROMETER_EVT_TILT_RIGHT;
+		case MICROBIT_DISPLAY_ROTATION_180:	return MICROBIT_ACCELEROMETER_EVT_TILT_UP;		// = BOTTOM
+	}
+}
+
+int microBitGestureEventTiltRight()
+{
+	switch(display::displayRotation()) {
+		case MICROBIT_DISPLAY_ROTATION_180:	return MICROBIT_ACCELEROMETER_EVT_TILT_LEFT;
+		case MICROBIT_DISPLAY_ROTATION_270:	return MICROBIT_ACCELEROMETER_EVT_TILT_DOWN;	// = TOP
+		default:
+		case MICROBIT_DISPLAY_ROTATION_0:	return MICROBIT_ACCELEROMETER_EVT_TILT_RIGHT;
+		case MICROBIT_DISPLAY_ROTATION_90:	return MICROBIT_ACCELEROMETER_EVT_TILT_UP;		// = BOTTOM
+	}
+}
+int microBitGestureEventTiltBottom()
+{
+	switch(display::displayRotation()) {
+		case MICROBIT_DISPLAY_ROTATION_90:	return MICROBIT_ACCELEROMETER_EVT_TILT_LEFT;
+		case MICROBIT_DISPLAY_ROTATION_180:	return MICROBIT_ACCELEROMETER_EVT_TILT_DOWN;	// = TOP
+		case MICROBIT_DISPLAY_ROTATION_270:	return MICROBIT_ACCELEROMETER_EVT_TILT_RIGHT;
+		default:
+		case MICROBIT_DISPLAY_ROTATION_0:	return MICROBIT_ACCELEROMETER_EVT_TILT_UP;		// = BOTTOM
+	}
 }
 
 }	// gesture

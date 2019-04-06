@@ -1,4 +1,4 @@
-/// Yotta module microbit-dal-ext-kit
+/// The set of components and utilities for C++ applications using `microbit-dal` (also known as micro:bit runtime)
 /**	@package	microbit_dal_ext_kit
 */
 
@@ -19,11 +19,17 @@ namespace microbit_dal_ext_kit {
 /// Gesture utility
 namespace gesture {
 
-/// Returns MICROBIT_ACCELEROMETER_EVT_TILT_LEFT or RIGHT in accordance with display::isUpsideDown().
+/// Event value for MICROBIT_ID_GESTURE. Returns MICROBIT_ACCELEROMETER_EVT_TILT_LEFT if display::displayRotation() is MICROBIT_DISPLAY_ROTATION_0.
 int microBitGestureEventTiltLeft();
 
-/// Returns MICROBIT_ACCELEROMETER_EVT_TILT_LEFT or RIGHT in accordance with display::isUpsideDown().
+/// Event value for MICROBIT_ID_GESTURE. Returns MICROBIT_ACCELEROMETER_EVT_TILT_DOWN (= TOP) if display::displayRotation() is MICROBIT_DISPLAY_ROTATION_0.
+int microBitGestureEventTiltTop();
+
+/// Event value for MICROBIT_ID_GESTURE. Returns MICROBIT_ACCELEROMETER_EVT_TILT_RIGHT if display::displayRotation() is MICROBIT_DISPLAY_ROTATION_0.
 int microBitGestureEventTiltRight();
+
+/// Event value for MICROBIT_ID_GESTURE. Returns MICROBIT_ACCELEROMETER_EVT_TILT_UP (= BOTTOM) if display::displayRotation() is MICROBIT_DISPLAY_ROTATION_0.
+int microBitGestureEventTiltBottom();
 
 }	// gesture
 }	// microbit_dal_ext_kit
