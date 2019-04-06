@@ -1,4 +1,4 @@
-/// Yotta module microbit-dal-ext-kit
+/// The set of components and utilities for C++ applications using `microbit-dal` (also known as micro:bit runtime)
 /**	@package	microbit_dal_ext_kit
 */
 
@@ -14,52 +14,32 @@
 
 namespace microbit_dal_ext_kit {
 
-static bool sIsDebuggerEnabled = false;
+static bool sIsDebuggerActive = false;
 
-void debug_setDebugger(bool enabled)
+void debug_activateDebugger(bool activate)
 {
-	if(sIsDebuggerEnabled == enabled) {
+	if(sIsDebuggerActive == activate) {
 		return;
 	}
 
-	if(enabled) {
-		sIsDebuggerEnabled = true;
-		debug_sendLine(EXT_KIT_DEBUG_INFO "Serial debugger: enabled");
+	if(activate) {
+		sIsDebuggerActive = true;
+		debug_sendLine(EXT_KIT_DEBUG_INFO "Serial debugger: activated");
 	}
 	else {
-		debug_sendLine(EXT_KIT_DEBUG_INFO "Serial debugger: disabled");
-		sIsDebuggerEnabled = false;
+		debug_sendLine(EXT_KIT_DEBUG_INFO "Serial debugger: deactivated");
+		sIsDebuggerActive = false;
 	}
 }
 
-bool debug_isDebuggerEnabled()
+bool debug_isDebuggerActive()
 {
-	return sIsDebuggerEnabled;
+	return sIsDebuggerActive;
 }
 
-void debug_sendLine(const char* s, bool withDebugPrefix, const char* suffix)
+void debug_sendLine(bool withDebugPrefix, const char* suffix, const char* s1, const char* s2, const char* s3, const char* s4, const char* s5)
 {
-	debug_sendLine(s, NULL, NULL, NULL, NULL, withDebugPrefix, suffix);
-}
-
-void debug_sendLine(const char* s1, const char* s2, bool withDebugPrefix, const char* suffix)
-{
-	debug_sendLine(s1, s2, NULL, NULL, NULL, withDebugPrefix, suffix);
-}
-
-void debug_sendLine(const char* s1, const char* s2, const char* s3, bool withDebugPrefix, const char* suffix)
-{
-	debug_sendLine(s1, s2, s3, NULL, NULL, withDebugPrefix, suffix);
-}
-
-void debug_sendLine(const char* s1, const char* s2, const char* s3, const char* s4, bool withDebugPrefix, const char* suffix)
-{
-	debug_sendLine(s1, s2, s3, s4, NULL, withDebugPrefix, suffix);
-}
-
-void debug_sendLine(const char* s1, const char* s2, const char* s3, const char* s4, const char* s5, bool withDebugPrefix, const char* suffix)
-{
-	if(!sIsDebuggerEnabled) {
+	if(!sIsDebuggerActive) {
 		return;
 	}
 
@@ -84,7 +64,7 @@ void debug_sendLine(const char* s1, const char* s2, const char* s3, const char* 
 
 void debug_sendMemoryDump(const void* buffer, size_t length)
 {
-	if(!sIsDebuggerEnabled) {
+	if(!sIsDebuggerActive) {
 		return;
 	}
 
