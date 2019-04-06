@@ -1,8 +1,8 @@
-/// Yotta module microbit-dal-ext-kit
+/// The set of components and utilities for C++ applications using `microbit-dal` (also known as micro:bit runtime)
 /**	@package	microbit_dal_ext_kit
 */
 
-/// ExtKit Generic Header - A handy header file to include all microbit-dal-ext-kit interfaces
+/// ExtKit Generic Header - a handy header file to include all microbit-dal-ext-kit interfaces
 /**	@file
 	@author	Copyright (c) 2019 Tomoyuki Nakashima.<br>
 			This code is licensed under MIT license. See `LICENSE` in the project root for more information.
@@ -58,6 +58,7 @@ namespace microbit_dal_ext_kit {
 		- ExtKitOctave.h
 		- ExtKitPianoKey.h
 		- ExtKitRadio.h
+		- ExtKitRequest.h
 		- ExtKitSerial.h
 		- ExtKitState.h
 		- ExtKitStatistics.h
@@ -109,6 +110,7 @@ namespace microbit_dal_ext_kit {
 #include "ExtKitPeriodicObserver.h"
 #include "ExtKitPianoKey.h"
 #include "ExtKitRadio.h"
+#include "ExtKitRequest.h"
 #include "ExtKitSerial.h"
 #include "ExtKitSerialDebugger.h"
 #include "ExtKitSonar.h"
