@@ -1,4 +1,4 @@
-/// Yotta module microbit-dal-ext-kit
+/// The set of components and utilities for C++ applications using `microbit-dal` (also known as micro:bit runtime)
 /**	@package	microbit_dal_ext_kit
 */
 
@@ -16,7 +16,7 @@
 namespace microbit_dal_ext_kit {
 namespace remoteState {
 
-/**	@class	remoteState::Transmitter
+/**	@class	Transmitter
 */
 
 static const Features kFeatureTx = feature::kRemoteStateTx;
@@ -119,7 +119,7 @@ void Transmitter::handleRadioDatagramReceived(MicroBitEvent /* event */)
 	}
 }
 
-/**	@class	remoteState::Transmitter::CategoryBase
+/**	@class	Transmitter::CategoryBase
 */
 
 Transmitter::CategoryBase::CategoryBase(char category)
@@ -129,7 +129,7 @@ Transmitter::CategoryBase::CategoryBase(char category)
 	mTransmitter.listen(mCategory, *this);
 }
 
-/**	@class	remoteState::Transmitter::CategoryRecord
+/**	@class	Transmitter::CategoryRecord
 */
 
 Transmitter::CategoryRecord::CategoryRecord(char category, Transmitter::CategoryProtocol& protocol)
@@ -171,7 +171,7 @@ void Transmitter::CategoryRecord::handleRadioCommandReceived(ManagedString& rece
 	requestToSend(/* asResponse*/ true);
 }
 
-/**	@class	remoteState::Receiver
+/**	@class	Receiver
 */
 
 static const Features kFeatureRx = feature::kRemoteStateRx;
@@ -282,7 +282,7 @@ void Receiver::handleRadioDatagramReceived(MicroBitEvent /* event */)
 	}
 }
 
-/**	@class	remoteState::Receiver::CategoryBase
+/**	@class	Receiver::CategoryBase
 */
 
 Receiver::CategoryBase::CategoryBase(char category)
@@ -292,7 +292,7 @@ Receiver::CategoryBase::CategoryBase(char category)
 	mReceiver.listen(mCategory, *this);
 }
 
-/**	@class	remoteState::Receiver::CategoryRecord
+/**	@class	Receiver::CategoryRecord
 */
 
 //																						 123456789abcdef0

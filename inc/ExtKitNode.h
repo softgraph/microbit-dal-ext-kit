@@ -1,4 +1,4 @@
-/// Yotta module microbit-dal-ext-kit
+/// The set of components and utilities for C++ applications using `microbit-dal` (also known as micro:bit runtime)
 /**	@package	microbit_dal_ext_kit
 */
 
@@ -16,7 +16,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/// Node - The base struct for any node which can be linked
+/// Node - the base struct for any node which can be linked
 /* abstract */ struct Node
 {
 public:

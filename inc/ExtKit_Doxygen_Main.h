@@ -1,4 +1,4 @@
-/// Yotta module microbit-dal-ext-kit
+/// The set of components and utilities for C++ applications using `microbit-dal` (also known as micro:bit runtime)
 /**	@package	microbit_dal_ext_kit
 */
 
@@ -9,12 +9,12 @@
 	@note	Run Doxygen (http://www.doxygen.nl) with `Doxyfile` in the project root to generate the documentation.
 */
 
-/**	@mainpage	notitle
+/**	@mainpage	Introduction
 
 	@section	main_1	1. Outlines
 
 	@subsection	main_1_1	1.1 microbit-dal-ext-kit-example
-		- microbit-dal-ext-kit-example is an example application for using @ref main_1_2. <br>
+		- microbit-dal-ext-kit-example is an example for using @ref main_1_2. <br>
 			Se also <a href="https://github.com/softgraph/microbit-dal-ext-kit-example"><b>microbit-dal-ext-kit-example</b> on github.com</a>.
 		.
 

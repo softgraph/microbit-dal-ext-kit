@@ -1,8 +1,8 @@
-/// Yotta module microbit-dal-ext-kit
+/// The set of components and utilities for C++ applications using `microbit-dal` (also known as micro:bit runtime)
 /**	@package	microbit_dal_ext_kit
 */
 
-/// ExtKit Common - The first include file for all microbit-dal-ext-kit interfaces
+/// ExtKit Common - the first include file for all microbit-dal-ext-kit interfaces
 /**	@file
 	@sa	Yotta config file and an example.
 		- config.json
