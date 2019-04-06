@@ -1,4 +1,4 @@
-/// Yotta module microbit-dal-ext-kit
+/// The set of components and utilities for C++ applications using `microbit-dal` (also known as micro:bit runtime)
 /**	@package	microbit_dal_ext_kit
 */
 
@@ -13,12 +13,14 @@
 #define EXT_KIT_PERIODIC_LISTENER_H
 
 #include "ExtKitComponent.h"
+#include "ExtKitError.h"
 #include "ExtKitNode.h"
+#include "ExtKitRequest.h"
 
 namespace microbit_dal_ext_kit {
 
 /// Periodic Observer Component
-class PeriodicObserver : public Component
+class PeriodicObserver : public Component, RequestCompletionProtocol
 {
 	friend class Handler;
 
@@ -28,6 +30,24 @@ public:
 		/// 100 milliseconds
 		kUnit100ms
 	};
+
+	/// Get global instance. Valid only after an instance of class `PeriodicObserver` is created.
+	static PeriodicObserver& global();
+
+	/// Constructor
+	PeriodicObserver();
+
+	/// Request value: Request To Cancel
+	const int kRequestToCancel = 1;
+
+	/// Inherited. Note that `request` should be retained until `waitForCompletion()` is returned.
+	/**	The following request/response pair is available.
+		- `request.value`: kRequestToCancel -> `response.value`: MICROBIT_CANCELLED
+	*/
+	/* RequestCompletionProtocol */ int /* result */ issueRequest(RequestToken& request);
+
+	/// Inherited.
+	/* RequestCompletionProtocol */ RequestToken& /* response */ waitForCompletion();
 
 	/// Handler
 	/* abstract */ class Handler
@@ -93,12 +113,6 @@ public:
 
 	};	// Handler
 
-	/// Get global instance. Valid only after an instance of class `PeriodicObserver` is created.
-	static PeriodicObserver& global();
-
-	/// Constructor
-	PeriodicObserver();
-
 protected:
 	/// Inherited
 	/* Component */ void doStart();
@@ -121,6 +135,15 @@ private:
 
 	/// Global instance
 	static PeriodicObserver*	sGlobal;
+
+	/// Running
+	bool mRunning;
+
+	/// Request To Cancel
+	bool mRequestToCancel;
+
+	/// Request Token
+	RequestToken* mRequestToken;
 
 	/// Root Node for `Handler::Record`
 	RootForDynamicNodes	mRoot;

@@ -1,4 +1,4 @@
-/// Yotta module microbit-dal-ext-kit
+/// The set of components and utilities for C++ applications using `microbit-dal` (also known as micro:bit runtime)
 /**	@package	microbit_dal_ext_kit
 */
 
@@ -28,34 +28,85 @@ PeriodicObserver& PeriodicObserver::global()
 
 PeriodicObserver::PeriodicObserver()
 	: Component("PeriodicObserver")
+	, mRunning(false)
+	, mRequestToCancel(false)
+	, mRequestToken(0)
 {
 	EXT_KIT_ASSERT(!sGlobal);
 
 	sGlobal = this;
 }
 
+/* RequestCompletionProtocol */ int /* result */ PeriodicObserver::issueRequest(RequestToken& request)
+{
+	if(request.value != kRequestToCancel) {
+		return MICROBIT_NOT_SUPPORTED;	// Unknown request
+	}
+
+	if(mRequestToken) {
+		return MICROBIT_BUSY;	// There's an active request
+	}
+
+	if(!mRunning) {
+		return MICROBIT_NO_DATA;	// Not running
+	}
+
+	// The request is accepted
+	mRequestToCancel = true;
+	mRequestToken = &request;
+	return MICROBIT_OK;
+}
+
+/* RequestCompletionProtocol */ RequestToken& /* response */ PeriodicObserver::waitForCompletion()
+{
+	while(mRunning || ! mRequestToken) {
+		time::sleep(100 /* milliseconds */);
+	}
+
+	// The request is completed
+	RequestToken& response = *mRequestToken;
+	mRequestToken = 0;
+	response.value = MICROBIT_CANCELLED;
+	return response;
+}
+
 /* Component */ void PeriodicObserver::doStart()
 {
+	mRunning = true;
+	mRequestToCancel = false;
+
 	create_fiber(loopEntry, this);
 }
 
 /* Component */ void PeriodicObserver::doStop()
 {
-	///	@todo	set a flag to stop `PeriodicObserver::loop()`
+	if(!mRunning) {
+		return;		// Not running
+	}
+
+	// Request to cancel
+	mRequestToCancel = true;
+
+	// Wait for the completion
+	while(mRunning) {
+		time::sleep(100 /* milliseconds */);
+	}
 }
 
 void PeriodicObserver::loopEntry(void* param)
 {
 	EXT_KIT_ASSERT(param);
 
+	// Start the loop
 	PeriodicObserver* p = static_cast<PeriodicObserver*>(param);
 	p->loop();
 }
 
 void PeriodicObserver::loop()
 {
+	// Be running the loop
 	uint32_t count100ms = 0;
-	while(true) {
+	while(!mRequestToCancel) {
 		time::SystemTime t1 = time::systemTime();
 		notify(count100ms, kUnit100ms);
 		time::SystemTime t2 = time::systemTime();
@@ -68,6 +119,10 @@ void PeriodicObserver::loop()
 		}
 		count100ms++;
 	}
+
+	// Canceled
+	mRunning = false;
+	mRequestToCancel = false;
 }
 
 void PeriodicObserver::notify(uint32_t count, PeriodUnit unit)
