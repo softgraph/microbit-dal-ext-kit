@@ -297,7 +297,7 @@ clear_buffer:
 
 /* to be overridden */ void SerialDebugger::debug_sendCmdHelp()
 {
-	static const char* cmdHelp[] = {
+	static const char* const cmdHelp[] = {
 		"--- Help ---",
 		"-- Direct Commands (No Enter key is required)",
 		"?   show this Help",
@@ -314,10 +314,10 @@ clear_buffer:
 		":id     Identify the Device",
 		":rd     Reset the Device",
 		":q      Quit the debugger",
-		0
+		0	// END OF TABLE
 	};
 
-	const char** p = cmdHelp;
+	const char* const * p = cmdHelp;
 	while (*p) {
 		debug_sendLine(*p++, false);
 	}
@@ -392,11 +392,12 @@ clear_buffer:
 
 /* to be overridden */ void SerialDebugger::debug_sendDeviceInfo()
 {
-	debug_sendLine("--- Hardware Information ---", false);
+	debug_sendLine("--- Device Information ---", false);
+	debug_sendLine("-- Hardware Information", false);
 	debug_sendLine("Serial Number: 0x", string::hex(microbit_serial_number()).toCharArray(), false);
 	debug_sendLine("Friendly Name: ", microbit_friendly_name(), false);
 
-	debug_sendLine("--- Build Environment ---", false);
+	debug_sendLine("-- Build Environment", false);
 	debug_sendLine("sizeof(bool):   ", ManagedString((int) sizeof(bool)).toCharArray(), false);
 	debug_sendLine("sizeof(int):    ", ManagedString((int) sizeof(int)).toCharArray(), false);
 	debug_sendLine("sizeof(void*):  ", ManagedString((int) sizeof(void*)).toCharArray(), false);
@@ -406,7 +407,7 @@ clear_buffer:
 //	debug_sendLine("sizeof(State<uint8_t>):    ", ManagedString((int) sizeof(a[0])).toCharArray(), false);
 //	debug_sendLine("sizeof(State<uint8_t>[2]): ", ManagedString((int) sizeof(a)).toCharArray(), false);
 
-	debug_sendLine("--- Software Information ---", false);
+	debug_sendLine("-- Software Information", false);
 	debug_sendLine("Build Date: ", __DATE__, " ", __TIME__, false);
 	debug_sendLine("mbed-classic version: " YOTTA_MBED_CLASSIC_VERSION_STRING, false);
 	debug_sendLine("microbit-dal version: ", microbit_dal_version(), false);
