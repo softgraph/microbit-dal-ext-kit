@@ -37,6 +37,9 @@ public:
 	/// Constructor
 	PeriodicObserver();
 
+	/// Destructor
+	~PeriodicObserver();
+
 	/// Request value: Request To Cancel
 	const int kRequestToCancel = 1;
 

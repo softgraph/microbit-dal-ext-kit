@@ -37,6 +37,13 @@ PeriodicObserver::PeriodicObserver()
 	sGlobal = this;
 }
 
+PeriodicObserver::~PeriodicObserver()
+{
+	if(sGlobal == this) {
+		sGlobal = 0;
+	}
+}
+
 /* RequestCompletionProtocol */ int /* result */ PeriodicObserver::issueRequest(RequestToken& request)
 {
 	if(request.value != kRequestToCancel) {
