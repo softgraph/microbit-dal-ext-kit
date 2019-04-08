@@ -297,15 +297,33 @@ clear_buffer:
 
 /* to be overridden */ void SerialDebugger::debug_sendCmdHelp()
 {
-	static const char* const cmdHelp[] = {
-		"--- Help ---",
-		"-- Direct Commands (No Enter key is required)",
+	debug_sendLine("--- Help ---", false);
+	debug_sendLine("--- Direct Commands (No Enter key is required)", false);
+	/* virtual */ debug_sendHelpForDirectCommands();
+
+	debug_sendLine("--- Line Commands (Enter key is required)", false);
+	/* virtual */ debug_sendHelpForLineCommands();
+
+	debug_sendLine("---", false);
+}
+
+/* to be overridden */ void SerialDebugger::debug_sendHelpForDirectCommands()
+{
+	static const char* const lineArray[] = {
 		"?   show this Help",
 		"a   emulate button A clicked",
 		"b   emulate button B clicked",
 		"w   emulate button A + B clicked",
 		"x_  eXamine the key code of the following character at _",
-		"-- Line Commands (Enter key is required)",
+		0	// END OF TABLE
+	};
+
+	debug_sendLines(lineArray);
+}
+
+/* to be overridden */ void SerialDebugger::debug_sendHelpForLineCommands()
+{
+	static const char* const lineArray[] = {
 		":sc     Show Configuration",
 		":sd     Show Device information",
 		":ss     Show Statistics",
@@ -317,8 +335,13 @@ clear_buffer:
 		0	// END OF TABLE
 	};
 
-	const char* const * p = cmdHelp;
-	while (*p) {
+	debug_sendLines(lineArray);
+}
+
+void SerialDebugger::debug_sendLines(const char* const * lineArray /* terminated by 0 */)
+{
+	const char* const * p = lineArray;
+	while(*p) {
 		debug_sendLine(*p++, false);
 	}
 }

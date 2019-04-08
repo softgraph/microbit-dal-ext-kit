@@ -52,6 +52,15 @@ protected:
 	/// Called when Show Help command is received
 	virtual /* to be overridden */ void debug_sendCmdHelp();
 
+	/// Called when Show Help command for Direct Input Mode is requested
+	virtual /* to be overridden */ void debug_sendHelpForDirectCommands();
+
+	/// Called when Show Help command for Line Input Mode is requested
+	virtual /* to be overridden */ void debug_sendHelpForLineCommands();
+
+	/// Send Lines
+	void debug_sendLines(const char* const * lineArray /* terminated by 0 */);
+
 	/// Called when Show Configuration command is received
 	virtual /* to be overridden */ void debug_sendConfig();
 
@@ -64,7 +73,7 @@ protected:
 	/// Previous character
 	char mPrevChar;
 
-	/// Mode character of Line Input Mode. 0 means Direct Mode.
+	/// Mode character of Line Input Mode. 0 means Direct Input Mode.
 	char mLineModeChar;
 
 private:
