@@ -46,6 +46,13 @@ Transmitter::Transmitter()
 	sGlobal = this;
 }
 
+Transmitter::~Transmitter()
+{
+	if(sGlobal == this) {
+		sGlobal = 0;
+	}
+}
+
 /* Component */ void Transmitter::doStart()
 {
 	// Listen to radio datagrams from the receiver
@@ -197,7 +204,15 @@ Receiver::Receiver()
 	EXT_KIT_ASSERT(r);
 
 	EXT_KIT_ASSERT(!sGlobal);
+
 	sGlobal = this;
+}
+
+Receiver::~Receiver()
+{
+	if(sGlobal == this) {
+		sGlobal = 0;
+	}
 }
 
 /* Component */ void Receiver::doStart()
@@ -217,7 +232,7 @@ Receiver::Receiver()
 /* Component */ void Receiver::doStop()
 {
 	// Ignore Periodic Observer
-	PeriodicObserver::Handler::listen(PeriodicObserver::kUnit100ms, *this);
+	PeriodicObserver::Handler::ignore(PeriodicObserver::kUnit100ms, *this);
 
 	// Ignore radio datagrams from the transmitter
 	MicroBitMessageBus& mb = ExtKit::global().messageBus();

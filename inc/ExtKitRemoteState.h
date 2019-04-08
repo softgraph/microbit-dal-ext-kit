@@ -67,6 +67,9 @@ public:
 	/// Constructor
 	Transmitter();
 
+	/// Destructor
+	~Transmitter();
+
 	/// Category Protocol
 	/* interface */ class CategoryProtocol
 	{
@@ -159,6 +162,9 @@ public:
 
 	/// Constructor
 	Receiver();
+
+	/// Destructor
+	~Receiver();
 
 	/// Category Protocol
 	/* interface */ class CategoryProtocol
