@@ -62,7 +62,7 @@ void Component::restart()
 
 void Component::stop()
 {
-	if(!(mStatus & kStatusActive)) {
+	if(! (mStatus & kStatusActive)) {
 		return;
 	}
 	if(mStatus & kStatusStopping) {
@@ -70,7 +70,7 @@ void Component::stop()
 	}
 
 	mStatus |= kStatusStopping;
-	doStart();
+	doStop();
 	mStatus &= ~kStatusStopping;
 
 	mStatus &= ~kStatusActive;
