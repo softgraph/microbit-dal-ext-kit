@@ -70,6 +70,9 @@ public:
 		MicroBitThermometer*	thermometer		// may null
 	);
 
+	/// Destructor
+	~ExtKit();
+
 	/// Initialize
 	void init();
 

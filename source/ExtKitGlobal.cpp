@@ -61,6 +61,13 @@ ExtKit::ExtKit(
 	EXT_KIT_ASSERT(owner);
 }
 
+ExtKit::~ExtKit()
+{
+	if(sGlobal == this) {
+		sGlobal = 0;
+	}
+}
+
 void ExtKit::init()
 {
 	EXT_KIT_ASSERT(!sGlobal);
