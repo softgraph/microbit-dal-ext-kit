@@ -85,6 +85,9 @@ const Features kReservedForApp1	= (1 << 30);
 /// Reserved for App #0.
 const Features kReservedForApp0	= (1 << 31);
 
+/// Reset configured features
+void resetConfigured();
+
 /// Set the feature as configured
 void setConfigured(Features features);
 

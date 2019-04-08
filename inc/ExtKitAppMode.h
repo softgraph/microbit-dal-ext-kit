@@ -30,7 +30,7 @@ public:
 	virtual /* to be implemented */ const char* nameFor(AppMode appMode) const = 0;
 
 	/// Creates a new App Mode list which meets `condition`
-	virtual /* to be implemented */ int /* count */ appModesFor(Features condition, AppMode** /* OUT new */ appModes) const = 0;
+	virtual /* to be implemented */ int /* count */ appModesFor(Features condition, AppMode** /* OUT new[] */ appModes) const = 0;
 
 };	// AppModeDescriberProtocol
 

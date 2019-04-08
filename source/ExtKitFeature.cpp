@@ -17,6 +17,11 @@ namespace feature {
 
 static Features sConfiguredFeatures = 0;
 
+void resetConfigured()
+{
+	sConfiguredFeatures = 0;
+}
+
 void setConfigured(Features features)
 {
 	sConfiguredFeatures |= features;

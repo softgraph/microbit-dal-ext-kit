@@ -37,11 +37,13 @@ void selectAppModeFor(Features condition, const AppModeDescriberProtocol& descri
 	registerAppModeDescriber(describer);
 
 	AppMode* selection = 0;
-	int count = sDescriber->appModesFor(condition, /* OUT new */ &selection);
+	int count = sDescriber->appModesFor(condition, /* OUT new[] */ &selection);
 	EXT_KIT_ASSERT(0 < count);
 	EXT_KIT_ASSERT(selection);
 
+	feature::resetConfigured();
 	AppMode appMode = 0;
+
 	if(count == 1) {
 		appMode = selection[0];
 	}
