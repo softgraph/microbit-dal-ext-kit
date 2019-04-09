@@ -18,17 +18,17 @@ namespace microbit_dal_ext_kit {
 	The interfaces of `microbit-dal-ext-kit` are provided by the following header files.
 
 	# Device class
-		@ref	ExtKit_Device
+		See also @ref	ExtKit_Device
 		- ExtKitDevice.h
 		.
 
 	# Global instance
-		@ref	ExtKit_Global
+		See also @ref	ExtKit_Global
 		- ExtKitGlobal.h
 		.
 
 	# Components
-		@ref	ExtKit_Components
+		See also @ref	ExtKit_Components
 		- ExtKitBuzzer.h
 		- ExtKitJoystickBit.h
 		- ExtKitMotoBit.h

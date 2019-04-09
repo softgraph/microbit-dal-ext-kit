@@ -1,7 +1,5 @@
 {
-	"_see_also": "http://docs.yottabuild.org/reference/config.html",
 	"microbit-dal--ext-kit": {
-		"_see_also": "microbit-dal-ext-kit/inc/ExtKit_Config.h",
 		"assert": 1,
 		"radio": {
 			"group": 0

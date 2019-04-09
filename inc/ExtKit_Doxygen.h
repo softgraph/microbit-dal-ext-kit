@@ -16,6 +16,7 @@ namespace microbit_dal_ext_kit {
 		- @subpage	ExtKit_Global
 		- @subpage	ExtKit_Components
 		- @subpage	ExtKit_Headers
+		- @subpage	ExtKit_Config
 */
 
 /**	@page	ExtKit_Components	Components - the service prviders of microbit-dal-ext-kit
@@ -39,6 +40,54 @@ namespace microbit_dal_ext_kit {
 		- `remoteState::Receiver` provides the support for receiving remote states from the transmitter using radio datagrams provided by `MicroBitRadioDatagram`.
 		- `SerialDebugger` provides the support for the serial debugger.
 		.
+*/
+
+/**	@page	ExtKit_Config	Compile Time Configuration Options for microbit-dal-ext-kit
+
+	@section ExtKit_Config_1	List of Compile Time Options
+		<table>
+			<tr>
+				<td><b>Symbol</b></td>
+				<td><b>Description</b></td>
+				<td><b>Default Value</b></td>
+			</tr>
+			<tr>
+				<td>YOTTA_CFG_MICROBIT_DAL__EXT_KIT_ASSERT</td>
+				<td>EXT_KIT_ASSERT and other assertion macros are enabled if the value is 1</td>
+				<td>1</td>
+			</tr>
+			<tr>
+				<td>YOTTA_CFG_MICROBIT_DAL__EXT_KIT_RADIO_GROUP</td>
+				<td>The value is used for MicroBitRadio.setGroup()</td>
+				<td>0</td>
+			</tr>
+			<tr>
+				<td>YOTTA_CFG_MICROBIT_DAL__EXT_KIT_SERIAL_EXT_DEBUG</td>
+				<td>Serial Debugger is enabled if the value is 1</td>
+				<td>1</td>
+			</tr>
+			<tr>
+				<td>YOTTA_CFG_MICROBIT_DAL__EXT_KIT_SERIAL_RXBUF</td>
+				<td>The value is used for MicroBitSerial.setRxBufferSize()</td>
+				<td>20</td>
+			</tr>
+			<tr>
+				<td>YOTTA_CFG_MICROBIT_DAL__EXT_KIT_SERIAL_TXBUF</td>
+				<td>The value is used for MicroBitSerial.setTxBufferSize()</td>
+				<td>80</td>
+			</tr>
+		</table>
+		These values are defined in <a href=_ext_kit___config_8h_source.html>ExtKit_Config.h</a>.
+
+	@section ExtKit_Config_2	Compile Time Options with Yotta
+		The above values can be changed through the configuration system provided by Yotta.
+		Here is an example for `config.json` file.
+		@include	config.example.json
+		@reference	Configuration System Reference - Yotta
+			- http://docs.yottabuild.org/reference/config.html
+		@reference	Compile Time Configuration Options - micro:bit runtime
+			- https://lancaster-university.github.io/microbit-docs/advanced/#compile-time-configuration-options
+
 */
 
 }	// microbit_dal_ext_kit
