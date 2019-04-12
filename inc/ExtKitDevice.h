@@ -20,8 +20,11 @@ namespace microbit_dal_ext_kit {
 
 /**	@page	ExtKit_Device	Device class - the first instance for using microbit-dal-ext-kit
 	- An instance of either class `MicroBitExtKit` or `PrimitiveExtKit` must be created first for using microbit-dal-ext-kit.
-	- The instance should not be created in stack memory (like local variables) - either in your main method or anywhere else. This restriction is the same as for microbit-dal's `MicroBit*` classes. <br>
-		For the details, see <a href="https://lancaster-university.github.io/microbit-docs/advanced/#using-components-directly"><b>Using Components Directly - Advanced Features of the Runtime</b> on lancaster-university.github.io</a>.
+	- The instance should not be created in stack memory (like local variables) - either in your main method or anywhere else. <br>
+		This restriction is the same as for microbit-dal's `MicroBit*` classes. See the site below for the details.
+		@reference
+			- <a href="https://lancaster-university.github.io/microbit-docs/advanced/#using-components-directly"><b>Using Components Directly</b> (lancaster-university.github.io)</a>
+
 	- Two or more instances are not allowed.
 	- You can choose one of the following classes
 		- `MicroBitExtKit` is derived from microbit-dal's class `MicroBit`. You can use all features of `MicroBit` via the instance of MicroBitExtKit.
@@ -37,7 +40,6 @@ namespace microbit_dal_ext_kit {
 			- `MicroBitPin` for port P0, P1 and P2
 			.
 			If you need another instance which depends on the instances listed here, inherit `PrimitiveExtKit` and add the required class as a member variable. This approach ensures that the initialization of the instances listed here are done by the constructor of `PrimitiveExtKit` before the initialization of your member variables.
-		.
 */
 
 /// Ext Kit device derived from MicroBit

@@ -17,7 +17,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/// Direction
+/// Direction. The constants for type `#Direction` are defined in namespace `microbit_dal_ext_kit.direction`.
 typedef uint16_t	Direction;
 
 /*
@@ -27,7 +27,7 @@ typedef uint16_t	Direction;
 extern template class State<Direction>;
 extern template class StateChange<Direction>;
 
-/// State For Direction
+/// `#State` for `#Direction`
 class StateForDirection : public State<Direction>
 {
 public:
@@ -36,7 +36,7 @@ public:
 
 };	// StateForDirection
 
-/// State Change For Direction
+/// `#StateChange` for `#Direction`
 class StateChangeForDirection : public StateChange<Direction>
 {
 public:
@@ -48,21 +48,21 @@ public:
 /// Direction utility
 namespace direction {
 
-const Direction kInvalid	= (Direction) -1;
-const Direction kCenter		= 0;
-const Direction kN			= 1 << 0;		// north     or move forward
-const Direction kE			= 1 << 1;		// east      or turn right
-const Direction kW			= 1 << 2;		// wesr      or turn left
-const Direction kS			= 1 << 3;		// south     or move backward
-const Direction kNE			= kN | kE;		// northeast or move forward and turn right
-const Direction kNW			= kN | kW;		// northwest or move forward and turn left
-const Direction kSE			= kS | kE;		// southeast or move backward and turn right
-const Direction kSW			= kS | kW;		// southwest or move backward and turn left
+const Direction kInvalid	= (Direction) -1;	///< Invalid Value
+const Direction kCenter		= 0;				///< Center or No Direction
+const Direction kN			= 1 << 0;			///< North     or move forward
+const Direction kE			= 1 << 1;			///< East      or turn right
+const Direction kW			= 1 << 2;			///< Wesr      or turn left
+const Direction kS			= 1 << 3;			///< South     or move backward
+const Direction kNE			= kN | kE;			///< Northeast or move forward and turn right
+const Direction kNW			= kN | kW;			///< Northwest or move forward and turn left
+const Direction kSE			= kS | kE;			///< Southeast or move backward and turn right
+const Direction kSW			= kS | kW;			///< Southwest or move backward and turn left
 
-const Direction kLF			= 1 << 4;		// move left motor forward
-const Direction kLB			= 1 << 5;		// move left motor backward
-const Direction kRF			= 1 << 6;		// move right motor forward
-const Direction kRB			= 1 << 7;		// move right motor backward
+const Direction kLF			= 1 << 4;			///< Move left motor forward
+const Direction kLB			= 1 << 5;			///< Move left motor backward
+const Direction kRF			= 1 << 6;			///< Move right motor forward
+const Direction kRB			= 1 << 7;			///< Move right motor backward
 
 }	// direction
 }	// microbit_dal_ext_kit

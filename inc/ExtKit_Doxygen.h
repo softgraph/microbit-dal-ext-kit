@@ -11,40 +11,37 @@
 
 namespace microbit_dal_ext_kit {
 
-/**	@page	microbit-dal-ext-kit	microbit-dal-ext-kit
+/**	@page	microbit-dal-ext-kit	Topics - microbit-dal-ext-kit
 		- @subpage	ExtKit_Device
 		- @subpage	ExtKit_Global
 		- @subpage	ExtKit_Components
-		- @subpage	ExtKit_Headers
 		- @subpage	ExtKit_Config
+		- @subpage	ExtKit_Headers
 */
 
 /**	@page	ExtKit_Components	Components - the service prviders of microbit-dal-ext-kit
 
-	@section	ExtKit_Components_1	Components dedicated to extensiton boards
+	# Components dedicated to extensiton boards
 		- `JoystickBit` provides the support for ElecFreaks' Joystick:bit
 		- `MotoBit` provides the support for SparkFun's moto:bit
 		- `TouchPiano` provides the support for Waveshare's Mini Piano Module.
 		- `ZipHalo` provides the support for Kitronik's Zip Halo.
-		.
 
-	@section	ExtKit_Components_2	Components dedicated to hardware modules
+	# Components dedicated to hardware modules
 		- `Buzzer` provides the support for a generic Buzzer module.
 		- `NeoPixel` provides the support for a generic NeoPixel (WS2812B) LED strip.
 		- `Sonar` provides the support for a generic Sonar module (HC-SR04).
-		.
 
-	@section	ExtKit_Components_3	Other components
+	# Other components
 		- `PeriodicObserver` provides the support for periodic listeners.
 		- `remoteState::Transmitter` provides the support for sending remote states to the receiver using radio datagrams provided by `MicroBitRadioDatagram`.
 		- `remoteState::Receiver` provides the support for receiving remote states from the transmitter using radio datagrams provided by `MicroBitRadioDatagram`.
 		- `SerialDebugger` provides the support for the serial debugger.
-		.
 */
 
 /**	@page	ExtKit_Config	Compile Time Configuration Options for microbit-dal-ext-kit
 
-	@section ExtKit_Config_1	List of Compile Time Options
+	# List of Compile Time Options
 		<table>
 			<tr>
 				<td><b>Symbol</b></td>
@@ -79,15 +76,13 @@ namespace microbit_dal_ext_kit {
 		</table>
 		These values are defined in <a href=_ext_kit___config_8h_source.html>ExtKit_Config.h</a>.
 
-	@section ExtKit_Config_2	Compile Time Options with Yotta
+	# Compile Time Options with Yotta
 		The above values can be changed through the configuration system provided by Yotta.
 		Here is an example for `config.json` file.
 		@include	config.example.json
-		@reference	Configuration System Reference - Yotta
-			- http://docs.yottabuild.org/reference/config.html
-		@reference	Compile Time Configuration Options - micro:bit runtime
-			- https://lancaster-university.github.io/microbit-docs/advanced/#compile-time-configuration-options
-
+		@reference
+			- <a href="http://docs.yottabuild.org/reference/config.html"><b>Configuration System Reference</b> (yottabuild.org)</a>
+			- <a href="https://lancaster-university.github.io/microbit-docs/advanced/#compile-time-configuration-options"><b>Compile Time Configuration Options</b> (lancaster-university.github.io)</a>
 */
 
 }	// microbit_dal_ext_kit

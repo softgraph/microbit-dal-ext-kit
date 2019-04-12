@@ -17,7 +17,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/// Buttons
+/// Buttons. The constants for type `#Buttons` are defined in namespace `microbit_dal_ext_kit.button`.
 typedef uint16_t	Buttons;
 
 /*
@@ -27,7 +27,7 @@ typedef uint16_t	Buttons;
 extern template class State<uint16_t>;
 extern template class StateChange<uint16_t>;
 
-/// State For Buttons
+/// `#State` for `#Buttons`
 class StateForButtons : public State<Buttons>
 {
 public:
@@ -36,7 +36,7 @@ public:
 
 };	// StateForButtons
 
-/// State Change For Buttons
+/// `#StateChange` for `#Buttons`
 class StateChangeForButtons : public StateChange<Buttons>
 {
 public:
@@ -48,19 +48,19 @@ public:
 /// Button utility
 namespace button {
 
-const Buttons kInvalid	= (Buttons) -1;
-const Buttons kNone		= 0;
-const Buttons kL		= 1 << 0;		// Button L = micro:bit Button A, or B if display::isUpsideDown() is true
-const Buttons kR		= 1 << 1;		// Button R = micro:bit Button B, or A if display::isUpsideDown() is true
-const Buttons kA		= 1 << 2;		// Button A
-const Buttons kB		= 1 << 3;		// Button B
-const Buttons kC		= 1 << 4;		// Button C
-const Buttons kD		= 1 << 5;		// Button D
-const Buttons kE		= 1 << 6;		// Button E
-const Buttons kF		= 1 << 7;		// Button F
-const Buttons kG		= 1 << 8;		// Button G
-const Buttons kH		= 1 << 9;		// Button H
-const Buttons kLR		= kL | kR;		// Button L + R
+const Buttons kInvalid	= (Buttons) -1;	///< Invalid Value
+const Buttons kNone		= 0;			///< No button
+const Buttons kL		= 1 << 0;		///< Button L = micro:bit Button A, or B if display::isUpsideDown() is true
+const Buttons kR		= 1 << 1;		///< Button R = micro:bit Button B, or A if display::isUpsideDown() is true
+const Buttons kA		= 1 << 2;		///< Button A
+const Buttons kB		= 1 << 3;		///< Button B
+const Buttons kC		= 1 << 4;		///< Button C
+const Buttons kD		= 1 << 5;		///< Button D
+const Buttons kE		= 1 << 6;		///< Button E
+const Buttons kF		= 1 << 7;		///< Button F
+const Buttons kG		= 1 << 8;		///< Button G
+const Buttons kH		= 1 << 9;		///< Button H
+const Buttons kLR		= kL | kR;		///< Button L + R
 
 int microBitIDButtonLeft();		// returns MICROBIT_ID_BUTTON_A or MICROBIT_ID_BUTTON_B
 int microBitIDButtonRight();	// returns MICROBIT_ID_BUTTON_A or MICROBIT_ID_BUTTON_B

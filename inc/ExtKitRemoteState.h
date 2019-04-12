@@ -30,35 +30,35 @@ namespace microbit_dal_ext_kit {
 
 extern template class State<uint8_t>;
 
-/// Remote State
+/// Remote %State
 namespace remoteState {
 
-/// Remote State Request Marker
+/// Remote %State Request Marker
 /**
-	The radio command with the marker, sent by the Remote State Receiver, is as follows:<br>
-	CATEGORY_CHARACTER `kMarkerRequest`
+	The radio command with the marker, sent by the Remote %State Receiver, is as follows: <br>
+	CATEGORY_CHARACTER `#kMarkerRequest`
 */
 const char kMarkerRequest		= '?';
 
-/// Remote State Response Marker followed by a sequence number
+/// Remote %State Response Marker followed by a sequence number
 /**
-	The radio command with the marker, sent by the Remote State Transmitter, is as follows:<br>
-	CATEGORY_CHARACTER `kMarkerResponse` [0-9a-f]+ (OTHER_MARKER_CHARACTER [0-9a-f]+)+
+	The radio command with the marker, sent by the Remote %State Transmitter, is as follows: <br>
+	CATEGORY_CHARACTER `#kMarkerResponse` [0-9a-f]+ (OTHER_MARKER_CHARACTER [0-9a-f]+)+
 */
 const char kMarkerResponse		= '!';
 
-/// Remote State Notification Marker followed by a sequence number
+/// Remote %State Notification Marker followed by a sequence number
 /**
-	The radio command with the marker, sent by the Remote State Transmitter, is as follows:<br>
-	CATEGORY_CHARACTER `kMarkerNotification` [0-9a-f]+ (OTHER_MARKER_CHARACTER [0-9a-f]+)+
+	The radio command with the marker, sent by the Remote %State Transmitter, is as follows: <br>
+	CATEGORY_CHARACTER `#kMarkerNotification` [0-9a-f]+ (OTHER_MARKER_CHARACTER [0-9a-f]+)+
 */
 const char kMarkerNotification	= '@';
 
-/// Remote State Transmitter Component
+/// Remote %State Transmitter Component
 class Transmitter : public Component
 {
 public:
-	/// Get global instance. Valid only after an instance of class `RemoteState` is created.
+	/// Get global instance. Valid only after an instance of class `Transmitter` is created.
 	static Transmitter& global();
 
 	/// Inherited
@@ -150,11 +150,11 @@ private:
 
 };	// Transmitter
 
-/// Remote State Receiver Component
+/// Remote %State Receiver Component
 class Receiver : public Component, PeriodicObserver::Handler::Protocol
 {
 public:
-	/// Get global instance. Valid only after an instance of class `RemoteState` is created.
+	/// Get global instance. Valid only after an instance of class `Receiver` is created.
 	static Receiver& global();
 
 	/// Inherited

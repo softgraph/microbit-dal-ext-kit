@@ -20,7 +20,7 @@ class MicroBitPin;
 
 namespace microbit_dal_ext_kit {
 
-///	Sonar Duration in milliseconds
+///	%Sonar Duration in milliseconds
 typedef uint32_t	SonarDuration;
 
 /*
@@ -30,7 +30,7 @@ typedef uint32_t	SonarDuration;
 extern template class State<SonarDuration>;
 extern template class StateChange<SonarDuration>;
 
-/// State For Sonar Duration
+/// `#State` for `#SonarDuration`
 class StateForSonarDuration : public State<SonarDuration>
 {
 public:
@@ -39,7 +39,7 @@ public:
 
 };	// StateForSonarDuration
 
-/// State Change For Sonar Duration
+/// `#StateChange` for `#SonarDuration`
 class StateChangeForSonarDuration : public StateChange<SonarDuration>
 {
 public:

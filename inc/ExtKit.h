@@ -14,21 +14,19 @@
 
 namespace microbit_dal_ext_kit {
 
-/**	@page	ExtKit_Headers	Header files of microbit-dal-ext-kit
+/**	@page	ExtKit_Headers	Header File Structure of microbit-dal-ext-kit
 	The interfaces of `microbit-dal-ext-kit` are provided by the following header files.
 
-	# Device class
-		See also @ref	ExtKit_Device
+	# Device Class
+		See also @ref	ExtKit_Device.
 		- ExtKitDevice.h
-		.
 
-	# Global instance
-		See also @ref	ExtKit_Global
+	# Global Instance
+		See also @ref	ExtKit_Global.
 		- ExtKitGlobal.h
-		.
 
 	# Components
-		See also @ref	ExtKit_Components
+		See also @ref	ExtKit_Components.
 		- ExtKitBuzzer.h
 		- ExtKitJoystickBit.h
 		- ExtKitMotoBit.h
@@ -39,7 +37,6 @@ namespace microbit_dal_ext_kit {
 		- ExtKitSonar.h
 		- ExtKitTouchPiano.h
 		- ExtKitZipHalo.h
-		.
 
 	# Utilities
 		- ExtKitAppMode.h
@@ -64,14 +61,12 @@ namespace microbit_dal_ext_kit {
 		- ExtKitStatistics.h
 		- ExtKitString.h
 		- ExtKitTime.h
-		.
 
 	# Others
 		- ExtKit_Common.h
 		- ExtKit_Config.h
 		- ExtKit.h
 		- ExtKitComponent.h
-		.
 */
 
 }	// microbit_dal_ext_kit

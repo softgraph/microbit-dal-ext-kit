@@ -17,7 +17,7 @@
 
 namespace microbit_dal_ext_kit {
 
-///	Ocrave value
+///	Ocrave. The constants for type `#Octave` are defined in namespace `microbit_dal_ext_kit.octave`.
 typedef uint16_t	Octave;
 
 /*
@@ -27,7 +27,7 @@ typedef uint16_t	Octave;
 extern template class State<Octave>;
 extern template class StateChange<Octave>;
 
-/// State For Octave
+/// `#State` for `#Octave`
 class StateForOctave : public State<Octave>
 {
 public:
@@ -36,7 +36,7 @@ public:
 
 };	// StateForOctave
 
-/// State Change For Octave
+/// `#StateChange` for `#Octave`
 class StateChangeForOctave : public StateChange<Octave>
 {
 public:
@@ -51,13 +51,13 @@ namespace octave {
 ///	Invalid value
 const Octave kInvalid	= (Octave) -1;
 
-///	The lowest octave value. PianoKeys are assigned to C1 - C2.
+///	The lowest octave value. `#PianoKeys` are assigned to C1 - C2.
 const Octave kLowest	= 1;
 
-///	The center octave value. PianoKeys are assigned to C4 - C5.
+///	The center octave value. `#PianoKeys` are assigned to C4 - C5.
 const Octave kCenter	= 4;
 
-///	The highest octave value. PianoKeys are assigned to C7 - C8.
+///	The highest octave value. `#PianoKeys` are assigned to C7 - C8.
 const Octave kHighest	= 7;
 
 }	// octave

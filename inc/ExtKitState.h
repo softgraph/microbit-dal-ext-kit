@@ -16,7 +16,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/// Generic State Template
+/// Generic %State Template
 template <class T>
 class State
 {
@@ -36,7 +36,7 @@ protected:
 
 };	// State<T>
 
-/// Generic State Change Template
+/// Generic %State Change Template
 template <class T>
 class StateChange : public State<T>
 {

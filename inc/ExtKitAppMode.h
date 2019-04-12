@@ -16,7 +16,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/// An App Mode is a set of Features
+/// An App Mode is a set of `#Features`
 typedef Features	AppMode;
 
 /// The Describer Protocol for App Mode

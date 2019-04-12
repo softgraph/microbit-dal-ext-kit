@@ -16,7 +16,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/// Features
+/// Features. The constants for type `#Features` are defined in namespace `microbit_dal_ext_kit.feature`.
 typedef uint32_t	Features;
 
 /// Feature utility
