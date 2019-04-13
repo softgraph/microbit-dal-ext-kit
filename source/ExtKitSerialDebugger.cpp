@@ -84,9 +84,9 @@ void SerialDebugger::handleSerialReceived(MicroBitEvent event)
 	doHandleSerialReceived(c);
 }
 
-#define BS	0x08	// ctrl-h / BackSpace
-#define LF	0x0a	// ctrl-j / Line Feed
-#define CR	0x0d	// ctrl-m / Carriage Return
+#define BS	0x08	// BackSpace (ctrl-h)
+#define LF	0x0a	// Line Feed (ctrl-j)
+#define CR	0x0d	// Carriage Return (ctrl-m)
 #define ESC	0x1b	// Escape
 #define DEL	0x7f	// Delete
 

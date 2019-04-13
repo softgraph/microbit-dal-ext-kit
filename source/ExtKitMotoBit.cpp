@@ -41,7 +41,7 @@ static const char	kI2cCmdSetMotorPolarityR		= 0x12;
 static const char	kI2cDataMotorPolarityNormal		= 0x00;
 static const char	kI2cDataMotorPolarityInvert		= 0x01;
 
-#define COUNT_OF(x)		((int) (sizeof(x) / sizeof(x[0])))
+#define COUNT_OF(x)		((int) (sizeof(x) / sizeof(x[0])))	///< Count of table elements
 
 static const Features kFeature = feature::kMotoBit;
 

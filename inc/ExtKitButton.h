@@ -62,13 +62,13 @@ const Buttons kG		= 1 << 8;		///< Button G
 const Buttons kH		= 1 << 9;		///< Button H
 const Buttons kLR		= kL | kR;		///< Button L + R
 
-int microBitIDButtonLeft();		// returns MICROBIT_ID_BUTTON_A or MICROBIT_ID_BUTTON_B
-int microBitIDButtonRight();	// returns MICROBIT_ID_BUTTON_A or MICROBIT_ID_BUTTON_B
-void clickPseudoButton(char button /* a, b or w */);
-bool isButtonAPressed();
-bool isButtonBPressed();
-Buttons readMicroBitButtons();
-void waitUntilMicroBitButtonsAreReleased();
+int microBitIDButtonLeft();		///< MicroBit ID for left button.  Returns MICROBIT_ID_BUTTON_A or MICROBIT_ID_BUTTON_B.
+int microBitIDButtonRight();	///< MicroBit ID for right button. Returns MICROBIT_ID_BUTTON_A or MICROBIT_ID_BUTTON_B.
+void clickPseudoButton(char button /* a, b or w */);	///< Click pseudo button
+bool isButtonAPressed();		///< Check whether button A is pressed or not
+bool isButtonBPressed();		///< Check whether button B is pressed or not
+Buttons readMicroBitButtons();	///< Read MicroBit buttons
+void waitUntilMicroBitButtonsAreReleased();		///< Wait until MicroBit buttons are released
 
 }	// button
 }	// microbit_dal_ext_kit

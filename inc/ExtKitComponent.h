@@ -58,8 +58,10 @@ protected:
 	/// Status Bit: The component is stopping.
 	static const uint16_t kStatusStopping = 1 << 2;
 
+	/// Component Name
 	const char* mName;
 
+	/// Status Bits
 	uint16_t	mStatus;
 
 };	// Component

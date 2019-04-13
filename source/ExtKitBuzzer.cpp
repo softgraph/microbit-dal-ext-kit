@@ -89,7 +89,7 @@ uint16_t /* duration in microseconds */ durationForPianoKeys(PianoKeys& /* INOUT
 	EXT_KIT_ASSERT(octave::kLowest <= octave);
 	EXT_KIT_ASSERT(octave <= octave::kHighest);
 
-	#define D(x)	((uint16_t) (1000 * 1000 / (x)))
+	#define D(x)	((uint16_t) (1000 * 1000 / (x)))	// Duration in microseconds for x Hz.
 	static const uint16_t durationTable[][12] = {
 		{	// C1 - B1 (C1 is Low C for octave::kLowest)
 			D(32.703),  D(34.648),  D(36.708),  D(38.891),  D(41.203),  D(43.654),

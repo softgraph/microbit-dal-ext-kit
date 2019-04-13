@@ -15,7 +15,7 @@
 namespace microbit_dal_ext_kit {
 namespace display {
 
-typedef char	Graph[2 * 5];
+typedef char	Graph[2 * 5];	// Graph for a single digit
 
 static const Graph sBarGraph[] = {
 	{0, 0,
