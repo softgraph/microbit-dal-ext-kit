@@ -36,6 +36,9 @@ bool isUpsideDown();
 /// Clear Display
 void clear();
 
+/// Show Image
+void showImage(MicroBitImage image);
+
 /// Show Character
 void showChar(char c);
 

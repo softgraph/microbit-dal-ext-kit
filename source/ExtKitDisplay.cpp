@@ -96,6 +96,12 @@ void clear()
 	d.clear();
 }
 
+void showImage(MicroBitImage image)
+{
+	MicroBitDisplay& d = ExtKit::global().display();
+	d.print(image);
+}
+
 void showChar(char c)
 {
 	MicroBitDisplay& d = ExtKit::global().display();
