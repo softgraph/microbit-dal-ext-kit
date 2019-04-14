@@ -45,7 +45,7 @@ The `microbit-dal-ext-kit` provides components and utilities compatible with BBC
 
 ## Install and Build
 
-You can build `microbit-dal-ext-kit` as a static library, but usually it is built as a part of your executable like `microbit-dal-ext-kit-example`.
+You can build this module as a static library named `microbit-dal-ext-kit.a`, but usually it is built as a part of your executable like `microbit-dal-ext-kit-example`.
 
 For the details, see [microbit-dal-ext-kit-example (github.com/softgraph)](https://github.com/softgraph/microbit-dal-ext-kit-example).
 
