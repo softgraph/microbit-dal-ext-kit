@@ -103,12 +103,6 @@ PrimitiveExtKit::PrimitiveExtKit()
 
 void PrimitiveExtKit::init()
 {
-#if CONFIG_ENABLED(MICROBIT_BLE_ENABLED) || CONFIG_ENABLED(MICROBIT_BLE_PAIRING_MODE)
-
-#error	Use MicroBitExtKit insted of PrimitiveExtKit if MICROBIT_BLE_ENABLED or MICROBIT_BLE_PAIRING_MODE is enabled
-
-#endif	// MICROBIT_BLE_ENABLED || MICROBIT_BLE_PAIRING_MODE
-
 	if(status & MICROBIT_INITIALIZED) {
 		return;
 	}
@@ -134,6 +128,12 @@ void PrimitiveExtKit::init()
 
 	mExtKit.init();		// required before calling serial::initializeTx()
 	serial::initializeTx();
+
+#if CONFIG_ENABLED(MICROBIT_BLE_ENABLED) || CONFIG_ENABLED(MICROBIT_BLE_PAIRING_MODE)
+
+	EXT_KIT_ASSERT_OR_PANIC(!"Use MicroBitExtKit insted of PrimitiveExtKit if BLE is required. Note MICROBIT_BLE_ENABLED and MICROBIT_BLE_PAIRING_MODE are enabled by default in `MicroBitConfig.h`.", kPanicNotSupported);
+
+#endif	// MICROBIT_BLE_ENABLED || MICROBIT_BLE_PAIRING_MODE
 }
 
 void PrimitiveExtKit::handleMessageBusListenerAdded(MicroBitEvent evt)

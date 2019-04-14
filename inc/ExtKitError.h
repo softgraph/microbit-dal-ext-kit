@@ -22,6 +22,9 @@ enum PanicCode {
 	/// Unexpected Error
 	kPanicUnexpectedError	= 270,
 
+	/// Not Supported
+	kPanicNotSupported,
+
 	/// Out Of Memory
 	kPanicOutOfMemory,
 
