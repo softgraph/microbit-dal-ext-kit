@@ -73,6 +73,18 @@ const Features kTouchPiano		= (1 << 13);
 /// Kitronik's Zip Halo board is connected to the device.
 const Features kZipHalo			= (1 << 14);
 
+/// Reserved for App #7.
+const Features kReservedForApp7	= (1 << 24);
+
+/// Reserved for App #6.
+const Features kReservedForApp6	= (1 << 25);
+
+/// Reserved for App #5.
+const Features kReservedForApp5	= (1 << 26);
+
+/// Reserved for App #4.
+const Features kReservedForApp4	= (1 << 27);
+
 /// Reserved for App #3.
 const Features kReservedForApp3	= (1 << 28);
 
