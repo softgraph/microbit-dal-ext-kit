@@ -43,11 +43,9 @@ The `microbit-dal-ext-kit` provides components and utilities compatible with BBC
 + Generic NeoPixel (WS2812B) LED strip
 + Generic Sonar module (HC-SR04)
 
-## Install and Build
+## Wiki
 
-You can build this module as a static library named `microbit-dal-ext-kit.a`, but usually it is built as a part of your executable like `microbit-dal-ext-kit-example`.
-
-For the details, see [microbit-dal-ext-kit-example (github.com/softgraph)](https://github.com/softgraph/microbit-dal-ext-kit-example).
+See also [the wiki page for microbit-dal-ext-kit and microbit-dal-ext-kit-example](https://github.com/softgraph/microbit-dal-ext-kit-example/wiki).
 
 ## Documentation
 
@@ -63,27 +61,9 @@ Module         | URL
 -------------- | ---
 `microbit-dal-ext-kit-example` | https://github.com/softgraph/microbit-dal-ext-kit-example
 
-## Dependencies
+## Required Modules
 
 Module         | URL | Version
 -------------- | --- | -------
 `microbit`     | https://github.com/lancaster-university/microbit     | v2.1.1
 `microbit-dal` | https://github.com/lancaster-university/microbit-dal | v2.1.1
-
-## External Resources
-
-### Build Environment
-
-+ [Offline development tools (lancaster-university.github.io)](https://lancaster-university.github.io/microbit-docs/offline-toolchains/)
-
-### micro:bit runtime
-
-+ [Introduction (lancaster-university.github.io)](https://lancaster-university.github.io/microbit-docs/)
-
-### Arm Mbed OS
-
-+ [BBC micro:bit (os.mbed.com)](https://os.mbed.com/platforms/Microbit/)
-
-### BBC micro:bit
-
-+ [Micro:bit Educational Foundation (microbit.org)](https://microbit.org)
