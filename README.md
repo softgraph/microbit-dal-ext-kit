@@ -43,25 +43,27 @@ The `microbit-dal-ext-kit` provides components and utilities compatible with BBC
 + Generic NeoPixel (WS2812B) LED strip
 + Generic Sonar module (HC-SR04)
 
-## Wiki
-
-See also [the wiki page for microbit-dal-ext-kit and microbit-dal-ext-kit-example](https://github.com/softgraph/microbit-dal-ext-kit-example/wiki).
-
-## Documentation
-
-Run [Doxygen (doxygen.nl)](http://www.doxygen.nl) with `Doxyfile` in the project root to generate the documentation.
-
 ## License
 
 MIT
 
-## Usage Example
+## Resources
+
+### Wiki
+
+See also [the wiki page for microbit-dal-ext-kit and example](https://github.com/softgraph/microbit-dal-ext-kit-example/wiki).
+
+### Documentation
+
+Run [Doxygen (doxygen.nl)](http://www.doxygen.nl) with `Doxyfile` in the project root to generate the documentation.
+
+### Usage Example
 
 Module         | URL
 -------------- | ---
 `microbit-dal-ext-kit-example` | https://github.com/softgraph/microbit-dal-ext-kit-example
 
-## Required Modules
+### Required Modules
 
 Module         | URL | Version
 -------------- | --- | -------
