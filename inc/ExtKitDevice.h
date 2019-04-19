@@ -21,10 +21,11 @@ namespace microbit_dal_ext_kit {
 /**	@page	ExtKit_Device	Device class - the first instance for using microbit-dal-ext-kit
 	- An instance of either class `MicroBitExtKit` or `PrimitiveExtKit` must be created first for using microbit-dal-ext-kit.
 	- The instance should not be created in stack memory (like local variables) - either in your main method or anywhere else. <br>
-		This restriction is the same as the warning below for microbit-dal's `MicroBit*` classes.
-
-			Warning
-			micro:bit runtime components should always be brought up as global variables. They should not be created as local variables - either in your main method or anywhere else. The reason for this is the the runtime is a multi-threaded environment, and any variables created in stack memory (like local variables) may be paged out by the scheduler, and result in instability if they utilise interrupts or are accessed by other threads. So... don't do it!
+		This restriction is the same as the warning below for micro:bit runtime.
+			<blockquote>
+			<b>Warning</b> <br>
+			micro:bit runtime components should <b>always</b> be brought up as global variables. They should <b>not</b> be created as local variables - either in your main method or anywhere else. The reason for this is the the runtime is a multi-threaded environment, and any variables created in stack memory (like local variables) may be paged out by the scheduler, and result in instability if they utilise interrupts or are accessed by other threads. So... don't do it!
+			</blockquote>
 
 		@reference
 			- <a href="https://lancaster-university.github.io/microbit-docs/advanced/#using-components-directly"><b>Using Components Directly</b> (lancaster-university.github.io)</a>
