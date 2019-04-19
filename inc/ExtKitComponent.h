@@ -17,7 +17,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/// Component - the root base class for any Component
+/// Component - the root base class for any #Component
 /* abstract */ class Component
 {
 public:
@@ -27,7 +27,7 @@ public:
 	/// Check that the required Features are configured
 	static /* to be overridden */ bool isConfigured();
 
-	/// Destructor
+	/// Virtual Destructor
 	virtual ~Component();
 
 	/// Start service
@@ -59,7 +59,7 @@ protected:
 	static const uint16_t kStatusStopping = 1 << 2;
 
 	/// Component Name
-	const char* mName;
+	const char*	mName;
 
 	/// Status Bits
 	uint16_t	mStatus;
@@ -69,16 +69,15 @@ protected:
 /// Composite Component
 class CompositeComponent : public Component
 {
-public:
+protected:
+	/// Constructor
+	CompositeComponent(const char* name);
+
 	/// Add Child Component
 	void addChild(Component& component);
 
 	/// Remove Child Component
 	void removeChild(Component& component);
-
-protected:
-	/// Constructor
-	CompositeComponent(const char* name);
 
 	/// Start Children
 	void startChildren();
