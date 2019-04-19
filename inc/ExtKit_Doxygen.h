@@ -11,7 +11,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/**	@page	microbit-dal-ext-kit	Topics - microbit-dal-ext-kit
+/**	@page	Topics_microbit-dal-ext-kit	Topics - microbit-dal-ext-kit
 		- @subpage	ExtKit_Device
 		- @subpage	ExtKit_Global
 		- @subpage	ExtKit_Components

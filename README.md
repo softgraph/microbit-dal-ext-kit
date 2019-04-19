@@ -54,7 +54,7 @@ See also [Miscellaneous notes for microbit-dal-ext-kit and example](https://gith
 
 ### Documentation
 
-Run [Doxygen (doxygen.nl)](http://www.doxygen.nl) with `Doxyfile` in the project root to generate the documentation.
+Run [Doxygen (doxygen.nl)](http://www.doxygen.nl/download.html#latestsrc) with `Doxyfile` in the project root to generate the documentation. Doxygen version 1.8.0 or higher is required.
 
 ### Usage Example
 
