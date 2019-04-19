@@ -134,31 +134,31 @@ void PeriodicObserver::loop()
 
 void PeriodicObserver::notify(uint32_t count, PeriodUnit unit)
 {
-	notify(count, unit, Handler::kPriorityVeryHigh);
-	notify(count, unit, Handler::kPriorityHigh);
-	notify(count, unit, Handler::kPriorityMedium);
-	notify(count, unit, Handler::kPriorityLow);
-	notify(count, unit, Handler::kPriorityVeryLow);
+	notify(count, unit, kPriorityVeryHigh);
+	notify(count, unit, kPriorityHigh);
+	notify(count, unit, kPriorityMedium);
+	notify(count, unit, kPriorityLow);
+	notify(count, unit, kPriorityVeryLow);
 }
 
-void PeriodicObserver::notify(uint32_t count, PeriodUnit unit, Handler::Priority priority)
+void PeriodicObserver::notify(uint32_t count, PeriodUnit unit, HandlerPriority priority)
 {
 	Node* p = &mRoot;
 	while((p = p->next) != &mRoot) {
 		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
 
-		Handler::Record* r = static_cast<Handler::Record*>(p);
+		HandlerRecord* r = static_cast<HandlerRecord*>(p);
 		if(r->unit != unit || r->priority != priority) {
 			continue;
 		}
 
-		Handler::Function* function = r->function;
+		HandlerFunction* function = r->function;
 		if(function) {
 			(*function)(count, unit);
 			continue;
 		}
 
-		Handler::Protocol* protocol = r->protocol;
+		HandlerProtocol* protocol = r->protocol;
 		if(protocol) {
 			protocol->handlePeriodicEvent(count, unit);
 			continue;
@@ -166,28 +166,25 @@ void PeriodicObserver::notify(uint32_t count, PeriodUnit unit, Handler::Priority
 	}
 }
 
-/**	@class PeriodicObserver::Handler
-*/
-
-void PeriodicObserver::Handler::listen(PeriodUnit unit, Function& function, Priority priority)
+void PeriodicObserver::listen(PeriodUnit unit, HandlerFunction& function, HandlerPriority priority)
 {
 	PeriodicObserver& g = PeriodicObserver::global();
-	Node* p = new Record(unit, function, priority);
+	Node* p = new HandlerRecord(unit, function, priority);
 	EXT_KIT_ASSERT_OR_PANIC(p, kPanicOutOfMemory);
 
 	p->linkBefore(g.mRoot);
 }
 
-void PeriodicObserver::Handler::listen(PeriodUnit unit, Protocol& protocol, Priority priority)
+void PeriodicObserver::listen(PeriodUnit unit, HandlerProtocol& protocol, HandlerPriority priority)
 {
 	PeriodicObserver& g = PeriodicObserver::global();
-	Node* p = new Record(unit, protocol, priority);
+	Node* p = new HandlerRecord(unit, protocol, priority);
 	EXT_KIT_ASSERT_OR_PANIC(p, kPanicOutOfMemory);
 
 	p->linkBefore(g.mRoot);
 }
 
-void PeriodicObserver::Handler::ignore(PeriodUnit unit, Function& function)
+void PeriodicObserver::ignore(PeriodUnit unit, HandlerFunction& function)
 {
 	PeriodicObserver& g = PeriodicObserver::global();
 	Node& root = g.mRoot;
@@ -195,7 +192,7 @@ void PeriodicObserver::Handler::ignore(PeriodUnit unit, Function& function)
 	while((p = p->next) != &root) {
 		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
 
-		Record* r = static_cast<Record*>(p);
+		HandlerRecord* r = static_cast<HandlerRecord*>(p);
 		if((r->function == &function) && (r->unit == unit)) {
 			r->unlink();
 			delete r;
@@ -204,7 +201,7 @@ void PeriodicObserver::Handler::ignore(PeriodUnit unit, Function& function)
 	}
 }
 
-void PeriodicObserver::Handler::ignore(PeriodUnit unit, Protocol& protocol)
+void PeriodicObserver::ignore(PeriodUnit unit, HandlerProtocol& protocol)
 {
 	PeriodicObserver& g = PeriodicObserver::global();
 	Node& root = g.mRoot;
@@ -212,7 +209,7 @@ void PeriodicObserver::Handler::ignore(PeriodUnit unit, Protocol& protocol)
 	while((p = p->next) != &root) {
 		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
 
-		Record* r = static_cast<Record*>(p);
+		HandlerRecord* r = static_cast<HandlerRecord*>(p);
 		if((r->protocol == &protocol) && (r->unit == unit)) {
 			r->unlink();
 			delete r;
@@ -221,10 +218,10 @@ void PeriodicObserver::Handler::ignore(PeriodUnit unit, Protocol& protocol)
 	}
 }
 
-/**	@struct PeriodicObserver::Handler::Record
+/**	@struct PeriodicObserver::HandlerRecord
 */
 
-PeriodicObserver::Handler::Record::Record(PeriodUnit unit, Function& function, Priority priority)
+PeriodicObserver::HandlerRecord::HandlerRecord(PeriodUnit unit, HandlerFunction& function, HandlerPriority priority)
 	: Node()
 {
 	this->unit		= unit;
@@ -233,7 +230,7 @@ PeriodicObserver::Handler::Record::Record(PeriodUnit unit, Function& function, P
 	this->priority	= priority;
 }
 
-PeriodicObserver::Handler::Record::Record(PeriodUnit unit, Protocol& protocol, Priority priority)
+PeriodicObserver::HandlerRecord::HandlerRecord(PeriodUnit unit, HandlerProtocol& protocol, HandlerPriority priority)
 	: Node()
 {
 	this->unit		= unit;

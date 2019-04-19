@@ -79,7 +79,7 @@ public:
 
 	};	// CategoryProtocol
 
-	/// Category Category Base
+	/// Category Base
 	/* abstract */ class CategoryBase : public CategoryProtocol
 	{
 	protected:
@@ -151,7 +151,7 @@ private:
 };	// Transmitter
 
 /// Remote %State Receiver Component
-class Receiver : public Component, PeriodicObserver::Handler::Protocol
+class Receiver : public Component, PeriodicObserver::HandlerProtocol
 {
 public:
 	/// Get global instance. Valid only after an instance of class `Receiver` is created.
@@ -249,7 +249,7 @@ private:
 	void handleRadioDatagramReceived(MicroBitEvent event);
 
 	/// Inherited
-	/* PeriodicObserver::Handler::Protocol */ void handlePeriodicEvent(uint32_t count, PeriodicObserver::PeriodUnit unit);
+	/* PeriodicObserver::HandlerProtocol */ void handlePeriodicEvent(uint32_t count, PeriodicObserver::PeriodUnit unit);
 
 	private:
 	/// Global instance

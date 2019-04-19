@@ -22,13 +22,32 @@ namespace microbit_dal_ext_kit {
 /// Periodic Observer Component
 class PeriodicObserver : public Component, RequestCompletionProtocol
 {
-	friend class Handler;
-
 public:
 	/// Period Unit
 	enum PeriodUnit {
 		/// 100 milliseconds
 		kUnit100ms
+	};
+
+	/// Handler Function
+	typedef void HandlerFunction(uint32_t count, PeriodUnit unit);
+
+	/// Handler Protocol
+	/* interface */ class HandlerProtocol
+	{
+	public:
+		/// Handle Periodic Event
+		virtual /* to be implemented */ void handlePeriodicEvent(uint32_t count, PeriodUnit unit) = 0;
+
+	};	// HandlerProtocol
+
+	/// Handler Priority
+	enum HandlerPriority {
+		kPriorityVeryLow,
+		kPriorityLow,
+		kPriorityMedium,
+		kPriorityHigh,
+		kPriorityVeryHigh
 	};
 
 	/// Get global instance. Valid only after an instance of class `PeriodicObserver` is created.
@@ -40,81 +59,26 @@ public:
 	/// Destructor
 	~PeriodicObserver();
 
-	/// Request value: Request To Cancel
+	/// Request value: Request To Cancel. Expected response value: MICROBIT_CANCELLED.
 	const int kRequestToCancel = 1;
 
 	/// Inherited. Note that `request` should be retained until `waitForCompletion()` is returned.
-	/**	The following request/response pair is available.
-		- `request.value`: kRequestToCancel -> `response.value`: MICROBIT_CANCELLED
-	*/
 	/* RequestCompletionProtocol */ int /* result */ issueRequest(RequestToken& request);
 
 	/// Inherited.
 	/* RequestCompletionProtocol */ RequestToken& /* response */ waitForCompletion();
 
-	/// Handler
-	/* abstract */ class Handler
-	{
-		friend class PeriodicObserver;
+	/// Listen using Function
+	static void listen(PeriodUnit unit, HandlerFunction& function, HandlerPriority priority = kPriorityMedium);
 
-	public:
-		/// Function
-		typedef void Function(uint32_t count, PeriodUnit unit);
+	/// Listen using Protocol
+	static void listen(PeriodUnit unit, HandlerProtocol& protocol, HandlerPriority priority = kPriorityMedium);
 
-		/// Protocol
-		/* interface */ class Protocol
-		{
-		public:
-			virtual /* to be implemented */ void handlePeriodicEvent(uint32_t count, PeriodUnit unit) = 0;
+	/// Ignore Function
+	static void ignore(PeriodUnit unit, HandlerFunction& function);
 
-		};	// Protocol
-
-		/// Priority
-		enum Priority {
-			kPriorityVeryLow,
-			kPriorityLow,
-			kPriorityMedium,
-			kPriorityHigh,
-			kPriorityVeryHigh
-		};
-
-		/// Listen using Function
-		static void listen(PeriodUnit unit, Function& function, Priority priority = kPriorityMedium);
-
-		/// Listen using Protocol
-		static void listen(PeriodUnit unit, Protocol& protocol, Priority priority = kPriorityMedium);
-
-		/// Ignore Function
-		static void ignore(PeriodUnit unit, Function& function);
-
-		/// Ignore Protocol
-		static void ignore(PeriodUnit unit, Protocol& protocol);
-
-	private:
-		/// Record
-		struct Record : public Node
-		{
-			/// Period Unit
-			PeriodUnit	unit;
-
-			/// Function
-			Function* 	function;
-
-			/// Protocol
-			Protocol*	protocol;
-
-			/// Priority
-			Priority	priority;
-
-			/// Constructor
-			Record(PeriodUnit unit, Function& function, Priority priority);
-
-			/// Constructor
-			Record(PeriodUnit unit, Protocol& protocol, Priority priority);
-
-		};	// Record
-
-	};	// Handler
+	/// Ignore Protocol
+	static void ignore(PeriodUnit unit, HandlerProtocol& protocol);
 
 protected:
 	/// Inherited
@@ -124,6 +88,29 @@ protected:
 	/* Component */ void doStop();
 
 private:
+	/// Handler Record
+	struct HandlerRecord : public Node
+	{
+		/// Period Unit
+		PeriodUnit			unit;
+
+		/// Function
+		HandlerFunction* 	function;
+
+		/// Protocol
+		HandlerProtocol*	protocol;
+
+		/// Priority
+		HandlerPriority		priority;
+
+		/// Constructor
+		HandlerRecord(PeriodUnit unit, HandlerFunction& function, HandlerPriority priority);
+
+		/// Constructor
+		HandlerRecord(PeriodUnit unit, HandlerProtocol& protocol, HandlerPriority priority);
+
+	};	// HandlerRecord
+
 	/// The Main Loop Entry
 	static void loopEntry(void* param);
 
@@ -134,22 +121,22 @@ private:
 	void notify(uint32_t count, PeriodUnit unit);
 
 	/// Notify Periodic Event
-	void notify(uint32_t count, PeriodUnit unit, Handler::Priority priority);
+	void notify(uint32_t count, PeriodUnit unit, HandlerPriority priority);
 
 	/// Global instance
 	static PeriodicObserver*	sGlobal;
 
 	/// Running
-	bool mRunning;
+	bool	mRunning;
 
 	/// Request To Cancel
-	bool mRequestToCancel;
+	bool	mRequestToCancel;
 
 	/// Request Token
-	RequestToken* mRequestToken;
+	RequestToken*	mRequestToken;
 
-	/// Root Node for `Handler::Record`
-	RootForDynamicNodes	mRoot;
+	/// Root Node for `HandlerRecord`
+	RootForDynamicNodes		mRoot;
 
 };	// PeriodicObserver
 

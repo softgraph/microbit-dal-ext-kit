@@ -224,7 +224,7 @@ Receiver::~Receiver()
 	mb.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &Receiver::handleRadioDatagramReceived);
 
 	// Listen Periodic Observer
-	PeriodicObserver::Handler::listen(PeriodicObserver::kUnit100ms, *this, PeriodicObserver::Handler::kPriorityLow);
+	PeriodicObserver::listen(PeriodicObserver::kUnit100ms, *this, PeriodicObserver::kPriorityLow);
 
 //	debug_sendLine(EXT_KIT_DEBUG_TRACE "Receiver::doStart");
 }
@@ -232,7 +232,7 @@ Receiver::~Receiver()
 /* Component */ void Receiver::doStop()
 {
 	// Ignore Periodic Observer
-	PeriodicObserver::Handler::ignore(PeriodicObserver::kUnit100ms, *this);
+	PeriodicObserver::ignore(PeriodicObserver::kUnit100ms, *this);
 
 	// Ignore radio datagrams from the transmitter
 	MicroBitMessageBus& mb = ExtKit::global().messageBus();
@@ -286,7 +286,7 @@ void Receiver::handleRadioDatagramReceived(MicroBitEvent /* event */)
 	}
 }
 
-/* PeriodicObserver::Handler::Protocol */ void Receiver::handlePeriodicEvent(uint32_t count, PeriodicObserver::PeriodUnit unit)
+/* PeriodicObserver::HandlerProtocol */ void Receiver::handlePeriodicEvent(uint32_t count, PeriodicObserver::PeriodUnit unit)
 {
 	Node* p = &mRoot;
 	while((p = p->next) != &mRoot) {
