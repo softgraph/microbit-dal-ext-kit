@@ -74,11 +74,15 @@ public:
 	void trigger();
 
 protected:
+	/// Trigger Output Port
+	MicroBitPin&		mTriggerOutputPort;
+
+	/// Handler
+	HandlerProtocol&	mHandler;
+
+private:
 	/// Handle Echo Input
 	void handleEchoInput(MicroBitEvent event);
-
-	MicroBitPin&		mTriggerOutputPort;
-	HandlerProtocol&	mHandler;
 
 };	// Sonar
 
