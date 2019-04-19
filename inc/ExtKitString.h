@@ -43,9 +43,16 @@ namespace microbit_dal_ext_kit {
 /// String utility
 namespace string {
 
-int16_t seek(const ManagedString& s, int16_t start, char prefix);	// returns MICROBIT_NO_DATA or the next position on s
-int16_t beginsWith(const ManagedString& s, int16_t start, const char* prefix);	// returns MICROBIT_NO_DATA or the next position on s
+/// Seek to the `prefix` character starting at `start` on `s`. Returns MICROBIT_NO_DATA or the next position on s.
+int16_t seek(const ManagedString& s, int16_t start, char prefix);
+
+/// Check that the substring, starting at `start` on `s`, begins with the `prefix` string. Returns MICROBIT_NO_DATA or the next position on s.
+int16_t beginsWith(const ManagedString& s, int16_t start, const char* prefix);
+
+/// Get a hex number starting at `start` on `s`.
 uint32_t numberForHexString(const ManagedString& s, int16_t start);
+
+/// Create a string with the prefix character followed by the hex string of the number.
 ManagedString hex(uint32_t number, char prefix = 0);
 
 }	// string

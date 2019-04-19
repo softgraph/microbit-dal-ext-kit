@@ -94,28 +94,54 @@ protected:
 	/// Inherited
 	/* Component */ void doStart();
 
+	/// Fill Color Directly
 	void fillColorDirectly(Color color);
+
+	/// Set Color Directly
 	void setColorDirectly(int index, Color color);
+
+	/// Fill Color Using Color Mode
 	void fillColorUsingColorMode();
 
+	/// Dump Pin
 	void debug_dumpPin(MicroBitPin* pin);
 
+	/// Color Mode
 	enum ColorMode {
-		kManual,
-		kColorMapForIndicator,
-		kColorMapForFocus,
-		kRainbowMapForFocus
+		kManual,				///< Manual Color (No Mode)
+		kColorMapForIndicator,	///< Use Specified Color Map for Indicator
+		kColorMapForFocus,		///< Use Specified Color Map for Focus
+		kRainbowMapForFocus		///< Use Rainbow Map for Focus
 	};
 
+	/// Led Port
 	MicroBitPin&	mLedPort;
+
+	/// Led Count
 	int				mLedCount;
+
+	/// Led Hue Unit
 	int 			mLedHueUnit;
+
+	/// Led Bufer Length
 	int				mLedBufferLength;
+
+	/// Led Bufer
 	uint8_t*		mLedBuffer;
+
+	/// Max Brightness
 	MaxBrightness	mMaxBrightness;
+
+	/// Color Mode
 	ColorMode		mColorMode;
+
+	/// Color Map for Color Mode `kColorMapForIndicator` or `kColorMapForFocus`
 	Color			mColorMap[4];
+
+	/// Indicator Pattern for Color Mode `kColorMapForIndicator`
 	uint32_t		mIndicatorPattern;
+
+	/// Focus Direction for Color Mode `kColorMapForFocus` or `kRainbowMapForFocus`
 	Direction		mFocusDirection;
 
 };	// NeoPixel

@@ -14,7 +14,7 @@
 
 #include "MicroBitDevice.h"	// microbit_panic()
 #include "ExtKit_Common.h"
-#include "ExtKitError.h"	// error
+#include "ExtKitError.h"	// error::raise()
 
 namespace microbit_dal_ext_kit {
 

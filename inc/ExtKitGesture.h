@@ -19,16 +19,16 @@ namespace microbit_dal_ext_kit {
 /// Gesture utility
 namespace gesture {
 
-/// Event value for MICROBIT_ID_GESTURE. Returns MICROBIT_ACCELEROMETER_EVT_TILT_LEFT if display::displayRotation() is MICROBIT_DISPLAY_ROTATION_0.
+/// Event value for MICROBIT_ID_GESTURE. Returns MICROBIT_ACCELEROMETER_EVT_TILT_LEFT (tilt to the left) if display::displayRotation() is MICROBIT_DISPLAY_ROTATION_0.
 int microBitGestureEventTiltLeft();
 
-/// Event value for MICROBIT_ID_GESTURE. Returns MICROBIT_ACCELEROMETER_EVT_TILT_DOWN (= TOP) if display::displayRotation() is MICROBIT_DISPLAY_ROTATION_0.
+/// Event value for MICROBIT_ID_GESTURE. Returns MICROBIT_ACCELEROMETER_EVT_TILT_DOWN (tilt to the top) if display::displayRotation() is MICROBIT_DISPLAY_ROTATION_0.
 int microBitGestureEventTiltTop();
 
-/// Event value for MICROBIT_ID_GESTURE. Returns MICROBIT_ACCELEROMETER_EVT_TILT_RIGHT if display::displayRotation() is MICROBIT_DISPLAY_ROTATION_0.
+/// Event value for MICROBIT_ID_GESTURE. Returns MICROBIT_ACCELEROMETER_EVT_TILT_RIGHT (tilt to the right) if display::displayRotation() is MICROBIT_DISPLAY_ROTATION_0.
 int microBitGestureEventTiltRight();
 
-/// Event value for MICROBIT_ID_GESTURE. Returns MICROBIT_ACCELEROMETER_EVT_TILT_UP (= BOTTOM) if display::displayRotation() is MICROBIT_DISPLAY_ROTATION_0.
+/// Event value for MICROBIT_ID_GESTURE. Returns MICROBIT_ACCELEROMETER_EVT_TILT_UP (tilt to the bottom) if display::displayRotation() is MICROBIT_DISPLAY_ROTATION_0.
 int microBitGestureEventTiltBottom();
 
 }	// gesture

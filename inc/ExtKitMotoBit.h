@@ -26,6 +26,7 @@ namespace microbit_dal_ext_kit {
 class MotoBit : public Component
 {
 public:
+	/// Motor Direction
 	enum MotorDirection {
 		kForward,
 		kBackward
@@ -51,16 +52,22 @@ protected:
 	/* Component */ void doStop();
 
 private:
+	/// Motor Side
 	enum Motor {
 		kLeft,
 		kRight
 	};
 
+	/// Set Motor Power
 	static int setMotorPower(bool power);	// returns MICROBIT_I2C_ERROR or MICROBIT_OK
 
+	/// Set Motor Speed
 	int setMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent);	// returns MICROBIT_I2C_ERROR or MICROBIT_OK
+
+	/// Set Motor Polarity
 	int setMotorPolarity(Motor motor, bool invert);	// returns MICROBIT_I2C_ERROR or MICROBIT_OK
 
+	/// Inverted
 	bool mInverted;
 
 };	// MotoBit

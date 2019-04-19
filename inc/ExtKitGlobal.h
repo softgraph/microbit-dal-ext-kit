@@ -15,7 +15,6 @@
 #include "MicroBitConfig.h"
 #include "ExtKit_Common.h"
 
-class MicroBit;
 class MicroBitAccelerometer;
 class MicroBitButton;
 class MicroBitCompass;
@@ -52,7 +51,7 @@ public:
 
 	/// Constructor
 	ExtKit(
-		const char*				owner,
+		const char*				owner,			// owner name
 		MicroBitButton&			buttonA,
 		MicroBitButton&			buttonB,
 		MicroBitMultiButton&	buttonAB,
@@ -76,89 +75,111 @@ public:
 	/// Initialize
 	void init();
 
+	/// Get Owner Name
 	inline const char* owner() {
 		return mOwner;
 	}
 
+	/// Get Button A Object
 	inline MicroBitButton& buttonA() {
 		return mButtonA;
 	}
 
+	/// Get Button B Object
 	inline MicroBitButton& buttonB() {
 		return mButtonB;
 	}
 
+	/// Get Multi Button A + B Object
 	inline MicroBitMultiButton& buttonAB() {
 		return mButtonAB;
 	}
 
+	/// Get Display Object
 	inline MicroBitDisplay& display() {
 		return mDisplay;
 	}
 
+	/// Get I2C Object
 	inline MicroBitI2C& i2c() {
 		return mI2c;
 	}
 
+	/// Get Message Bus Object
 	inline MicroBitMessageBus& messageBus() {
 		return mMessageBus;
 	}
 
+	/// Get Port P0 Object
 	inline MicroBitPin& p0() {
 		return mP0;
 	}
 
+	/// Get Port P1 Object
 	inline MicroBitPin& p1() {
 		return mP1;
 	}
 
+	/// Get Port P2 Object
 	inline MicroBitPin& p2() {
 		return mP2;
 	}
 
+	/// Get Reset Button Object
 	inline mbed::InterruptIn& resetButton() {
 		return mResetButton;
 	}
 
+	/// Get Serial Object
 	inline MicroBitSerial& serial() {
 		return mSerial;
 	}
 
-	inline MicroBitAccelerometer* accelerometer() {	// may null
+	/// Get Accelerometer Object (may null)
+	inline MicroBitAccelerometer* accelerometer() {
 		return mAccelerometer;
 	}
 
-	inline MicroBitCompass* compass() {	// may null
+	/// Get Compass Object (may null)
+	inline MicroBitCompass* compass() {
 		return mCompass;
 	}
 
-	inline MicroBitRadio* radio() {	// may null
+	/// Get Radio Object (may null)
+	inline MicroBitRadio* radio() {
 		return mRadio;
 	}
 
-	inline MicroBitThermometer* thermometer() {	// may null
+	/// Get Thermometer Object (may null)
+	inline MicroBitThermometer* thermometer() {
 		return mThermometer;
 	}
 
+	/// Register Accelerometer Object
 	inline void registerAccelerometer(MicroBitAccelerometer& accelerometer) {
 		mAccelerometer = &accelerometer;
 	}
 
+	/// Register Compass Object
 	inline void registerCompass(MicroBitCompass& compass) {
 		mCompass = &compass;
 	}
 
+	/// Register Radio Object
 	inline void registerRadio(MicroBitRadio& radio) {
 		mRadio = &radio;
 	}
 
+	/// Register Thermometer Object
 	inline void registerThermometer(MicroBitThermometer& thermometer) {
 		mThermometer = &thermometer;
 	}
 
 private:
+	/// Global instance
 	static ExtKit*			sGlobal;
 
+	/// Owner Name
 	const char*				mOwner;
 
 	MicroBitButton&			mButtonA;

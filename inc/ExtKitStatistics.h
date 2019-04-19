@@ -41,7 +41,7 @@ private:
 		uint16_t				total;
 
 		StatisticRecord(const ManagedString& title);
-	};
+	};	// StatisticRecord
 
 	/// Prepare item
 	static StatisticRecord& prepareItem(const ManagedString& title);

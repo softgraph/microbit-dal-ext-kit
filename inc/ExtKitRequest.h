@@ -19,7 +19,7 @@ namespace microbit_dal_ext_kit {
 /// Request Token
 struct RequestToken
 {
-	/// Request value and/or response value
+	/// Request value and response value
 	int	value;
 };
 

@@ -43,8 +43,13 @@ protected:
 	/// Inherited
 	/* Component */ void doStart();
 
+	/// Sound Port
 	MicroBitPin&	mSoundPort;
+
+	/// Current Tone
 	PianoKeys		mCurrentTone;
+
+	/// Current Octave
 	Octave			mCurrentOctave;
 
 };	// Buzzer

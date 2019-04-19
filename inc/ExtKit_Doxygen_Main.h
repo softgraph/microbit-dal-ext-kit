@@ -12,7 +12,6 @@
 /**	@mainpage	Introduction
 
 	# Overview
-		See the following pages.
 		- <a href="https://github.com/softgraph/microbit-dal-ext-kit-example/wiki"><b>Miscellaneous notes for microbit-dal-ext-kit and example</b> (github.com/softgraph)</a>
 		- <a href="https://github.com/softgraph/microbit-dal-ext-kit-example/wiki/Home-(ja)"><b>microbit-dal-ext-kit と example のための各種ノート</b> (github.com/softgraph)</a>
 		- <a href="https://github.com/softgraph/microbit-dal-ext-kit-example"><b>The repository</b> (github.com/softgraph)</a> for `microbit-dal-ext-kit-example`

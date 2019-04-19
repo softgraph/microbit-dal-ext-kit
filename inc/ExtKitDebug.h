@@ -33,7 +33,7 @@ namespace microbit_dal_ext_kit {
 /// The debug log prefix for a trace item
 #define	EXT_KIT_DEBUG_STATISTICS	"[S] "
 
-/// Activate the debugger
+/// Activate or deactivate the debugger
 void debug_activateDebugger(bool activate);
 
 /// Check whether the debugger is active or not
