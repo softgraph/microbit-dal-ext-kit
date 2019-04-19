@@ -4,9 +4,6 @@
 
 /// Module configration using Yotta config system
 /**	@file
-	@sa	Yotta config file and an example.
-		- `config.json` in the project root
-		- `config.example.json` in the project root
 	@author	Copyright (c) 2019 Tomoyuki Nakashima.<br>
 			This code is licensed under MIT license. See `LICENSE` in the project root for more information.
 	@note	Run Doxygen (http://www.doxygen.nl) with `Doxyfile` in the project root to generate the documentation.
@@ -14,6 +11,56 @@
 
 #ifndef EXT_KIT__CONFIG_H
 #define EXT_KIT__CONFIG_H
+
+namespace microbit_dal_ext_kit {
+
+/**	@page	ExtKit_Config	Compile Time Configuration Options for microbit-dal-ext-kit
+
+	# List of Compile Time Options
+		<table>
+			<tr>
+				<td><b>Symbol</b></td>
+				<td><b>Description</b></td>
+				<td><b>Default Value</b></td>
+			</tr>
+			<tr>
+				<td>YOTTA_CFG_MICROBIT_DAL__EXT_KIT_ASSERT</td>
+				<td>EXT_KIT_ASSERT and other assertion macros are enabled if the value is 1</td>
+				<td>1</td>
+			</tr>
+			<tr>
+				<td>YOTTA_CFG_MICROBIT_DAL__EXT_KIT_RADIO_GROUP</td>
+				<td>The value is used for MicroBitRadio.setGroup()</td>
+				<td>0</td>
+			</tr>
+			<tr>
+				<td>YOTTA_CFG_MICROBIT_DAL__EXT_KIT_SERIAL_EXT_DEBUG</td>
+				<td>Serial Debugger is enabled if the value is 1</td>
+				<td>1</td>
+			</tr>
+			<tr>
+				<td>YOTTA_CFG_MICROBIT_DAL__EXT_KIT_SERIAL_RXBUF</td>
+				<td>The value is used for MicroBitSerial.setRxBufferSize()</td>
+				<td>20</td>
+			</tr>
+			<tr>
+				<td>YOTTA_CFG_MICROBIT_DAL__EXT_KIT_SERIAL_TXBUF</td>
+				<td>The value is used for MicroBitSerial.setTxBufferSize()</td>
+				<td>80</td>
+			</tr>
+		</table>
+		These values are defined in <a href=_ext_kit___config_8h_source.html>ExtKit_Config.h</a>.
+
+	# Compile Time Options with Yotta
+		The above values can be changed through the configuration system provided by Yotta.
+		Here is an example for `config.json` file.
+		@include	config.example.json
+		@reference
+			- <a href="http://docs.yottabuild.org/reference/config.html"><b>Configuration System Reference</b> (yottabuild.org)</a>
+			- <a href="https://lancaster-university.github.io/microbit-docs/advanced/#compile-time-configuration-options"><b>Compile Time Configuration Options</b> (lancaster-university.github.io)</a>
+*/
+
+}	// microbit_dal_ext_kit
 
 /// Ensure that the config feature for using Assert is defined. The valid value is 1 (enabled) or 0 (disabled).
 #ifndef		YOTTA_CFG_MICROBIT_DAL__EXT_KIT_ASSERT
@@ -42,9 +89,6 @@
 
 /// Check that the config feature is enabled
 #define EXT_KIT_CONFIG_ENABLED(xxx)		(YOTTA_CFG_MICROBIT_DAL__EXT_KIT_##xxx == 1)	// expects 0 or 1
-
-/// Check that the config port is valid
-#define EXT_KIT_CONFIG_PORT_VALID(xxx)	(YOTTA_CFG_MICROBIT_DAL__EXT_KIT_##xxx >= 0)	// expects -1, 0, 1, 2, ...
 
 /// Read the config value
 #define EXT_KIT_CONFIG_VALUE(xxx)		(YOTTA_CFG_MICROBIT_DAL__EXT_KIT_##xxx)
