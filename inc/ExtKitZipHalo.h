@@ -18,9 +18,8 @@
 
 namespace microbit_dal_ext_kit {
 
-/// ZipHalo Component
+/// An ext-kit Component which provides the support for Kitronik's Zip Halo board
 /**
-	Support for Kitronik's Zip Halo board.
 	@reference	Kitronik Zip Halo
 		- https://www.kitronik.co.uk/5625-zip-halo-for-the-bbc-microbit.html
 		- https://www.kitronik.co.uk/blog/get-started-with-zip-halo

@@ -16,9 +16,8 @@
 
 namespace microbit_dal_ext_kit {
 
-/// MotoBit Component
+/// An ext-kit Component which provides the support for SparkFun's moto:bit board
 /**
-	Support for SparkFun's moto:bit board.
 	@reference	SparkFun moto:bit
 		- https://www.sparkfun.com/products/14213
 		- https://learn.sparkfun.com/tutorials/microbot-kit-experiment-guide/about-the-motobit-board

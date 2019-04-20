@@ -20,7 +20,7 @@ class MicroBitPin;
 
 namespace microbit_dal_ext_kit {
 
-/// Buzzer Component
+/// An ext-kit Component which provides the support for a generic buzzer
 class Buzzer : public Component
 {
 public:

@@ -20,7 +20,7 @@ class MicroBitEvent;
 
 namespace microbit_dal_ext_kit {
 
-/// Serial Debugger Component
+/// An ext-kit Component which provides the console for debugging using a serial port over USB
 class SerialDebugger : public Component
 {
 public:

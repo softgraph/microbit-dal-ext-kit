@@ -48,10 +48,7 @@ public:
 
 };	// StateChangeForSonarDuration
 
-/// Sonar Component
-/**
-	Support for a sonar modules such as HC-SR04.
-*/
+/// An ext-kit Component which provides the support for a generic sonar modules such as HC-SR04
 class Sonar : public Component
 {
 public:

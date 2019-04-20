@@ -20,10 +20,7 @@ class MicroBitPin;
 
 namespace microbit_dal_ext_kit {
 
-/// NeoPixel Component
-/**
-	Support for a LED Strip using WS2812B modules also known as NeoPixel.
-*/
+/// An ext-kit Component which provides the support for a generic LED Strip using WS2812B modules also known as NeoPixel
 class NeoPixel : public Component
 {
 public:

@@ -17,7 +17,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/// Component - the root base class for any #Component
+/// The root base class for any ext-kit `Component`
 /* abstract */ class Component
 {
 public:
@@ -66,7 +66,7 @@ protected:
 
 };	// Component
 
-/// Composite Component
+/// The base class for any ext-kit `Component` which has child `Component`(s)
 class CompositeComponent : public Component
 {
 protected:

@@ -54,7 +54,7 @@ const char kMarkerResponse		= '!';
 */
 const char kMarkerNotification	= '@';
 
-/// Remote %State Transmitter Component
+/// An ext-kit Component which provides the Remote %State Transmitter
 class Transmitter : public Component
 {
 public:
@@ -150,7 +150,7 @@ private:
 
 };	// Transmitter
 
-/// Remote %State Receiver Component
+/// An ext-kit Component which provides the Remote %State Receiver
 class Receiver : public Component, PeriodicObserver::HandlerProtocol
 {
 public:

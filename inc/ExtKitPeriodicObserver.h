@@ -19,7 +19,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/// Periodic Observer Component
+/// An ext-kit Component which provides observer service invoked periodically
 class PeriodicObserver : public Component, RequestCompletionProtocol
 {
 public:

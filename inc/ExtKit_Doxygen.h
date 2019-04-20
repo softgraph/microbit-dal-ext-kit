@@ -22,21 +22,41 @@ namespace microbit_dal_ext_kit {
 /**	@page	ExtKit_Components	Components - the service prviders of microbit-dal-ext-kit
 
 	# Components dedicated to extensiton boards
-		- `JoystickBit` provides the support for ElecFreaks' Joystick:bit
-		- `MotoBit` provides the support for SparkFun's moto:bit
-		- `TouchPiano` provides the support for Waveshare's Mini Piano Module.
-		- `ZipHalo` provides the support for Kitronik's Zip Halo.
+		<table><tr><td>
+		%Component		</td><td>	Description
+		</td></tr><tr><td>
+		`JoystickBit`	</td><td>	@copybrief	JoystickBit
+		</td></tr><tr><td>
+		`MotoBit`		</td><td>	@copybrief	MotoBit
+		</td></tr><tr><td>
+		`TouchPiano`	</td><td>	@copybrief	TouchPiano
+		</td></tr><tr><td>
+		`ZipHalo`		</td><td>	@copybrief	ZipHalo
+		</td></tr></table>
 
 	# Components dedicated to hardware modules
-		- `Buzzer` provides the support for a generic Buzzer module.
-		- `NeoPixel` provides the support for a generic NeoPixel (WS2812B) LED strip.
-		- `Sonar` provides the support for a generic Sonar module (HC-SR04).
+		<table><tr><td>
+		%Component		</td><td>	Description
+		</td></tr><tr><td>
+		`Buzzer`		</td><td>	@copybrief	Buzzer
+		</td></tr><tr><td>
+		`NeoPixel`		</td><td>	@copybrief	NeoPixel
+		</td></tr><tr><td>
+		`Sonar`			</td><td>	@copybrief	Sonar
+		</td></tr></table>
 
 	# Other components
-		- `PeriodicObserver` provides the support for periodic listeners.
-		- `remoteState::Transmitter` provides the support for sending remote states to the receiver using radio datagrams provided by `MicroBitRadioDatagram`.
-		- `remoteState::Receiver` provides the support for receiving remote states from the transmitter using radio datagrams provided by `MicroBitRadioDatagram`.
-		- `SerialDebugger` provides the support for the serial debugger.
+		<table><tr><td>
+		%Component					</td><td>	Description
+		</td></tr><tr><td>
+		`PeriodicObserver`			</td><td>	@copybrief	PeriodicObserver
+		</td></tr><tr><td>
+		`remoteState::Transmitter`	</td><td>	@copybrief	remoteState::Transmitter
+		</td></tr><tr><td>
+		`remoteState::Receiver`		</td><td>	@copybrief	remoteState::Receiver
+		</td></tr><tr><td>
+		`SerialDebugger`			</td><td>	@copybrief	SerialDebugger
+		</td></tr></table>
 */
 
 }	// microbit_dal_ext_kit
