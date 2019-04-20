@@ -32,7 +32,7 @@ namespace microbit_dal_ext_kit {
 
 	- Two or more instances are not allowed.
 	- You can choose one of the following classes
-		- `MicroBitExtKit` is derived from microbit-dal's class `MicroBit`. You can use all features of `MicroBit` via the instance of MicroBitExtKit.
+		- `MicroBitExtKit` is derived from microbit-dal's class `MicroBit`. You can use all features of `MicroBit` via the instance of `MicroBitExtKit`.
 		- `PrimitiveExtKit` is a minimal version of `MicroBitExtKit`. You can choose this if you don't want to instanciate the class `MicroBit`. <br>
 			Only the following instances are included in `PrimitiveExtKit`.
 			- `mbed::InterruptIn` for the reset button
@@ -47,15 +47,40 @@ namespace microbit_dal_ext_kit {
 			If you need another instance which depends on the instances listed here, inherit `PrimitiveExtKit` and add the required class as a member variable. This approach ensures that the initialization of the instances listed here are done by the constructor of `PrimitiveExtKit` before the initialization of your member variables.
 */
 
-/// Ext Kit device derived from MicroBit
-class MicroBitExtKit : public MicroBit
+/// The common interface for any ext-kit `Device`
+/**	Any class inherits this interface should also expose the following member variables.
+
+		public:
+			MicroBitSerial			serial;
+			mbed::InterruptIn		resetButton;
+			MicroBitI2C				i2c;
+			MicroBitMessageBus		messageBus;
+			MicroBitDisplay			display;
+			MicroBitButton			buttonA;
+			MicroBitButton			buttonB;
+			MicroBitMultiButton		buttonAB;
+			struct or class {
+				MicroBitPin				pin[0];
+				MicroBitPin				P0;
+				MicroBitPin				P1;
+				MicroBitPin				P2;
+			}						io;
+*/
+/* abstract */ class Device
+{
+	/// Initialize the device
+	/* to be implemented */ void init();
+};
+
+/// An ext-kit `Device` derived from `MicroBit`
+class MicroBitExtKit : public MicroBit, public Device
 {
 public:
 	/// Constructor
 	MicroBitExtKit();
 
 	/// Inherited
-	/* MicroBit */ void init();
+	/* MicroBit and Device */ void init();
 
 protected:
 	/// Ext Kit global instance
@@ -84,8 +109,8 @@ public:
 
 };	// PrimitiveExtKitIO
 
-/// Primitive Ext Kit device
-class PrimitiveExtKit
+/// A minimal ext-kit `Device`
+class PrimitiveExtKit : public Device
 {
 public:
 	/// Constructor
