@@ -56,6 +56,18 @@ protected:
 
 };	// State<T>
 
+/*
+	Extern Template Instantiation
+*/
+
+extern template class State<uint8_t>;
+extern template class State<uint16_t>;
+extern template class State<uint32_t>;
+
+extern template class StateChange<uint8_t>;
+extern template class StateChange<uint16_t>;
+extern template class StateChange<uint32_t>;
+
 }	// microbit_dal_ext_kit
 
 #endif	// EXT_KIT_STATE_H
