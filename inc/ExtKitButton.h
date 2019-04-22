@@ -20,14 +20,7 @@ namespace microbit_dal_ext_kit {
 /// Buttons. The constants for type `#Buttons` are defined in namespace `microbit_dal_ext_kit.button`.
 typedef uint16_t	Buttons;
 
-/*
-	Extern Template Instantiation
-*/
-
-extern template class State<uint16_t>;
-extern template class StateChange<uint16_t>;
-
-/// `#State` for `#Buttons`
+/// `State` specialization for `#Buttons`
 class StateForButtons : public State<Buttons>
 {
 public:
@@ -36,7 +29,7 @@ public:
 
 };	// StateForButtons
 
-/// `#StateChange` for `#Buttons`
+/// `StateChange` specialization for `#Buttons`
 class StateChangeForButtons : public StateChange<Buttons>
 {
 public:

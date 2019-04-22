@@ -20,14 +20,7 @@ namespace microbit_dal_ext_kit {
 /// Direction. The constants for type `#Direction` are defined in namespace `microbit_dal_ext_kit.direction`.
 typedef uint16_t	Direction;
 
-/*
-	Extern Template Instantiation
-*/
-
-extern template class State<Direction>;
-extern template class StateChange<Direction>;
-
-/// `#State` for `#Direction`
+/// `State` specialization for `#Direction`
 class StateForDirection : public State<Direction>
 {
 public:
@@ -36,7 +29,7 @@ public:
 
 };	// StateForDirection
 
-/// `#StateChange` for `#Direction`
+/// `StateChange` specialization for `#Direction`
 class StateChangeForDirection : public StateChange<Direction>
 {
 public:
@@ -63,6 +56,8 @@ const Direction kLF			= 1 << 4;			///< Move left motor forward
 const Direction kLB			= 1 << 5;			///< Move left motor backward
 const Direction kRF			= 1 << 6;			///< Move right motor forward
 const Direction kRB			= 1 << 7;			///< Move right motor backward
+
+const Direction kStop		= 1 << 15;			///< Stop
 
 }	// direction
 }	// microbit_dal_ext_kit

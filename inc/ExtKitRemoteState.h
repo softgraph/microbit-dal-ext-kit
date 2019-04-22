@@ -24,12 +24,6 @@ class MicroBitEvent;
 
 namespace microbit_dal_ext_kit {
 
-/*
-	Extern Template Instantiation
-*/
-
-extern template class State<uint8_t>;
-
 /// Remote %State
 namespace remoteState {
 

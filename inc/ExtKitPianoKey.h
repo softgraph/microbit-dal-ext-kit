@@ -20,14 +20,7 @@ namespace microbit_dal_ext_kit {
 /// Piano Keys. The constants for type `#PianoKeys` are defined in namespace `microbit_dal_ext_kit.pianoKey`.
 typedef uint16_t	PianoKeys;
 
-/*
-	Extern Template Instantiation
-*/
-
-extern template class State<PianoKeys>;
-extern template class StateChange<PianoKeys>;
-
-/// `#State` for `#PianoKeys`
+/// `State` specialization for `#PianoKeys`
 class StateForPianoKeys : public State<PianoKeys>
 {
 public:
@@ -36,7 +29,7 @@ public:
 
 };	// StateForPianoKeys
 
-/// `#StateChange` for `#PianoKeys`
+/// `StateChange` specialization for `#PianoKeys`
 class StateChangeForPianoKeys : public StateChange<PianoKeys>
 {
 public:

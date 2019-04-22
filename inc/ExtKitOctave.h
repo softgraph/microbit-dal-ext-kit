@@ -20,14 +20,7 @@ namespace microbit_dal_ext_kit {
 ///	Ocrave. The constants for type `#Octave` are defined in namespace `microbit_dal_ext_kit.octave`.
 typedef uint16_t	Octave;
 
-/*
-	Extern Template Instantiation
-*/
-
-extern template class State<Octave>;
-extern template class StateChange<Octave>;
-
-/// `#State` for `#Octave`
+/// `State` specialization for `#Octave`
 class StateForOctave : public State<Octave>
 {
 public:
@@ -36,7 +29,7 @@ public:
 
 };	// StateForOctave
 
-/// `#StateChange` for `#Octave`
+/// `StateChange` specialization for `#Octave`
 class StateChangeForOctave : public StateChange<Octave>
 {
 public:
