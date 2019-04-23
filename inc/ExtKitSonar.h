@@ -29,7 +29,7 @@ public:
 	{
 	public:
 		/// Handle Sonar Echo.
-		/** Duration of 1000 us (1 ms) means that the distace to the object is 170 mm if the speed of sound is 340 m/s. Please note the speed of sound depends strongly on temperature.
+		/** Duration of 1000 us (1 ms) means that the distace to the object is 171.5 mm if the speed of sound is 343 m/s. Please note the speed of sound depends strongly on temperature.
 		*/
 		virtual /* to be implemented */ void handleSonarEcho(uint32_t duration /* in microseconds*/) = 0;
 
