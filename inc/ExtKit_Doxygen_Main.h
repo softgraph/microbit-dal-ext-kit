@@ -14,12 +14,12 @@
 	# Overview
 		- README
 			- @ref README.md
-		- Repository
-			- <a href="https://github.com/softgraph/microbit-dal-ext-kit"><b>microbit-dal-ext-kit</b> (github.com/softgraph)</a>
 		- Wiki
 			- <a href="https://github.com/softgraph/microbit-dal-ext-kit-example/wiki"><b>Miscellaneous notes for microbit-dal-ext-kit and example</b> (github.com/softgraph)</a>
 		- Wiki (Japanese Edition)
 			- <a href="https://github.com/softgraph/microbit-dal-ext-kit-example/wiki/Home-(ja)"><b>microbit-dal-ext-kit と example のための各種ノート</b> (github.com/softgraph)</a>
+		- Repository
+			- <a href="https://github.com/softgraph/microbit-dal-ext-kit"><b>microbit-dal-ext-kit</b> (github.com/softgraph)</a>
 
 	# Key Concepts
 		- @ref	ExtKit_Device
