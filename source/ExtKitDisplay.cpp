@@ -67,7 +67,12 @@ static const Graph sBarGraph[] = {
 	 1, 1,
 	 1, 1,
 	 1, 1,
-	 1, 1}	// 9
+	 1, 1},	// 9
+	{1, 1,
+	 1, 1,
+	 1, 1,
+	 1, 1,
+	 1, 1}	// FULL
 };
 
 static DisplayRotation  sDisplayRotation = MICROBIT_DISPLAY_ROTATION_0;
@@ -129,9 +134,22 @@ void scrollString(const ManagedString& s)
 void showNumber(int twoDigitNumber /* 00-99 */)
 {
 	MicroBitDisplay& d = ExtKit::global().display();
-	twoDigitNumber = numeric::clamp(0, 99, twoDigitNumber);
-	const char* p1 = &sBarGraph[twoDigitNumber / 10][0];
-	const char* p2 = &sBarGraph[twoDigitNumber % 10][0];
+	int d1;
+	int d2;
+	if(twoDigitNumber < 0) {
+		d1 = 0;		// 0
+		d2 = 10;	// FULL
+	}
+	else if(99 < twoDigitNumber) {
+		d1 = 10;	// FULL
+		d2 = 10;	// FULL
+	}
+	else if(twoDigitNumber < 100) {
+		d1 = twoDigitNumber / 10;	// 0-9
+		d2 = twoDigitNumber % 10;	// 0-9
+	}
+	const char* p1 = &sBarGraph[d1][0];
+	const char* p2 = &sBarGraph[d2][0];
 	MicroBitImage image(5,5);
 	for (int16_t y = 0; y < 5; y++) {
 		image.setPixelValue(0, y, *p1++ ? 1 : 0);
@@ -175,18 +193,19 @@ void showButton(Buttons buttons)
 	else											{ d.printChar('?'); }
 }
 
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirN,	0,1,1,1,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirE,	0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirW,	0,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirS,	0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1,1,1,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirNE,	0,0,0,1,1, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirNW,	1,1,0,0,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirSE,	0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,1,1)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirSW,	0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,0, 1,1,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirLF,	1,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirLB,	0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirRF,	0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirRB,	0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,1)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirN,		0,1,1,1,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirE,		0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirW,		0,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 0,0,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirS,		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1,1,1,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirNE,		0,0,0,1,1, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirNW,		1,1,0,0,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirSE,		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,1,1)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirSW,		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,0, 1,1,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirLF,		1,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirLB,		0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirRF,		0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirRB,		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,1)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirStop,	0,0,0,0,0, 0,1,0,1,0, 0,0,1,0,0, 0,1,0,1,0, 0,0,0,0,0)
 
 void showDirection(Direction direction)
 {
@@ -205,6 +224,7 @@ void showDirection(Direction direction)
 		case direction::kLB:		d.print(sImageDirLB);	break;
 		case direction::kRF:		d.print(sImageDirRF);	break;
 		case direction::kRB:		d.print(sImageDirRB);	break;
+		case direction::kStop:		d.print(sImageDirStop);	break;
 		case direction::kInvalid:	d.printChar('!');		break;
 		default:					d.printChar('?');		break;
 	}
