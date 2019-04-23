@@ -20,34 +20,6 @@ class MicroBitPin;
 
 namespace microbit_dal_ext_kit {
 
-///	%Sonar Duration in milliseconds
-typedef uint32_t	SonarDuration;
-
-/*
-	Extern Template Instantiation
-*/
-
-extern template class State<SonarDuration>;
-extern template class StateChange<SonarDuration>;
-
-/// `#State` for `#SonarDuration`
-class StateForSonarDuration : public State<SonarDuration>
-{
-public:
-	/// Constructor
-	StateForSonarDuration();
-
-};	// StateForSonarDuration
-
-/// `#StateChange` for `#SonarDuration`
-class StateChangeForSonarDuration : public StateChange<SonarDuration>
-{
-public:
-	/// Constructor
-	StateChangeForSonarDuration();
-
-};	// StateChangeForSonarDuration
-
 /// An ext-kit Component which provides the support for a generic sonar modules such as HC-SR04
 class Sonar : public Component
 {
@@ -56,8 +28,10 @@ public:
 	/* interface */ class HandlerProtocol
 	{
 	public:
-		/// Handle Sonar Echo
-		virtual /* to be implemented */ void handleSonarEcho(SonarDuration duration) = 0;
+		/// Handle Sonar Echo.
+		/** Duration of 1000 us (1 ms) means that the distace to the object is 170 mm if the speed of sound is 340 m/s. Please note the speed of sound depends strongly on temperature.
+		*/
+		virtual /* to be implemented */ void handleSonarEcho(uint32_t duration /* in microseconds*/) = 0;
 
 	};	// HandlerProtocol
 
@@ -67,7 +41,9 @@ public:
 	/// Constructor
 	Sonar(MicroBitPin& triggerOutput, MicroBitPin& echoInput, uint16_t echoInputEventID, HandlerProtocol& handler);
 
-	/// Trigger sonar
+	/// Trigger sonar.
+	/** Suggest to use over 60 ms measurement cycle, in order to prevent trigger signal to the echo signal.
+	*/
 	void trigger();
 
 protected:
