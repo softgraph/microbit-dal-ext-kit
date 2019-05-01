@@ -66,10 +66,14 @@ NeoPixel::~NeoPixel()
 	delete mLedBuffer;
 }
 
-/* Component */ void NeoPixel::doStart()
+/* Component */ void NeoPixel::doHandleComponentAction(Action action)
 {
-	fillColor(Color::black);
-	show();
+	if(action == kStart) {
+		fillColor(Color::black);
+		show();
+	}
+
+	Component::doHandleComponentAction(action);
 }
 
 void NeoPixel::show()
@@ -487,7 +491,7 @@ const uint8_t* sendBuffer(MicroBitPin* pin, const uint8_t* buf, int len)
 		: [pin] "r" (pin), [buf] "r" (buf), [len] "r" (len)
 
 		// clobbered_register_list
-		: "r4", "r5", "r6", "r7", "cc", "memory"
+		: "r4", "r5", "r6", "cc", "memory"
 	);
 	return ret;
 }

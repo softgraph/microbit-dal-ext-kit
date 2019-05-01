@@ -89,7 +89,7 @@ public:
 
 protected:
 	/// Inherited
-	/* Component */ void doStart();
+	/* Component */ void doHandleComponentAction(Action action);
 
 	/// Fill Color Directly
 	void fillColorDirectly(Color color);

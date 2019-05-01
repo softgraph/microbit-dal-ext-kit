@@ -29,10 +29,7 @@ public:
 
 protected:
 	/// Inherited
-	/* Component */ void doStart();
-
-	/// Inherited
-	/* Component */ void doStop();
+	/* Component */ void doHandleComponentAction(Action action);
 
 	/// Called when the serial debugger is enabled (ready to activate)
 	virtual /* to be overridden */ void doHandleSerialDebuggerEnabled();

@@ -53,20 +53,22 @@ Transmitter::~Transmitter()
 	}
 }
 
-/* Component */ void Transmitter::doStart()
+/* Component */ void Transmitter::doHandleComponentAction(Action action)
 {
-	// Listen to radio datagrams from the receiver
-	MicroBitMessageBus& mb = ExtKit::global().messageBus();
-	mb.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &Transmitter::handleRadioDatagramReceived);
+	if(action == kStart) {
+		radio::prepare();
 
-	radio::prepare();
-}
+		// Listen to radio datagrams from the receiver
+		MicroBitMessageBus& mb = ExtKit::global().messageBus();
+		mb.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &Transmitter::handleRadioDatagramReceived);
+	}
+	else if(action == kStop) {
+		// Ignore radio datagrams from the receiver
+		MicroBitMessageBus& mb = ExtKit::global().messageBus();
+		mb.ignore(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &Transmitter::handleRadioDatagramReceived);
+	}
 
-/* Component */ void Transmitter::doStop()
-{
-	// Ignore radio datagrams from the receiver
-	MicroBitMessageBus& mb = ExtKit::global().messageBus();
-	mb.ignore(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &Transmitter::handleRadioDatagramReceived);
+	Component::doHandleComponentAction(action);
 }
 
 void Transmitter::listen(char category, CategoryProtocol& protocol)
@@ -215,30 +217,28 @@ Receiver::~Receiver()
 	}
 }
 
-/* Component */ void Receiver::doStart()
+/* Component */ void Receiver::doHandleComponentAction(Action action)
 {
-	radio::prepare();
+	if(action == kStart) {
+		radio::prepare();
 
-	// Listen to radio datagrams from the transmitter
-	MicroBitMessageBus& mb = ExtKit::global().messageBus();
-	mb.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &Receiver::handleRadioDatagramReceived);
+		// Listen to radio datagrams from the transmitter
+		MicroBitMessageBus& mb = ExtKit::global().messageBus();
+		mb.listen(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &Receiver::handleRadioDatagramReceived);
 
-	// Listen Periodic Observer
-	PeriodicObserver::listen(PeriodicObserver::kUnit100ms, *this, PeriodicObserver::kPriorityLow);
+		// Listen Periodic Observer
+		PeriodicObserver::listen(PeriodicObserver::kUnit100ms, *this, PeriodicObserver::kPriorityLow);
+	}
+	else if(action == kStop) {
+		// Ignore Periodic Observer
+		PeriodicObserver::ignore(PeriodicObserver::kUnit100ms, *this);
 
-//	debug_sendLine(EXT_KIT_DEBUG_TRACE "Receiver::doStart");
-}
+		// Ignore radio datagrams from the transmitter
+		MicroBitMessageBus& mb = ExtKit::global().messageBus();
+		mb.ignore(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &Receiver::handleRadioDatagramReceived);
+	}
 
-/* Component */ void Receiver::doStop()
-{
-	// Ignore Periodic Observer
-	PeriodicObserver::ignore(PeriodicObserver::kUnit100ms, *this);
-
-	// Ignore radio datagrams from the transmitter
-	MicroBitMessageBus& mb = ExtKit::global().messageBus();
-	mb.ignore(MICROBIT_ID_RADIO, MICROBIT_RADIO_EVT_DATAGRAM, this, &Receiver::handleRadioDatagramReceived);
-
-//	debug_sendLine(EXT_KIT_DEBUG_TRACE "Receiver::doStop");
+	Component::doHandleComponentAction(action);
 }
 
 void Receiver::listen(char category, CategoryProtocol& protocol)

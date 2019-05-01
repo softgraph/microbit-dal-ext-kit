@@ -19,7 +19,7 @@ namespace microbit_dal_ext_kit {
 		- @subpage	ExtKit_Headers
 */
 
-/**	@page	ExtKit_Components	Components - the service prviders of microbit-dal-ext-kit
+/**	@page	ExtKit_Components	Components - the small service prviders of microbit-dal-ext-kit
 
 	# Components dedicated to extensiton boards
 		<table><tr><td>

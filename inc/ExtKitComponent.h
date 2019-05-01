@@ -17,9 +17,11 @@
 
 namespace microbit_dal_ext_kit {
 
-/// The root base class for any ext-kit `Component`
+/// The root base class for any ext-kit `Component`. A `Component` is a small servie provider and controlled by `start()` and `stop()`.
 /* abstract */ class Component
 {
+	friend class CompositeComponent;
+
 public:
 	/// Check that the required hardware/software resources are avaialable and return available Features.
 	static /* to be overridden */ Features avaiableFeatures();
@@ -40,28 +42,41 @@ public:
 	void stop();
 
 protected:
+	/// Component Status: The component is inacive.
+	static const uint16_t kStatusInactive	= 0;
+
+	/// Component Status Bit: The component is acive, i.e. started.
+	static const uint16_t kStatusActive		= 1 << 0;
+
+	/// Component Status Bit: The component is starting.
+	static const uint16_t kStatusStarting	= 1 << 1;
+
+	/// Component Status Bit: The component is stopping.
+	static const uint16_t kStatusStopping	= 1 << 2;
+
+	/// Component Action
+	enum Action {
+		/* kPrestart, kStart and kPoststart are invoked within start() */
+		kPrestart	= kStatusStarting,					///< Prestart
+		kStart		= kStatusActive + kStatusStarting,	///< Start
+		kPoststart	= kStatusActive,					///< Poststart
+
+		/* kPrestop, kStop and kPoststop are invoked within stop() */
+		kPrestop	= kStatusActive + kStatusStopping,	///< Prestop
+		kStop		= kStatusStopping,					///< Stop
+		kPoststop	= 0									///< PostStop
+	};
+
 	/// Constructor
 	Component(const char* name);
 
-	/// Do start service
-	virtual /* to be overridden */ void doStart()	{ /* nothing to do */ }
-
-	/// Do stop service
-	virtual /* to be overridden */ void doStop()	{ /* nothing to do */ }
-
-	/// Status Bit: The component is acive, i.e. started.
-	static const uint16_t kStatusActive = 1 << 0;
-
-	/// Status Bit: The component is starting.
-	static const uint16_t kStatusStarting = 1 << 1;
-
-	/// Status Bit: The component is stopping.
-	static const uint16_t kStatusStopping = 1 << 2;
+	/// Do Handle Component Action
+	virtual /* to be overridden */ void doHandleComponentAction(Action action);
 
 	/// Component Name
 	const char*	mName;
 
-	/// Status Bits
+	/// Component Status Bits
 	uint16_t	mStatus;
 
 };	// Component
@@ -79,11 +94,8 @@ protected:
 	/// Remove Child Component
 	void removeChild(Component& component);
 
-	/// Start Children
-	void startChildren();
-
-	/// Stop Children
-	void stopChildren();
+	/// Inherited
+	/* Component */ void doHandleComponentAction(Action action);
 
 private:
 	/// Component Record

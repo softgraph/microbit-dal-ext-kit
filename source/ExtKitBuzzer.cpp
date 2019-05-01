@@ -54,11 +54,15 @@ Buzzer::~Buzzer()
 {
 }
 
-/* Component */ void Buzzer::doStart()
+/* Component */ void Buzzer::doHandleComponentAction(Action action)
 {
-	mSoundPort.setAnalogValue(0);
-	mCurrentTone = pianoKey::kNone;
-	mCurrentOctave = octave::kCenter;
+	if(action == kStart) {
+		mSoundPort.setAnalogValue(0);
+		mCurrentTone = pianoKey::kNone;
+		mCurrentOctave = octave::kCenter;
+	}
+
+	Component::doHandleComponentAction(action);
 }
 
 void Buzzer::playTone(PianoKeys& /* INOUT */ pianoKeys, Octave octave)

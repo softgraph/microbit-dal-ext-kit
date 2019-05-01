@@ -99,10 +99,7 @@ public:
 
 protected:
 	/// Inherited
-	/* Component */ void doStart();
-
-	/// Inherited
-	/* Component */ void doStop();
+	/* Component */ void doHandleComponentAction(Action action);
 
 private:
 	/// Category Record
@@ -192,10 +189,7 @@ public:
 
 protected:
 	/// Inherited
-	/* Component */ void doStart();
-
-	/// Inherited
-	/* Component */ void doStop();
+	/* Component */ void doHandleComponentAction(Action action);
 
 private:
 	/// Category Record

@@ -82,10 +82,7 @@ public:
 
 protected:
 	/// Inherited
-	/* Component */ void doStart();
-
-	/// Inherited
-	/* Component */ void doStop();
+	/* Component */ void doHandleComponentAction(Action action);
 
 private:
 	/// Handler Record

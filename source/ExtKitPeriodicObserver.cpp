@@ -77,27 +77,27 @@ PeriodicObserver::~PeriodicObserver()
 	return response;
 }
 
-/* Component */ void PeriodicObserver::doStart()
+/* Component */ void PeriodicObserver::doHandleComponentAction(Action action)
 {
-	mRunning = true;
-	mRequestToCancel = false;
+	if(action == kStart) {
+		mRunning = true;
+		mRequestToCancel = false;
 
-	create_fiber(loopEntry, this);
-}
+		create_fiber(loopEntry, this);
+	}
+	else if(action == kStop) {
+		if(mRunning) {
+			// Request to cancel
+			mRequestToCancel = true;
 
-/* Component */ void PeriodicObserver::doStop()
-{
-	if(!mRunning) {
-		return;		// Not running
+			// Wait for the completion
+			while(mRunning) {
+				time::sleep(100 /* milliseconds */);
+			}
+		}
 	}
 
-	// Request to cancel
-	mRequestToCancel = true;
-
-	// Wait for the completion
-	while(mRunning) {
-		time::sleep(100 /* milliseconds */);
-	}
+	Component::doHandleComponentAction(action);
 }
 
 void PeriodicObserver::loopEntry(void* param)

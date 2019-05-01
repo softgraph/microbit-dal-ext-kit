@@ -29,7 +29,7 @@ namespace microbit_dal_ext_kit {
 
 Component::Component(const char* name)
 	: mName(name)
-	, mStatus(0)
+	, mStatus(kStatusInactive)
 {
 	EXT_KIT_ASSERT_SAFE_CLASS_OBJECT(name, this);
 }
@@ -40,7 +40,7 @@ Component::~Component()
 
 void Component::start()
 {
-	if(mStatus & kStatusActive) {
+	if(mStatus != kStatusInactive) {
 		return;
 	}
 
@@ -49,31 +49,26 @@ void Component::start()
 
 void Component::restart()
 {
-	if(mStatus & kStatusStarting) {
-		return;
-	}
-
-	mStatus |= kStatusStarting;
-	doStart();
-	mStatus &= ~kStatusStarting;
-
-	mStatus |= kStatusActive;
+	doHandleComponentAction(kPrestart);
+	doHandleComponentAction(kStart);
+	doHandleComponentAction(kPoststart);
 }
 
 void Component::stop()
 {
-	if(! (mStatus & kStatusActive)) {
-		return;
-	}
-	if(mStatus & kStatusStopping) {
+	if(mStatus == kStatusInactive) {
+		// nothing to do
 		return;
 	}
 
-	mStatus |= kStatusStopping;
-	doStop();
-	mStatus &= ~kStatusStopping;
+	doHandleComponentAction(kPrestop);
+	doHandleComponentAction(kStop);
+	doHandleComponentAction(kPoststop);
+}
 
-	mStatus &= ~kStatusActive;
+void Component::doHandleComponentAction(Action action)
+{
+	mStatus = action;
 }
 
 /**	@class	CompositeComponent
@@ -107,26 +102,17 @@ void CompositeComponent::removeChild(Component& component)
 	}
 }
 
-void CompositeComponent::startChildren()
+/* Component */ void CompositeComponent::doHandleComponentAction(Action action)
 {
 	Node* p = &mRoot;
 	while((p = p->next) != &mRoot) {
 		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
 
 		ComponentRecord* r = static_cast<ComponentRecord*>(p);
-		r->component.start();
+		r->component.doHandleComponentAction(action);
 	}
-}
 
-void CompositeComponent::stopChildren()
-{
-	Node* p = &mRoot;
-	while((p = p->prev) != &mRoot) {
-		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
-
-		ComponentRecord* r = static_cast<ComponentRecord*>(p);
-		r->component.stop();
-	}
+	Component::doHandleComponentAction(action);
 }
 
 /**	@class	CompositeComponent::ComponentRecord

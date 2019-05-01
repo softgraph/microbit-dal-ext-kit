@@ -41,7 +41,7 @@ public:
 
 protected:
 	/// Inherited
-	/* Component */ void doStart();
+	/* Component */ void doHandleComponentAction(Action action);
 
 	/// Sound Port
 	MicroBitPin&	mSoundPort;

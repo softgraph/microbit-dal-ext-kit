@@ -29,32 +29,34 @@ SerialDebugger::SerialDebugger(const char* name)
 
 #if EXT_KIT_CONFIG_ENABLED(SERIAL_EXT_DEBUG)
 
-/* Component */ void SerialDebugger::doStart()
+/* Component */ void SerialDebugger::doHandleComponentAction(Action action)
 {
-	ExtKit& g = ExtKit::global();
-	g.messageBus().listen(MICROBIT_ID_SERIAL, MICROBIT_SERIAL_EVT_HEAD_MATCH, this, &SerialDebugger::handleSerialReceived);
-	serial::initializeRx();		// required for receivng the event
-	g.serial().eventAfter(1 /* character */);
+	if(action == kStart) {
+		serial::initializeRx();		// required for receivng the event
 
-	/* virtual */ doHandleSerialDebuggerEnabled();
-}
+		ExtKit& g = ExtKit::global();
+		g.messageBus().listen(MICROBIT_ID_SERIAL, MICROBIT_SERIAL_EVT_HEAD_MATCH, this, &SerialDebugger::handleSerialReceived);
+		g.serial().eventAfter(1 /* character */);
+	}
+	else if(action == kPoststart) {
+		/* virtual */ doHandleSerialDebuggerEnabled();
+	}
+	else if(action == kPrestop) {
+		/* virtual */ doHandleSerialDebuggerDisabled();
+	}
+	else if(action == kStop) {
+		ExtKit& g = ExtKit::global();
+		g.messageBus().ignore(MICROBIT_ID_SERIAL, MICROBIT_SERIAL_EVT_HEAD_MATCH, this, &SerialDebugger::handleSerialReceived);
+	}
 
-/* Component */ void SerialDebugger::doStop()
-{
-	/* virtual */ doHandleSerialDebuggerDisabled();
-
-	ExtKit& g = ExtKit::global();
-	g.messageBus().ignore(MICROBIT_ID_SERIAL, MICROBIT_SERIAL_EVT_HEAD_MATCH, this, &SerialDebugger::handleSerialReceived);
+	Component::doHandleComponentAction(action);
 }
 
 #else	// SERIAL_EXT_DEBUG
 
-/* Component */ void SerialDebugger::doStart()
+/* Component */ void SerialDebugger::doHandleComponentAction(Action action)
 {
-}
-
-/* Component */ void SerialDebugger::doStop()
-{
+	Component::doHandleComponentAction(action);
 }
 
 #endif	// SERIAL_EXT_DEBUG
