@@ -1,8 +1,8 @@
 # https://git-scm.com/docs/gitignore
 
+.brackets.json
+.DS_Store
 /build/
 /doxygen/
 /yotta_modules/
 /yotta_targets/
-.DS_Store
-.brackets.json

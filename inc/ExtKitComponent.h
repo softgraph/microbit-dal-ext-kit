@@ -64,7 +64,7 @@ protected:
 		/* kPrestop, kStop and kPoststop are invoked within stop() */
 		kPrestop	= kStatusActive + kStatusStopping,	///< Prestop
 		kStop		= kStatusStopping,					///< Stop
-		kPoststop	= 0									///< PostStop
+		kPoststop	= kStatusInactive					///< PostStop
 	};
 
 	/// Constructor

@@ -1,13 +1,13 @@
 {
-	"microbit-dal--ext-kit": {
-		"assert": 1,
-		"radio": {
-			"group": 0
-		},
-		"serial": {
-			"ext_debug": 1,
-			"rxBuf": 20,
-			"txBuf": 80
-		}
-	}
+  "microbit-dal--ext-kit": {
+    "assert": 1,
+    "radio": {
+      "group": 0
+    },
+    "serial": {
+      "ext_debug": 1,
+      "rxBuf": 20,
+      "txBuf": 80
+    }
+  }
 }
