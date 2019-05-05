@@ -4,5 +4,6 @@
 .DS_Store
 /build/
 /doxygen/
+/microbit-dal-ext-kit.wiki/
 /yotta_modules/
 /yotta_targets/
