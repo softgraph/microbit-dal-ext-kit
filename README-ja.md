@@ -1,8 +1,8 @@
+[ [English](README.md) ]
+
 # microbit-dal-ext-kit
 
 `microbit-dal` (別名 micro:bit runtime) を使う C++ アプリケーションのためのコンポーネント・ユーティリティ集
-
-[English](README.md)
 
 ## 概要
 
