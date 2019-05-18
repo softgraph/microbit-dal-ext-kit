@@ -2,6 +2,8 @@
 
 `microbit-dal` (別名 micro:bit runtime) を使う C++ アプリケーションのためのコンポーネント・ユーティリティ集
 
+[English](README.md)
+
 ## 概要
 
 `microbit-dal-ext-kit` は BBC micro:bit と互換性のあるコンポーネント・ユーティリティを提供します。また非公式にですが、いくつかの拡張ボード・ハードウェアモジュールをサポートしています。Kit は小さな C++ クラスと関数で構成されていて、必要な部分だけを `microbit-dal` や Arm Mbed OS と組み合わせて利用することができます。
