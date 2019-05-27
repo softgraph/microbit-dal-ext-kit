@@ -15,20 +15,40 @@
 namespace microbit_dal_ext_kit {
 namespace string {
 
-int16_t seek(const ManagedString& s, int16_t start, char prefix)	// returns MICROBIT_NO_DATA or the next position on s
+int16_t seekTo(char c, const ManagedString& s, int16_t start)	// returns MICROBIT_NO_DATA or the next position on s
 {
 	ManagedString t(s);
 	int16_t length = t.length();
 	for(int16_t i = start; i < length; i++) {
-		char c = t.charAt(i) /* !const */;
-		if(c == prefix) {
+		char x = t.charAt(i) /* !const */;
+		if(x == c) {
 			return i + 1;
 		}
 	}
 	return MICROBIT_NO_DATA;
 }
 
-int16_t beginsWith(const ManagedString& s, int16_t start, const char* prefix)	// returns MICROBIT_NO_DATA or the next position on s
+bool contains(char c, const char* s)
+{
+	while(*s) {
+		if(*s++ == c) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool beginsWith(const char* prefix, const char* s)
+{
+	while(*prefix) {
+		if(*s++ != *prefix++) {
+			return false;
+		}
+	}
+	return true;
+}
+
+int16_t beginsWith(const char* prefix, const ManagedString& s, int16_t start)	// returns MICROBIT_NO_DATA or the next position on s
 {
 	ManagedString t(s);
 	int16_t length = t.length();
@@ -67,6 +87,11 @@ uint32_t numberForHexString(const ManagedString& s, int16_t start)
 		number += c;
 	}
 	return number;
+}
+
+ManagedString dec(int number)
+{
+	return ManagedString(number);
 }
 
 ManagedString hex(uint32_t number, char prefix)

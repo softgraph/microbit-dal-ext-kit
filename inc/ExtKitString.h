@@ -43,16 +43,25 @@ namespace microbit_dal_ext_kit {
 /// String utility
 namespace string {
 
-/// Seek to the `prefix` character starting at `start` on `s`. Returns MICROBIT_NO_DATA or the next position on s.
-int16_t seek(const ManagedString& s, int16_t start, char prefix);
+/// Seek to character `c` in the substring starting at `start` on `s`. Returns MICROBIT_NO_DATA or the next position on s.
+int16_t seekTo(char c, const ManagedString& s, int16_t start = 0);
 
-/// Check that the substring, starting at `start` on `s`, begins with the `prefix` string. Returns MICROBIT_NO_DATA or the next position on s.
-int16_t beginsWith(const ManagedString& s, int16_t start, const char* prefix);
+/// Check that string `s` contains character `c`.
+bool contains(char c, const char* s);
+
+/// Check that string `s` begins with string `prefix`.
+bool beginsWith(const char* prefix, const char* s);
+
+/// Check that the substring, starting at `start` on `s`, begins with string `prefix`. Returns MICROBIT_NO_DATA or the next position on s.
+int16_t beginsWith(const char* prefix, const ManagedString& s, int16_t start = 0);
 
 /// Get a hex number starting at `start` on `s`.
 uint32_t numberForHexString(const ManagedString& s, int16_t start);
 
-/// Create a string with the prefix character followed by the hex string of the number.
+/// Create a decimal string from a number.
+ManagedString dec(int number);
+
+/// Create a hexadecimal string from a number and a prefix character.
 ManagedString hex(uint32_t number, char prefix = 0);
 
 }	// string
