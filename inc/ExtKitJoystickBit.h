@@ -20,7 +20,7 @@ namespace microbit_dal_ext_kit {
 
 /// An ext-kit Component which provides the support for ElecFreaks' Joystick:bit board
 /**
-	@reference	ELECFREAKS Joystick:bit for Micro:bit
+	@reference	ElecFreaks Joystick:bit for Micro:bit
 		- https://www.elecfreaks.com/estore/elecfreaks-joystick-bit-for-micro-bit.html
 */
 class JoystickBit : public Component

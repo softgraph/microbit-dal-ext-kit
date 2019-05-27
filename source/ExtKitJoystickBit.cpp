@@ -15,7 +15,7 @@
 namespace microbit_dal_ext_kit {
 
 /**	@class	JoystickBit
-	@reference	ELECFREAKS Joystick:bit code example.
+	@reference	ElecFreaks Joystick:bit code example.
 		- https://www.elecfreaks.com/estore/elecfreaks-joystick-bit-for-micro-bit.html
 */
 
