@@ -48,7 +48,7 @@ public:
 
 protected:
 	/// Trigger Output Port
-	MicroBitPin&		mTriggerOutputPort;
+	MicroBitPin&		mTriggerOutput;
 
 	/// Handler
 	HandlerProtocol&	mHandler;

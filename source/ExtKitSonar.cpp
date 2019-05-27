@@ -32,7 +32,7 @@ static const Features kFeature = feature::kSonar;
 
 Sonar::Sonar(MicroBitPin& triggerOutput, MicroBitPin& echoInput, uint16_t echoInputEventID, HandlerProtocol& handler)
 	: Component("Sonar")
-	, mTriggerOutputPort(triggerOutput)
+	, mTriggerOutput(triggerOutput)
 	, mHandler(handler)
 {
 	ExtKit::global().messageBus().listen(echoInputEventID, MICROBIT_PIN_EVT_PULSE_HI, this, &Sonar::handleEchoInput);
@@ -49,10 +49,10 @@ Sonar::Sonar(MicroBitPin& triggerOutput, MicroBitPin& echoInput, uint16_t echoIn
 
 void Sonar::trigger()
 {
-	mTriggerOutputPort.setPull(PullNone);
-	mTriggerOutputPort.setDigitalValue(0);	wait_us(2);
-	mTriggerOutputPort.setDigitalValue(1);	wait_us(10);	// 10 us is required
-	mTriggerOutputPort.setDigitalValue(0);
+	mTriggerOutput.setPull(PullNone);
+	mTriggerOutput.setDigitalValue(0);	wait_us(2);
+	mTriggerOutput.setDigitalValue(1);	wait_us(10);	// 10 us is required
+	mTriggerOutput.setDigitalValue(0);
 }
 
 void Sonar::handleEchoInput(MicroBitEvent event)
