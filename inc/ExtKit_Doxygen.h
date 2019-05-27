@@ -29,6 +29,8 @@ namespace microbit_dal_ext_kit {
 		</td></tr><tr><td>
 		`MotoBit`		</td><td>	@copybrief	MotoBit
 		</td></tr><tr><td>
+		`RingBitCar`	</td><td>	@copybrief	RingBitCar
+		</td></tr><tr><td>
 		`TouchPiano`	</td><td>	@copybrief	TouchPiano
 		</td></tr><tr><td>
 		`ZipHalo`		</td><td>	@copybrief	ZipHalo

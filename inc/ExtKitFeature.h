@@ -46,13 +46,13 @@ const Features kRemoteRX		= kRemoteEventRx | kRemoteStateRx;
 /// The device is mounted upside down. micro:bit's button A is on the right.
 const Features kInverted		= (1 << 5);
 
-/// NexPixel modules are connected to the device
+/// Class `NeoPixel` is required.
 const Features kNeoPixel		= (1 << 6);
 
-/// Buzzer module is connected to the device
+/// Class `Buzzer` is required.
 const Features kBuzzer			= (1 << 7);
 
-/// Sonar module is connected to the device
+/// Class `Sonar` is required.
 const Features kSonar			= (1 << 8);
 
 /// Auto detection for the extension board is not available
@@ -61,17 +61,20 @@ const Features kNoAutoDetection	= (1 << 9);
 /// No extension board is connected to the device
 const Features kMicroBitOnly	= (1 << 10);
 
-/// ElecFreaks' Joystick:bit board is connected to the device.
+/// Class `JoystickBit`
 const Features kJoystickBit		= (1 << 11);
 
-/// SparkFun's moto:bit board is connected to the device.
+/// Class `MotoBit` is required.
 const Features kMotoBit			= (1 << 12);
 
-/// Waveshare's Mini Piano Module is connected to the device.
+/// Class `TouchPiano` is required.
 const Features kTouchPiano		= (1 << 13);
 
-/// Kitronik's Zip Halo board is connected to the device.
+/// Class `ZipHalo` is required.
 const Features kZipHalo			= (1 << 14);
+
+/// Class `RingBitCar` is required.
+const Features kRingBitCar		= (1 << 15);
 
 /// Reserved for App #7.
 const Features kReservedForApp7	= (1 << 24);

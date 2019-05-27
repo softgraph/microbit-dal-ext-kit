@@ -2,7 +2,7 @@
 /**	@package	microbit_dal_ext_kit
 */
 
-/// MotoBit component
+/// RingBitCar component
 /**	@file
 	@author	Copyright (c) 2019 Tomoyuki Nakashima.<br>
 			This code is licensed under MIT license. See `LICENSE` in the project root for more information.
@@ -14,15 +14,16 @@
 
 #include "ExtKitMotorsLR.h"
 
+class MicroBitPin;
+
 namespace microbit_dal_ext_kit {
 
-/// An ext-kit Component which provides the support for SparkFun's moto:bit board
+/// An ext-kit Component which provides the support for ElecFreaks' ring:bit car (v2) board
 /**
-	@reference	SparkFun moto:bit
-		- https://www.sparkfun.com/products/14213
-		- https://learn.sparkfun.com/tutorials/microbot-kit-experiment-guide/about-the-motobit-board
+	@reference	ElecFreaks ring:bit car (v2) for micro:bit
+		- https://www.elecfreaks.com/estore/elecfreaks-ring-bit-car-v2-for-micro-bit-without-micro-bit.html
 */
-class MotoBit : public MotorsLR
+class RingBitCar : public MotorsLR
 {
 public:
 	/// Inherited
@@ -32,14 +33,14 @@ public:
 	static /* Component */ bool isConfigured();
 
 	/// Constructor
-	MotoBit();
+	RingBitCar(const char* name, MicroBitPin& servoLeft, MicroBitPin& servoRight);
 
 	/// Inherited
-	void setMotorSpeed(MotorDirection directionL, MotorDirection directionR, int speedInPercentL, int speedInPercentR);
+	/* MotorsLR */ void setMotorSpeed(MotorDirection directionL, MotorDirection directionR, int speedInPercentL, int speedInPercentR);
 
 protected:
 	/// Inherited
-	/* Component */ void doHandleComponentAction(Action action);
+	/* MotorsLR */ void doHandleComponentAction(Action action);
 
 private:
 	/// Motor Side
@@ -48,17 +49,14 @@ private:
 		kRight
 	};
 
-	/// Set Motor Power
-	static int setMotorPower(bool power);	// returns MICROBIT_I2C_ERROR or MICROBIT_OK
-
 	/// Set Motor Speed
-	int setMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent);	// returns MICROBIT_I2C_ERROR or MICROBIT_OK
+	void setMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent);
 
-	/// Set Motor Polarity
-	int setMotorPolarity(Motor motor, bool invert);	// returns MICROBIT_I2C_ERROR or MICROBIT_OK
+	/// Servo Left
+	MicroBitPin&	mServoL;
 
-	/// Inverted
-	bool mInverted;
+	/// Servo Right
+	MicroBitPin&	mServoR;
 
 };	// MotoBit
 

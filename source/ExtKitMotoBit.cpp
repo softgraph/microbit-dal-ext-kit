@@ -57,7 +57,7 @@ static const Features kFeature = feature::kMotoBit;
 }
 
 MotoBit::MotoBit()
-	: Component("MotoBit")
+	: MotorsLR("MotoBit")
 	, mInverted(false)
 {
 	mInverted = !feature::isConfigured(feature::kInverted);
