@@ -32,9 +32,9 @@ static const uint8_t* sendBuffer(MicroBitPin* pin, const uint8_t* buf, int len);
 	return feature::isConfigured(kFeature);
 }
 
-NeoPixel::NeoPixel(const char* name, MicroBitPin& digitalPort, int ledCount)
+NeoPixel::NeoPixel(const char* name, MicroBitPin& ledPort, int ledCount)
 	: Component(name)
-	, mLedPort(digitalPort)
+	, mLedPort(ledPort)
 	, mLedCount(0)
 	, mLedHueUnit(0)
 	, mLedBufferLength(0)

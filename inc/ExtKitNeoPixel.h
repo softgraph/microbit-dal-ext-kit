@@ -37,7 +37,7 @@ public:
 	static /* Component */ bool isConfigured();
 
 	/// Constructor with a digital port and a led count
-	NeoPixel(const char* name, MicroBitPin& digitalPort, int ledCount);
+	NeoPixel(const char* name, MicroBitPin& ledPort, int ledCount);
 
 	/// Destructor
 	~NeoPixel();
