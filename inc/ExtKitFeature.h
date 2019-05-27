@@ -22,26 +22,11 @@ typedef uint32_t	Features;
 /// Feature utility
 namespace feature {
 
-/// Radio
-const Features kRadio			= (1 << 0);
+/// Class `remoteState::Transmitter` is required.
+const Features kRemoteStateTx	= (1 << 3);
 
-/// Remote Event Tx (Transmitter) using radio
-const Features kRemoteEventTx	= (1 << 1) | kRadio;
-
-/// Remote Event Rx (Receiver) using radio
-const Features kRemoteEventRx	= (1 << 2) | kRadio;
-
-/// Remote State Tx (Transmitter) using radio
-const Features kRemoteStateTx	= (1 << 3) | kRadio;
-
-/// Remote State Rx (Receiver) using radio
-const Features kRemoteStateRx	= (1 << 4) | kRadio;
-
-/// Remote Tx (Transmitter) using radio
-const Features kRemoteTx		= kRemoteEventTx | kRemoteStateTx;
-
-/// Remote Rx (Receiver) using radio
-const Features kRemoteRX		= kRemoteEventRx | kRemoteStateRx;
+/// Class `remoteState::Receiver` is required.
+const Features kRemoteStateRx	= (1 << 4);
 
 /// The device is mounted upside down. micro:bit's button A is on the right.
 const Features kInverted		= (1 << 5);
