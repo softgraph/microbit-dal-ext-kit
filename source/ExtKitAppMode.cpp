@@ -16,8 +16,8 @@ namespace microbit_dal_ext_kit {
 
 static const AppModeDescriberProtocol* sDescriber = 0;
 
-static void showCharFor(AppMode appMode);
-static void flashCharFor(AppMode appMode);
+static int /* count */ optionsFor(const AppMode* appModes, int appModeCount, int position, char** /* OUT new[] */ outOptions);
+static char charFor(const char* menuKey, unsigned int index);
 static void debug_sendPossibleAppModes(const AppMode* appModes);
 
 void registerAppModeDescriber(const AppModeDescriberProtocol& describer)
@@ -34,63 +34,108 @@ void selectAppModeFor(Features condition, const AppModeDescriberProtocol& descri
 {
 	EXT_KIT_ASSERT(condition);
 
+	// Ensure that the App Mode Describer is registered
 	registerAppModeDescriber(describer);
 
-	AppMode* selection = 0;
-	int count = sDescriber->appModesFor(condition, /* OUT new[] */ &selection);
-	EXT_KIT_ASSERT(0 < count);
-	EXT_KIT_ASSERT(selection);
-
+	// Clear the previous App Mode
 	feature::resetConfigured();
 	AppMode appMode = 0;
 
-	if(count == 1) {
-		appMode = selection[0];
-	}
-	else {
-		debug_sendPossibleAppModes(selection);
-		int i = 0;
-		showCharFor(selection[i]);
-		while(1) {
-			if(button::isButtonAPressed()) {
-				i++;
-				if(count <= i) {
-					i = 0;
-				}
-				showCharFor(selection[i]);
-				debug_sendAppMode(EXT_KIT_DEBUG_INFO "Focused App Mode: ", selection[i]);
-				button::waitUntilMicroBitButtonsAreReleased();
-			}
-			else if(button::isButtonBPressed()) {
-				button::waitUntilMicroBitButtonsAreReleased();
-				appMode = selection[i];
-				flashCharFor(appMode);
-				break;
-			}
-			else {
-				time::sleep(100 /* milliseconds */);
-			}
+	// Initializa the list of App Modes
+	AppMode* appModes = 0;
+	int appModeCount = 0;
+
+	// Initializa the list of optinos
+	char* options = 0;
+	int optionCount = 0;
+
+	// Initialize the menu key filter
+	char menuKeyFilter[7 + 1] = {};
+	const char* const * hints = sDescriber->hints();
+
+	// Until the menu key filter is filled
+	for(int i = 0; i < 7; i++) {
+		// Update the list of App Modes for the menu key filter
+		delete[] appModes;
+		appModeCount = sDescriber->appModesFor(condition, menuKeyFilter, /* OUT new[] */ &appModes);
+		EXT_KIT_ASSERT(0 < appModeCount);
+		EXT_KIT_ASSERT(appModes);
+
+		// Exit if only one App Mode is available
+		if(appModeCount == 1) {
+			appMode = appModes[0];
+			break;
 		}
+
+		// Send the possible App Modes to the debugger
+		if(i == 0) {
+			debug_sendPossibleAppModes(appModes);
+		}
+
+		// Update the list of options for the current filter position (`i`)
+		delete[] options;
+		optionCount = optionsFor(appModes, appModeCount, i, /* OUT new[] */ &options);
+		EXT_KIT_ASSERT(0 < optionCount);
+		EXT_KIT_ASSERT(options);
+
+		// Choose it if only one option is available
+		if(optionCount == 1) {
+			menuKeyFilter[i] = options[0];
+			continue;
+		}
+
+		// Choose an option
+		char c = button::chooseFrom(options, hints);
+
+		// Update the filter
+		menuKeyFilter[i] = c;
+	}
+	EXT_KIT_ASSERT(appMode);
+
+	// Set the App Mode
+	feature::setConfigured(appMode);
+	const char* menuKey = sDescriber->menuKeyFor(appMode);
+
+	// Show the selected App Mode
+	display::showChar(' ');
+	display::scrollString(ManagedString(menuKey));
+
+	// Send the selected App Mode to the debugger
+	debug_sendAppMode(EXT_KIT_DEBUG_INFO "Active App Mode: ", appMode);
+ 
+	delete[] appModes;
+	delete[] options;
+}
+
+int /* count */ optionsFor(const AppMode* appModes, int appModeCount, int position, char** /* OUT new[] */ outOptions)
+{
+	EXT_KIT_ASSERT(outOptions);
+
+	// Initializa the list
+	int count = 0;
+	char* options = new char[appModeCount + 1];
+	EXT_KIT_ASSERT_OR_PANIC(options, kPanicOutOfMemory);
+
+	// Append options to the list
+	options[0] = 0;
+	while(*appModes) {
+		const char* menuKey = sDescriber->menuKeyFor(*appModes++);
+		char c = charFor(menuKey, position);
+		if(!c || string::contains(c, options)) {
+			continue;
+		}
+		options[count++] = c;
+		options[count] = 0;
 	}
 
-	feature::setConfigured(appMode);
-	showCharFor(appMode);
-	debug_sendAppMode(EXT_KIT_DEBUG_INFO "Active App Mode: ", appMode);
-	//	serial::sendLine("*** App Mode Selected ***");
-
-	delete[] selection;
+	// Return the list
+	*outOptions = options;
+	return count;
 }
 
-void showCharFor(AppMode appMode)
+char charFor(const char* menuKey, unsigned int index)
 {
-	char c = sDescriber ? sDescriber->charFor(appMode) : '?';
-	display::showChar(c);
-}
-
-void flashCharFor(AppMode appMode)
-{
-	char c = sDescriber ? sDescriber->charFor(appMode) : '?';
-	display::flashChar(c, 200);
+	return (menuKey && (index < strlen(menuKey))) ? menuKey[index] : 0;
 }
 
 void debug_sendPossibleAppModes(const AppMode* appModes)
@@ -107,19 +152,13 @@ void debug_sendPossibleAppModes(const AppMode* appModes)
 void debug_sendAppMode(const char* title, AppMode appMode, bool withDebugPrefix)
 {
 	if(sDescriber) {
-		static char buf[5];
-		const char c = sDescriber->charFor(appMode);
-		const char* name = sDescriber->nameFor(appMode);
-		buf[0] = ' ';
-		buf[1] = '(';
-		buf[2] = c;
-		buf[3] = ')';
-		buf[4] = 0;
-		debug_sendLine(title, name, buf, withDebugPrefix);
+		const char* menuKey = sDescriber->menuKeyFor(appMode);
+		const char* description = sDescriber->descriptionFor(appMode);
+		debug_sendLine(title, menuKey, " (", description, ")", withDebugPrefix);
 	}
 	else {
-		const char* appModeString = string::hex(appMode).toCharArray();
-		debug_sendLine(title, " 0x", appModeString, withDebugPrefix);
+		const char* hexAppMode = string::hex(appMode).toCharArray();
+		debug_sendLine(title, " 0x", hexAppMode, withDebugPrefix);
 	}
 }
 

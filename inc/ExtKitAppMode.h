@@ -23,14 +23,17 @@ typedef Features	AppMode;
 /* interface */ class AppModeDescriberProtocol
 {
 public:
-	/// A character for App Mode
-	virtual /* to be implemented */ char charFor(AppMode appMode) const = 0;
+	/// Hints for Menu Keys
+	virtual /* to be implemented */ const char* const * hints() const = 0;
 
-	/// A name for App Mode
-	virtual /* to be implemented */ const char* nameFor(AppMode appMode) const = 0;
+	/// A menu key for an App Mode
+	virtual /* to be implemented */ const char* menuKeyFor(AppMode appMode) const = 0;
 
-	/// Creates a new App Mode list which meets `condition`
-	virtual /* to be implemented */ int /* count */ appModesFor(Features condition, AppMode** /* OUT new[] */ appModes) const = 0;
+	/// A description for an App Mode
+	virtual /* to be implemented */ const char* descriptionFor(AppMode appMode) const = 0;
+
+	/// Creates a new array of App Modes which meets `condition` and `menuKeyFilter`
+	virtual /* to be implemented */ int /* count */ appModesFor(Features condition, const char* menuKeyFilter, AppMode** /* OUT new[] */ outAppModes) const = 0;
 
 };	// AppModeDescriberProtocol
 
