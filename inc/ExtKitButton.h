@@ -63,6 +63,11 @@ bool isButtonBPressed();		///< Check whether button B is pressed or not
 Buttons readMicroBitButtons();	///< Read MicroBit buttons
 void waitUntilMicroBitButtonsAreReleased();		///< Wait until MicroBit buttons are released
 
+/// Choose a character from string `options`.
+/**	`hints` is used as an array of hint strings terminated by a null pointer. Each hint string should consist of a character in `options` followed by the hint text for the character.
+*/
+char chooseFrom(const char* options, const char* const * hints = 0);
+
 }	// button
 }	// microbit_dal_ext_kit
 
