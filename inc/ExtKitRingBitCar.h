@@ -26,12 +26,6 @@ namespace microbit_dal_ext_kit {
 class RingBitCar : public MotorsLR
 {
 public:
-	/// Inherited
-	static /* Component */ Features avaiableFeatures();
-
-	/// Inherited
-	static /* Component */ bool isConfigured();
-
 	/// Constructor
 	RingBitCar(const char* name, MicroBitPin& servoLeft, MicroBitPin& servoRight);
 

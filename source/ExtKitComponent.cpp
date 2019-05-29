@@ -17,16 +17,6 @@ namespace microbit_dal_ext_kit {
 /**	@class	Component
 */
 
-/* to be overridden */ Features Component::avaiableFeatures()
-{
-	return 0;	// not available
-}
-
-/* to be overridden */ bool Component::isConfigured()
-{
-	return false;	// not yet configured
-}
-
 Component::Component(const char* name)
 	: mName(name)
 	, mStatus(kStatusInactive)

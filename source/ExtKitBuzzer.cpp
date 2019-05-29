@@ -17,29 +17,9 @@ namespace microbit_dal_ext_kit {
 /**	@class	Buzzer
 */
 
-static const Features kFeature = feature::kBuzzer;
-
 static const int portValue = 10;
 
 static uint16_t durationForPianoKeys(PianoKeys& /* INOUT */ pianoKeys, Octave octave);
-
-/* Component */ Features Buzzer::avaiableFeatures(MicroBitPin& analogPort)
-{
-	bool available = false;
-	{
-		int value = analogPort.getAnalogValue();
-		//	display::scrollString(value);
-		if(value < 10) {
-			available = true;
-		}
-	}
-	return available ? kFeature : 0;
-}
-
-/* Component */ bool Buzzer::isConfigured()
-{
-	return feature::isConfigured(kFeature);
-}
 
 Buzzer::Buzzer(const char* name, MicroBitPin& analogPort)
 	: Component(name)

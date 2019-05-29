@@ -35,9 +35,6 @@ public:
 
 	};	// HandlerProtocol
 
-	/// Inherited
-	static /* Component */ bool isConfigured();
-
 	/// Constructor
 	Sonar(MicroBitPin& triggerOutput, MicroBitPin& echoInput, uint16_t echoInputEventID, HandlerProtocol& handler);
 

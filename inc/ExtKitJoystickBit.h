@@ -26,11 +26,8 @@ namespace microbit_dal_ext_kit {
 class JoystickBit : public Component
 {
 public:
-	/// Inherited
-	static /* Component */ Features avaiableFeatures();
-
-	/// Inherited
-	static /* Component */ bool isConfigured();
+	/// Check that the required hardware is avaialable.
+	static bool isAvaiable();
 
 	/// Constructor
 	JoystickBit();

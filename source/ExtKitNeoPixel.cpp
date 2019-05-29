@@ -21,16 +21,9 @@ namespace microbit_dal_ext_kit {
 		- https://github.com/Microsoft/pxt-ws2812b/blob/master/sendBuffer.asm
 */
 
-static const Features kFeature = feature::kNeoPixel;
-
 static const int kBytesPerLed = 3;	// bytes per one led module
 
 static const uint8_t* sendBuffer(MicroBitPin* pin, const uint8_t* buf, int len);
-
-/* Component */ bool NeoPixel::isConfigured()
-{
-	return feature::isConfigured(kFeature);
-}
 
 NeoPixel::NeoPixel(const char* name, MicroBitPin& ledPort, int ledCount)
 	: Component(name)

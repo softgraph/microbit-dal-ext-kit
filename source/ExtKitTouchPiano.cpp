@@ -20,19 +20,13 @@ namespace microbit_dal_ext_kit {
 		- https://github.com/waveshare/TouchPiano/blob/master/WSTouchPiano.ts
 */
 
-static const Features kFeature = feature::kTouchPiano;
 static const int kI2cAddress	= 0x57 << 1;
 
-/* Component */ Features TouchPiano::avaiableFeatures()
+bool TouchPiano::isAvaiable()
 {
 	char buf[2];
 	int ret = ExtKit::global().i2c().read(kI2cAddress, buf, (int) sizeof(buf));
-	return (ret == MICROBIT_OK) ? kFeature : 0;
-}
-
-/* Component */ bool TouchPiano::isConfigured()
-{
-	return feature::isConfigured(kFeature);
+	return (ret == MICROBIT_OK);
 }
 
 TouchPiano::TouchPiano()
@@ -52,11 +46,6 @@ void TouchPiano::read(PianoKeys* /* OUT */ outKeys)
 
 static const int kNeoPixelLedCount	= 4;
 static const NeoPixel::MaxBrightness kMaxBrightnessDefault = 10;
-
-/* Component */ bool NeoPixelForTouchPiano::isConfigured()
-{
-	return NeoPixel::isConfigured() && feature::isConfigured(kFeature);
-}
 
 NeoPixelForTouchPiano::NeoPixelForTouchPiano()
 	: NeoPixel("NeoPixelForTouchPiano", /* digitalPort */ ExtKit::global().p1(), kNeoPixelLedCount)

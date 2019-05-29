@@ -21,22 +21,10 @@ namespace microbit_dal_ext_kit {
 		- https://github.com/Tinkertanker/pxt-ringbitcar/blob/master/ringbitcar.ts
 */
 
-static const Features kFeature = feature::kRingBitCar;
-
 // range: 600 ... 1400, 1500, 1600 ... 2400
 static const int kCenter = 1500;	// microseconds
 static const int kOffset = 100;		// microseconds
 static const int kRatio = 8;		// microseconds
-
-/* Component */ Features RingBitCar::avaiableFeatures()
-{
-	return kFeature;
-}
-
-/* Component */ bool RingBitCar::isConfigured()
-{
-	return feature::isConfigured(kFeature);
-}
 
 RingBitCar::RingBitCar(const char* name, MicroBitPin& servoL, MicroBitPin& servoR)
 	: MotorsLR(name)

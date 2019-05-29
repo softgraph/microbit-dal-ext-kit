@@ -27,9 +27,6 @@ namespace microbit_dal_ext_kit {
 class ZipHalo : public Component
 {
 public:
-	/// Inherited
-	static /* Component */ bool isConfigured();
-
 	/// Constructor
 	ZipHalo();
 
@@ -39,9 +36,6 @@ public:
 class NeoPixelForZipHalo : public NeoPixel
 {
 public:
-	/// Inherited
-	static /* Component */ bool isConfigured();
-
 	/// Constructor
 	NeoPixelForZipHalo();
 

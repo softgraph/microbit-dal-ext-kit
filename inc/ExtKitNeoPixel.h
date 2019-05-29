@@ -33,9 +33,6 @@ public:
 	/// No limit value for max brightness
 	static const MaxBrightness kMaxBrightnessNoLimit = 100;
 
-	/// Inherited
-	static /* Component */ bool isConfigured();
-
 	/// Constructor with a digital port and a led count
 	NeoPixel(const char* name, MicroBitPin& ledPort, int ledCount);
 

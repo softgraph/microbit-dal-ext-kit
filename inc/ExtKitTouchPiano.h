@@ -28,11 +28,8 @@ namespace microbit_dal_ext_kit {
 class TouchPiano : public Component
 {
 public:
-	/// Inherited
-	static /* Component */ Features avaiableFeatures();
-
-	/// Inherited
-	static /* Component */ bool isConfigured();
+	/// Check that the required hardware is avaialable.
+	static bool isAvaiable();
 
 	/// Constructor
 	TouchPiano();
@@ -46,9 +43,6 @@ public:
 class NeoPixelForTouchPiano : public NeoPixel
 {
 public:
-	/// Inherited
-	static /* Component */ bool isConfigured();
-
 	/// Constructor
 	NeoPixelForTouchPiano();
 

@@ -24,12 +24,6 @@ namespace microbit_dal_ext_kit {
 class Buzzer : public Component
 {
 public:
-	/// Check that a buzzer module is possibly available on the port and return available Features
-	static /* Component */ Features avaiableFeatures(MicroBitPin& analogPort);
-
-	/// Inherited
-	static /* Component */ bool isConfigured();
-
 	/// Constructor with an analog port
 	Buzzer(const char* name, MicroBitPin& analogPort);
 

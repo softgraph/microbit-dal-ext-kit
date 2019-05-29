@@ -23,13 +23,6 @@ namespace microbit_dal_ext_kit {
 		- http://www.handsontec.com/pdf_files/hc-sr04-User-Guide.pdf
 */
 
-static const Features kFeature = feature::kSonar;
-
-/* Component */ bool Sonar::isConfigured()
-{
-	return feature::isConfigured(kFeature);
-}
-
 Sonar::Sonar(MicroBitPin& triggerOutput, MicroBitPin& echoInput, uint16_t echoInputEventID, HandlerProtocol& handler)
 	: Component("Sonar")
 	, mTriggerOutput(triggerOutput)

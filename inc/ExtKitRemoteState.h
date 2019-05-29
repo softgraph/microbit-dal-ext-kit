@@ -55,9 +55,6 @@ public:
 	/// Get global instance. Valid only after an instance of class `Transmitter` is created.
 	static Transmitter& global();
 
-	/// Inherited
-	static /* Component */ bool isConfigured();
-
 	/// Constructor
 	Transmitter();
 
@@ -147,9 +144,6 @@ class Receiver : public Component, PeriodicObserver::HandlerProtocol
 public:
 	/// Get global instance. Valid only after an instance of class `Receiver` is created.
 	static Receiver& global();
-
-	/// Inherited
-	static /* Component */ bool isConfigured();
 
 	/// Constructor
 	Receiver();

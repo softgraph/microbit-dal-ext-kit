@@ -19,8 +19,6 @@ namespace remoteState {
 /**	@class	Transmitter
 */
 
-static const Features kFeatureTx = feature::kRemoteStateTx;
-
 Transmitter* Transmitter::sGlobal = 0;
 
 Transmitter& Transmitter::global()
@@ -28,11 +26,6 @@ Transmitter& Transmitter::global()
 	EXT_KIT_ASSERT(sGlobal);
 
 	return *sGlobal;
-}
-
-/* Component */ bool Transmitter::isConfigured()
-{
-	return feature::isConfigured(kFeatureTx);
 }
 
 Transmitter::Transmitter()
@@ -183,8 +176,6 @@ void Transmitter::CategoryRecord::handleRadioCommandReceived(ManagedString& rece
 /**	@class	Receiver
 */
 
-static const Features kFeatureRx = feature::kRemoteStateRx;
-
 Receiver* Receiver::sGlobal = 0;
 
 Receiver& Receiver::global()
@@ -192,11 +183,6 @@ Receiver& Receiver::global()
 	EXT_KIT_ASSERT(sGlobal);
 
 	return *sGlobal;
-}
-
-/* Component */ bool Receiver::isConfigured()
-{
-	return feature::isConfigured(kFeatureRx);
 }
 
 Receiver::Receiver()

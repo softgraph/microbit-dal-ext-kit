@@ -43,17 +43,9 @@ static const char	kI2cDataMotorPolarityInvert		= 0x01;
 
 #define COUNT_OF(x)		((int) (sizeof(x) / sizeof(x[0])))	///< Count of table elements
 
-static const Features kFeature = feature::kMotoBit;
-
-/* Component */ Features MotoBit::avaiableFeatures()
+bool MotoBit::isAvaiable()
 {
-	bool available = (setMotorPower(false) == MICROBIT_OK);
-	return available ? kFeature : 0;
-}
-
-/* Component */ bool MotoBit::isConfigured()
-{
-	return feature::isConfigured(kFeature);
+	return (setMotorPower(false) == MICROBIT_OK);
 }
 
 MotoBit::MotoBit()

@@ -17,13 +17,6 @@ namespace microbit_dal_ext_kit {
 /**	@class	ZipHalo
 */
 
-static const Features kFeature = feature::kZipHalo;
-
-/* Component */ bool ZipHalo::isConfigured()
-{
-	return feature::isConfigured(kFeature);
-}
-
 ZipHalo::ZipHalo()
 	: Component("ZipHalo")
 {
@@ -34,11 +27,6 @@ ZipHalo::ZipHalo()
 
 static const int kNeoPixelLedCount	= 24;
 static const NeoPixel::MaxBrightness kMaxBrightnessDefault	= 10;
-
-/* Component */ bool NeoPixelForZipHalo::isConfigured()
-{
-	return NeoPixel::isConfigured() && feature::isConfigured(kFeature);
-}
 
 NeoPixelForZipHalo::NeoPixelForZipHalo()
 	: NeoPixel("NeoPixelForZipHalo", /* digitalPort */ ExtKit::global().p0(), kNeoPixelLedCount)

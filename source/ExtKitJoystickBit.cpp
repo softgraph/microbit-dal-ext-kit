@@ -22,22 +22,14 @@ namespace microbit_dal_ext_kit {
 static const int kJoystickDirectionCenterMin = 400;
 static const int kJoystickDirectionCenterMax = 600;
 
-static const Features kFeature = feature::kJoystickBit;
-
-/* Component */ Features JoystickBit::avaiableFeatures()
+bool JoystickBit::isAvaiable()
 {
 	ExtKit& g = ExtKit::global();
 	int valueX = g.p0().getAnalogValue();
 	int valueY = g.p1().getAnalogValue();
-	bool available =
+	return
 		(((kJoystickDirectionCenterMin <= valueX) && (valueX <= kJoystickDirectionCenterMax)) &&
 		 ((kJoystickDirectionCenterMin <= valueY) && (valueY <= kJoystickDirectionCenterMax)));
-	return available ? kFeature : 0;
-}
-
-/* Component */ bool JoystickBit::isConfigured()
-{
-	return feature::isConfigured(kFeature);
 }
 
 JoystickBit::JoystickBit()

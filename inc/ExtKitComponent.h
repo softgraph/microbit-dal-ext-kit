@@ -23,12 +23,6 @@ namespace microbit_dal_ext_kit {
 	friend class CompositeComponent;
 
 public:
-	/// Check that the required hardware/software resources are avaialable and return available Features.
-	static /* to be overridden */ Features avaiableFeatures();
-
-	/// Check that the required Features are configured
-	static /* to be overridden */ bool isConfigured();
-
 	/// Virtual Destructor
 	virtual ~Component();
 
