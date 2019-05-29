@@ -45,6 +45,9 @@ void showChar(char c);
 /// Flash Character
 void flashChar(char c, uint32_t durationInMilliseconds = 500);
 
+/// Set Scroll Speed
+void setScrollSpeed(int speed);
+
 /// Scroll Sring
 void scrollString(const ManagedString& s);
 

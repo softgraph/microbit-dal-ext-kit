@@ -75,7 +75,8 @@ static const Graph sBarGraph[] = {
 	 1, 1}	// FULL
 };
 
-static DisplayRotation  sDisplayRotation = MICROBIT_DISPLAY_ROTATION_0;
+static DisplayRotation sDisplayRotation = MICROBIT_DISPLAY_ROTATION_0;
+static int sScrollSpeed = MICROBIT_DEFAULT_SCROLL_SPEED;
 
 void setDisplayRotation(DisplayRotation displayRotation)
 {
@@ -123,11 +124,16 @@ void flashChar(char c, uint32_t durationInMilliseconds)
 	d.print(saved);
 }
 
+void setScrollSpeed(int scrollSpeed)
+{
+	sScrollSpeed = scrollSpeed;
+}
+
 void scrollString(const ManagedString& s)
 {
 	MicroBitDisplay& d = ExtKit::global().display();
 	MicroBitImage saved = d.screenShot();
-	d.scroll(s);
+	d.scroll(s, sScrollSpeed);
 	d.print(saved);
 }
 
