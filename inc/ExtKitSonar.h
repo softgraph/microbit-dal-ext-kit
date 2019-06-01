@@ -35,8 +35,17 @@ public:
 
 	};	// HandlerProtocol
 
+	/// Echo Input Stabilizer
+	/**
+		0: No stabilizer - raw data
+		1: The weakest stabilizer - mix the latest and the previous data in the proportion 7:1
+		:
+		7: The strongest stabilizer - mix the latest and the previous data in the proportion 1:7
+	*/
+	typedef uint8_t EchoInputStabilizer;
+
 	/// Constructor
-	Sonar(MicroBitPin& triggerOutput, MicroBitPin& echoInput, uint16_t echoInputEventID, HandlerProtocol& handler);
+	Sonar(const char* name, MicroBitPin& triggerOutput, MicroBitPin& echoInput, uint16_t echoInputEventID, HandlerProtocol& handler, EchoInputStabilizer echoInputStabilizer = 0);
 
 	/// Trigger sonar.
 	/** Suggest to use over 60 ms measurement cycle, in order to prevent trigger signal to the echo signal.
@@ -53,6 +62,12 @@ protected:
 private:
 	/// Handle Echo Input
 	void handleEchoInput(MicroBitEvent event);
+
+	/// Previous Sonar Duration
+	uint32_t	mPreviousSonarDuration;
+
+	/// Echo Input Stabilizer
+	EchoInputStabilizer		mEchoInputStabilizer;
 
 };	// Sonar
 

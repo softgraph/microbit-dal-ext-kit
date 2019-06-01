@@ -23,10 +23,12 @@ namespace microbit_dal_ext_kit {
 		- http://www.handsontec.com/pdf_files/hc-sr04-User-Guide.pdf
 */
 
-Sonar::Sonar(MicroBitPin& triggerOutput, MicroBitPin& echoInput, uint16_t echoInputEventID, HandlerProtocol& handler)
-	: Component("Sonar")
+Sonar::Sonar(const char* name, MicroBitPin& triggerOutput, MicroBitPin& echoInput, uint16_t echoInputEventID, HandlerProtocol& handler, EchoInputStabilizer echoInputStabilizer)
+	: Component(name)
 	, mTriggerOutput(triggerOutput)
 	, mHandler(handler)
+	, mPreviousSonarDuration(0)
+	, mEchoInputStabilizer(echoInputStabilizer)
 {
 	ExtKit::global().messageBus().listen(echoInputEventID, MICROBIT_PIN_EVT_PULSE_HI, this, &Sonar::handleEchoInput);
 
@@ -50,11 +52,27 @@ void Sonar::trigger()
 
 void Sonar::handleEchoInput(MicroBitEvent event)
 {
-	uint64_t duration = event.timestamp;	// duration in microseconds
-	if(UINT32_MAX < duration) {
-		duration = UINT32_MAX;
+	const uint32_t kMaxDuration = 36 * 1000;	// 36 ms
+
+	// Apply the upper limit.
+	uint32_t duration;	// duration in microseconds
+	if(kMaxDuration < event.timestamp) {
+		duration = kMaxDuration;
 	}
-	mHandler.handleSonarEcho((uint32_t) duration);
+	else {
+		duration = (uint32_t) event.timestamp;
+	}
+
+	// Stabilize Sonar Duration.
+	if((mPreviousSonarDuration != 0) && (0 < mEchoInputStabilizer) && (mEchoInputStabilizer < 8)) {
+		duration *= 8 - mEchoInputStabilizer;
+		duration += mPreviousSonarDuration * mEchoInputStabilizer;
+		duration /= 8;
+	}
+	mPreviousSonarDuration = duration;
+
+	// Handle Sonar Echo
+	mHandler.handleSonarEcho(duration);
 }
 
 }	// microbit_dal_ext_kit
