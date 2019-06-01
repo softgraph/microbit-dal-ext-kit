@@ -39,9 +39,6 @@ public:
 	/// Constructor
 	NeoPixelForZipHalo();
 
-	/// Reset max brightness value in percent. Call show() to apply the change.
-	void resetMaxBrightness();
-
 };	// NeoPixelForZipHalo
 
 }	// microbit_dal_ext_kit

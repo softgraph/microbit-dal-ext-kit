@@ -45,12 +45,10 @@ void TouchPiano::read(PianoKeys* /* OUT */ outKeys)
 */
 
 static const int kNeoPixelLedCount	= 4;
-static const NeoPixel::MaxBrightness kMaxBrightnessDefault = 10;
 
 NeoPixelForTouchPiano::NeoPixelForTouchPiano()
-	: NeoPixel("NeoPixelForTouchPiano", /* digitalPort */ ExtKit::global().p1(), kNeoPixelLedCount)
+	: NeoPixel("NeoPixelForTouchPiano", /* ledPort */ ExtKit::global().p1(), kNeoPixelLedCount)
 {
-	setMaxBrightness(kMaxBrightnessDefault);
 }
 
 /* NeoPixel */ void NeoPixelForTouchPiano::fillColorWithRainbow()

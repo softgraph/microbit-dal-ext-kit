@@ -26,17 +26,10 @@ ZipHalo::ZipHalo()
 */
 
 static const int kNeoPixelLedCount	= 24;
-static const NeoPixel::MaxBrightness kMaxBrightnessDefault	= 10;
 
 NeoPixelForZipHalo::NeoPixelForZipHalo()
-	: NeoPixel("NeoPixelForZipHalo", /* digitalPort */ ExtKit::global().p0(), kNeoPixelLedCount)
+	: NeoPixel("NeoPixelForZipHalo", /* ledPort */ ExtKit::global().p0(), kNeoPixelLedCount)
 {
-	setMaxBrightness(kMaxBrightnessDefault);
-}
-
-void NeoPixelForZipHalo::resetMaxBrightness()
-{
-	setMaxBrightness(kMaxBrightnessDefault);
 }
 
 }	// microbit_dal_ext_kit
