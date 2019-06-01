@@ -65,7 +65,7 @@ protected:
 	Component(const char* name);
 
 	/// Do Handle Component Action
-	virtual /* to be overridden */ void doHandleComponentAction(Action action);
+	virtual /* Component */ void doHandleComponentAction(Action action);
 
 	/// Component Name
 	const char*	mName;
