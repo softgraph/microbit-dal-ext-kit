@@ -30,6 +30,7 @@ namespace microbit_dal_ext_kit {
 		- ExtKitBuzzer.h
 		- ExtKitJoystickBit.h
 		- ExtKitMotoBit.h
+		- ExtKitMotorsLR.h
 		- ExtKitNeoPixel.h
 		- ExtKitPeriodicObserver.h
 		- ExtKitRemoteState.h
@@ -98,6 +99,7 @@ namespace microbit_dal_ext_kit {
 #include "ExtKitImage.h"
 #include "ExtKitJoystickBit.h"
 #include "ExtKitMotoBit.h"
+#include "ExtKitMotorsLR.h"
 #include "ExtKitNeoPixel.h"
 #include "ExtKitNode.h"
 #include "ExtKitNumeric.h"
@@ -105,6 +107,7 @@ namespace microbit_dal_ext_kit {
 #include "ExtKitPeriodicObserver.h"
 #include "ExtKitPianoKey.h"
 #include "ExtKitRadio.h"
+#include "ExtKitRemoteState.h"
 #include "ExtKitRequest.h"
 #include "ExtKitSerial.h"
 #include "ExtKitSerialDebugger.h"

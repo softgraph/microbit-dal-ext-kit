@@ -22,44 +22,57 @@ typedef uint32_t	Features;
 /// Feature utility
 namespace feature {
 
-/// Class `remoteState::Transmitter` is required.
-const Features kRemoteStateTx	= (1 << 3);
-
-/// Class `remoteState::Receiver` is required.
-const Features kRemoteStateRx	= (1 << 4);
+/// Auto detection for the extension board is not available.
+const Features kNoAutoDetection	= (1 << 0);
 
 /// The device is mounted upside down. micro:bit's button A is on the right.
-const Features kInverted		= (1 << 5);
+const Features kInverted		= (1 << 1);
 
-/// Class `NeoPixel` is required.
+//								= (1 << 2);
+
+/// Remote State Transmitter is supported.
+const Features kRemoteStateTx	= (1 << 3);
+
+/// Remote State Receiver is supported.
+const Features kRemoteStateRx	= (1 << 4);
+
+//								= (1 << 5);
+
+/// Generic NeoPixel strip module is equipped optionally.
 const Features kNeoPixel		= (1 << 6);
 
-/// Class `Buzzer` is required.
+/// Generic buzzer module is equipped optionally.
 const Features kBuzzer			= (1 << 7);
 
-/// Class `Sonar` is required.
+/// Generic sonar module is equipped optionally.
 const Features kSonar			= (1 << 8);
 
-/// Auto detection for the extension board is not available
-const Features kNoAutoDetection	= (1 << 9);
+/// Generic Servo Motors for L and R are equipped optionally.
+const Features kServoMotorsLR	= (1 << 9);
 
-/// No extension board is connected to the device
-const Features kMicroBitOnly	= (1 << 10);
+//								= (1 << 10);
 
-/// Class `JoystickBit`
+/// ElecFreaks' Joystick:bit board is connected.
 const Features kJoystickBit		= (1 << 11);
 
-/// Class `MotoBit` is required.
+/// SparkFun's moto:bit board is connected.
 const Features kMotoBit			= (1 << 12);
 
-/// Class `TouchPiano` is required.
+/// Waveshare's Mini Piano Module for micro:bit also known as TouchPiano board is connected.
 const Features kTouchPiano		= (1 << 13);
 
-/// Class `ZipHalo` is required.
+/// Kitronik's Zip Halo board is connected.
 const Features kZipHalo			= (1 << 14);
 
-/// Class `RingBitCar` is required.
-const Features kRingBitCar		= (1 << 15);
+//								= (1 << 15);
+//								= (1 << 16);
+//								= (1 << 17);
+//								= (1 << 18);
+//								= (1 << 19);
+//								= (1 << 20);
+//								= (1 << 21);
+//								= (1 << 22);
+//								= (1 << 23);
 
 /// Reserved for App #7.
 const Features kReservedForApp7	= (1 << 24);

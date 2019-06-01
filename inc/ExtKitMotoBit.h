@@ -32,24 +32,18 @@ public:
 	MotoBit();
 
 	/// Inherited
-	void setMotorSpeed(MotorDirection directionL, MotorDirection directionR, int speedInPercentL, int speedInPercentR);
+	/* MotorsLR */ void setMotorSpeed(MotorDirection directionL, MotorDirection directionR, int speedInPercentL, int speedInPercentR);
 
 protected:
 	/// Inherited
 	/* Component */ void doHandleComponentAction(Action action);
 
-private:
-	/// Motor Side
-	enum Motor {
-		kLeft,
-		kRight
-	};
+	/// Inherited
+	/* MotorsLR */ int setMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent);	// returns MICROBIT_INVALID_PARAMETER, MICROBIT_NOT_SUPPORTED, MICROBIT_I2C_ERROR or MICROBIT_OK
 
+private:
 	/// Set Motor Power
 	static int setMotorPower(bool power);	// returns MICROBIT_I2C_ERROR or MICROBIT_OK
-
-	/// Set Motor Speed
-	int setMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent);	// returns MICROBIT_I2C_ERROR or MICROBIT_OK
 
 	/// Set Motor Polarity
 	int setMotorPolarity(Motor motor, bool invert);	// returns MICROBIT_I2C_ERROR or MICROBIT_OK

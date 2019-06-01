@@ -61,20 +61,15 @@ MotoBit::MotoBit()
 	{
 		setMotorPolarity(kLeft, mInverted);
 		setMotorPolarity(kRight, mInverted);
-		setMotorSpeed(kForward, kForward, 0, 0);
-	}
-	else if(action == kStop)
-	{
-		setMotorSpeed(kForward, kForward, 0, 0);
 	}
 
-	Component::doHandleComponentAction(action);
+	/* super */ MotorsLR::doHandleComponentAction(action);
 }
 
-void MotoBit::setMotorSpeed(MotoBit::MotorDirection directionL, MotoBit::MotorDirection directionR, int speedInPercentL, int speedInPercentR)
+/* MotorsLR */ void MotoBit::setMotorSpeed(MotorDirection directionL, MotorDirection directionR, int speedInPercentL, int speedInPercentR)
 {
-	setMotorSpeed(kLeft,  directionL, speedInPercentL);
-	setMotorSpeed(kRight, directionR, speedInPercentR);
+	/* super */ MotorsLR::setMotorSpeed(directionL, directionR, speedInPercentL, speedInPercentR);
+
 	bool power = (speedInPercentL || speedInPercentR);
 	setMotorPower(power);
 }
@@ -87,7 +82,7 @@ int MotoBit::setMotorPower(bool power)	// returns MICROBIT_I2C_ERROR or MICROBIT
 	return ExtKit::global().i2c().write(kI2cAddress, i2cData, COUNT_OF(i2cData));
 }
 
-int MotoBit::setMotorSpeed(MotoBit::Motor motor, MotoBit::MotorDirection direction, int speedInPercent)	// returns MICROBIT_I2C_ERROR or MICROBIT_OK
+/* MotorsLR */ int MotoBit::setMotorSpeed(MotoBit::Motor motor, MotoBit::MotorDirection direction, int speedInPercent)	// returns MICROBIT_I2C_ERROR or MICROBIT_OK
 {
 	speedInPercent = numeric::clamp(0, 100, speedInPercent);
 	int speed = speedInPercent * 127 / 100;	// range: 0 - 127

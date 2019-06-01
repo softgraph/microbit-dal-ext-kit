@@ -9,8 +9,8 @@
 	@note	Run Doxygen (http://www.doxygen.nl) with `Doxyfile` in the project root to generate the documentation.
 */
 
-#ifndef EXT_KIT_LR_MOTORS_H
-#define EXT_KIT_LR_MOTORS_H
+#ifndef EXT_KIT_MOTORS_LR_H
+#define EXT_KIT_MOTORS_LR_H
 
 #include "ExtKitComponent.h"
 
@@ -27,13 +27,26 @@ public:
 	};
 
 	/// Constructor
-	MotorsLR(const char* name) : Component(name) {}
+	MotorsLR(const char* name);
 
-	/// Set motor speed
-	virtual void setMotorSpeed(MotorDirection directionL, MotorDirection directionR, int speedInPercentL, int speedInPercentR) = 0;
+	/// Set Motor Speed
+	virtual /* MotorsLR */ void setMotorSpeed(MotorDirection directionL, MotorDirection directionR, int speedInPercentL, int speedInPercentR);
 
-};	// LRMotors
+protected:
+	/// Motor
+	enum Motor {
+		kLeft,
+		kRight
+	};
+
+	/// Inherited
+	/* Component */ void doHandleComponentAction(Action action);
+
+	/// Set Motor Speed
+	virtual /* MotorsLR */ int setMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent) = 0;	// returns MICROBIT_INVALID_PARAMETER, MICROBIT_NOT_SUPPORTED, MICROBIT_I2C_ERROR or MICROBIT_OK
+
+};	// MotorsLR
 
 }	// microbit_dal_ext_kit
 
-#endif	// EXT_KIT_LR_MOTORS_H
+#endif	// EXT_KIT_MOTORS_LR_H
