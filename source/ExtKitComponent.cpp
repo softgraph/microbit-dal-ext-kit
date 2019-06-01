@@ -56,7 +56,7 @@ void Component::stop()
 	doHandleComponentAction(kPoststop);
 }
 
-void Component::doHandleComponentAction(Action action)
+/* Component */ void Component::doHandleComponentAction(Action action)
 {
 	mStatus = action;
 }
@@ -102,7 +102,7 @@ void CompositeComponent::removeChild(Component& component)
 		r->component.doHandleComponentAction(action);
 	}
 
-	Component::doHandleComponentAction(action);
+	/* super */ Component::doHandleComponentAction(action);
 }
 
 /**	@class	CompositeComponent::ComponentRecord

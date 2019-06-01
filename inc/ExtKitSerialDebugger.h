@@ -32,37 +32,37 @@ protected:
 	/* Component */ void doHandleComponentAction(Action action);
 
 	/// Called when the serial debugger is enabled (ready to activate)
-	virtual /* to be overridden */ void doHandleSerialDebuggerEnabled();
+	virtual /* SerialDebugger */ void doHandleSerialDebuggerEnabled();
 
 	/// Called when the serial debugger is disabled
-	virtual /* to be overridden */ void doHandleSerialDebuggerDisabled();
+	virtual /* SerialDebugger */ void doHandleSerialDebuggerDisabled();
 
 	/// Called when a character is received from the serial port
-	virtual /* to be overridden */ void doHandleSerialReceived(char c);
+	virtual /* SerialDebugger */ void doHandleSerialReceived(char c);
 
 	/// Called when a command for Direct Input Mode is ready to evaluate
-	virtual /* to be overridden */ bool /* consumed */ doHandleDirectCommand(ManagedString command);
+	virtual /* SerialDebugger */ bool /* consumed */ doHandleDirectCommand(ManagedString command);
 
 	/// Called when a command for Line Input Mode is ready to evaluate
-	virtual /* to be overridden */ bool /* consumed */ doHandleLineCommand(ManagedString command);
+	virtual /* SerialDebugger */ bool /* consumed */ doHandleLineCommand(ManagedString command);
 
 	/// Called when Show Help command is received
-	virtual /* to be overridden */ void debug_sendCmdHelp();
+	virtual /* SerialDebugger */ void debug_sendCmdHelp();
 
 	/// Called when Show Help command for Direct Input Mode is requested
-	virtual /* to be overridden */ void debug_sendHelpForDirectCommands();
+	virtual /* SerialDebugger */ void debug_sendHelpForDirectCommands();
 
 	/// Called when Show Help command for Line Input Mode is requested
-	virtual /* to be overridden */ void debug_sendHelpForLineCommands();
+	virtual /* SerialDebugger */ void debug_sendHelpForLineCommands();
 
 	/// Send Lines
 	void debug_sendLines(const char* const * lineArray /* terminated by 0 */);
 
 	/// Called when Show Configuration command is received
-	virtual /* to be overridden */ void debug_sendConfig();
+	virtual /* SerialDebugger */ void debug_sendConfig();
 
 	/// Called when Show Device information command is received
-	virtual /* to be overridden */ void debug_sendDeviceInfo();
+	virtual /* SerialDebugger */ void debug_sendDeviceInfo();
 
 	/// Command string buffer
 	ManagedString mCommand;

@@ -61,12 +61,12 @@ SerialDebugger::SerialDebugger(const char* name)
 
 #endif	// SERIAL_EXT_DEBUG
 
-/* to be overridden */ void SerialDebugger::doHandleSerialDebuggerEnabled()
+/* SerialDebugger */ void SerialDebugger::doHandleSerialDebuggerEnabled()
 {
 	serial::sendLine("*** Hit any key to activate the serial debugger ***");
 }
 
-/* to be overridden */ void SerialDebugger::doHandleSerialDebuggerDisabled()
+/* SerialDebugger */ void SerialDebugger::doHandleSerialDebuggerDisabled()
 {
 	serial::sendLine("*** The serial debugger is disabled ***");
 }
@@ -92,7 +92,7 @@ void SerialDebugger::handleSerialReceived(MicroBitEvent event)
 #define ESC	0x1b	// Escape
 #define DEL	0x7f	// Delete
 
-/* to be overridden */ void SerialDebugger::doHandleSerialReceived(char c)
+/* SerialDebugger */ void SerialDebugger::doHandleSerialReceived(char c)
 {
 	// Activate debugger if it is not activated
 	if(!debug_isDebuggerActive()) {
@@ -190,7 +190,7 @@ clear_buffer:
 	mLineModeChar = 0;
 }
 
-/* to be overridden */ bool /* consumed */ SerialDebugger::doHandleDirectCommand(ManagedString command)
+/* SerialDebugger */ bool /* consumed */ SerialDebugger::doHandleDirectCommand(ManagedString command)
 {
 	if(command.length() == 1) {
 		const char c0 = command.charAt(0);
@@ -235,7 +235,7 @@ clear_buffer:
 	return false;	// not consumed
 }
 
-/* to be overridden */ bool /* consumed */ SerialDebugger::doHandleLineCommand(ManagedString command)
+/* SerialDebugger */ bool /* consumed */ SerialDebugger::doHandleLineCommand(ManagedString command)
 {
 	if(command.length() < 2) {
 		return false;	// not consumed
@@ -297,7 +297,7 @@ clear_buffer:
 	return false;	// not consumed
 }
 
-/* to be overridden */ void SerialDebugger::debug_sendCmdHelp()
+/* SerialDebugger */ void SerialDebugger::debug_sendCmdHelp()
 {
 	debug_sendLine("--- Help ---", false);
 	debug_sendLine("--- Direct Commands (No Enter key is required)", false);
@@ -309,7 +309,7 @@ clear_buffer:
 	debug_sendLine("---", false);
 }
 
-/* to be overridden */ void SerialDebugger::debug_sendHelpForDirectCommands()
+/* SerialDebugger */ void SerialDebugger::debug_sendHelpForDirectCommands()
 {
 	static const char* const lineArray[] = {
 		"?   show this Help",
@@ -323,7 +323,7 @@ clear_buffer:
 	debug_sendLines(lineArray);
 }
 
-/* to be overridden */ void SerialDebugger::debug_sendHelpForLineCommands()
+/* SerialDebugger */ void SerialDebugger::debug_sendHelpForLineCommands()
 {
 	static const char* const lineArray[] = {
 		":sc     Show Configuration",
@@ -348,7 +348,7 @@ void SerialDebugger::debug_sendLines(const char* const * lineArray /* terminated
 	}
 }
 
-/* to be overridden */ void SerialDebugger::debug_sendConfig()
+/* SerialDebugger */ void SerialDebugger::debug_sendConfig()
 {
 	ExtKit& g = ExtKit::global();
 
@@ -415,7 +415,7 @@ void SerialDebugger::debug_sendLines(const char* const * lineArray /* terminated
 //	debug_sendLine("gSerial.getTxBufferSize(): ", ManagedString(gSerial.getTxBufferSize()).toCharArray(), false);
 }
 
-/* to be overridden */ void SerialDebugger::debug_sendDeviceInfo()
+/* SerialDebugger */ void SerialDebugger::debug_sendDeviceInfo()
 {
 	debug_sendLine("--- Device Information ---", false);
 	debug_sendLine("-- Hardware Information", false);
