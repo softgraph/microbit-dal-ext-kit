@@ -97,7 +97,7 @@ void selectAppModeFor(Features condition, const AppModeDescriberProtocol& descri
 	const char* menuKey = sDescriber->menuKeyFor(appMode);
 
 	// Show the selected App Mode
-	display::showChar(' ');
+	display::clear();
 	display::scrollString(ManagedString(menuKey));
 
 	// Send the selected App Mode to the debugger
