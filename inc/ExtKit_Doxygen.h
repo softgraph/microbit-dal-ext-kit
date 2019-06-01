@@ -29,8 +29,6 @@ namespace microbit_dal_ext_kit {
 		</td></tr><tr><td>
 		`MotoBit`		</td><td>	@copybrief	MotoBit
 		</td></tr><tr><td>
-		`RingBitCar`	</td><td>	@copybrief	RingBitCar
-		</td></tr><tr><td>
 		`TouchPiano`	</td><td>	@copybrief	TouchPiano
 		</td></tr><tr><td>
 		`ZipHalo`		</td><td>	@copybrief	ZipHalo
@@ -42,6 +40,8 @@ namespace microbit_dal_ext_kit {
 		</td></tr><tr><td>
 		`Buzzer`		</td><td>	@copybrief	Buzzer
 		</td></tr><tr><td>
+		`MotorsLR`		</td><td>	@copybrief	MotorsLR
+		</td></tr><tr><td>
 		`NeoPixel`		</td><td>	@copybrief	NeoPixel
 		</td></tr><tr><td>
 		`Sonar`			</td><td>	@copybrief	Sonar
@@ -50,6 +50,10 @@ namespace microbit_dal_ext_kit {
 	# Other components
 		<table><tr><td>
 		%Component					</td><td>	Description
+		</td></tr><tr><td>
+		`Component`					</td><td>	@copybrief	Component
+		</td></tr><tr><td>
+		`CompositeComponent`		</td><td>	@copybrief	CompositeComponent
 		</td></tr><tr><td>
 		`PeriodicObserver`			</td><td>	@copybrief	PeriodicObserver
 		</td></tr><tr><td>

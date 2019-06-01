@@ -19,7 +19,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/// An ext-kit Component which provides the support for Waveshare's Mini Piano Module for micro:bit also known as TouchPiano board
+/// An ext-kit Component which provides the support for Waveshare's Mini Piano Module for micro:bit also known as %TouchPiano board
 /**
 	@reference	Waveshare Mini Piano Module for micro:bit
 		- https://www.waveshare.com/piano-for-micro-bit.htm
