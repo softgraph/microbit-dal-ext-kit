@@ -17,7 +17,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/// Buttons. The constants for type `#Buttons` are defined in namespace `microbit_dal_ext_kit.button`.
+/// Buttons. The constants for type `#Buttons` are defined in namespace `microbit_dal_ext_kit::button`.
 typedef uint16_t	Buttons;
 
 /// `State` specialization for `#Buttons`

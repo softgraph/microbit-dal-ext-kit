@@ -17,7 +17,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/// Direction. The constants for type `#Direction` are defined in namespace `microbit_dal_ext_kit.direction`.
+/// Direction. The constants for type `#Direction` are defined in namespace `microbit_dal_ext_kit::direction`.
 typedef uint16_t	Direction;
 
 /// `State` specialization for `#Direction`

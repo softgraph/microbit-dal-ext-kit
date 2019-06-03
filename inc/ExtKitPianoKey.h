@@ -17,7 +17,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/// Piano Keys. The constants for type `#PianoKeys` are defined in namespace `microbit_dal_ext_kit.pianoKey`.
+/// Piano Keys. The constants for type `#PianoKeys` are defined in namespace `microbit_dal_ext_kit::pianoKey`.
 typedef uint16_t	PianoKeys;
 
 /// `State` specialization for `#PianoKeys`
