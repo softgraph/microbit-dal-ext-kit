@@ -29,7 +29,7 @@ public:
 	static bool isAvaiable();
 
 	/// Constructor
-	MotoBit();
+	MotoBit(bool inverted);
 
 	/// Inherited
 	/* MotorsLR */ void setMotorSpeed(MotorDirection directionL, MotorDirection directionR, int speedInPercentL, int speedInPercentR);

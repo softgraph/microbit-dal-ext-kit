@@ -48,11 +48,10 @@ bool MotoBit::isAvaiable()
 	return (setMotorPower(false) == MICROBIT_OK);
 }
 
-MotoBit::MotoBit()
+MotoBit::MotoBit(bool inverted)
 	: MotorsLR("MotoBit")
-	, mInverted(false)
+	, mInverted(inverted)
 {
-	mInverted = !feature::isConfigured(feature::kInverted);
 }
 
 /* Component */ void MotoBit::doHandleComponentAction(Action action)
