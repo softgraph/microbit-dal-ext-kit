@@ -16,8 +16,16 @@
 
 namespace microbit_dal_ext_kit {
 
-/// An App Mode is a set of `#Features`
-typedef Features	AppMode;
+/// App Mode
+typedef uint32_t	AppMode;
+
+const AppMode kAppModeNone = 0;
+
+/// Set App Mode
+void setAppMode(AppMode appMode);
+
+/// App Mode
+AppMode appMode();
 
 /// The Describer Protocol for App Mode
 /* interface */ class AppModeDescriberProtocol
@@ -33,7 +41,7 @@ public:
 	virtual /* to be implemented */ const char* descriptionFor(AppMode appMode) const = 0;
 
 	/// Creates a new array of App Modes which meets `condition` and `menuKeyFilter`
-	virtual /* to be implemented */ int /* count */ appModesFor(Features condition, const char* menuKeyFilter, AppMode** /* OUT new[] */ outAppModes) const = 0;
+	virtual /* to be implemented */ int /* count */ appModesFor(AppMode condition, const char* menuKeyFilter, AppMode** /* OUT new[] */ outAppModes) const = 0;
 
 };	// AppModeDescriberProtocol
 
@@ -44,7 +52,7 @@ const AppModeDescriberProtocol* appModeDescriber();	// returns null until `regis
 void registerAppModeDescriber(const AppModeDescriberProtocol& describer);
 
 /// Select App Mode for the condition
-void selectAppModeFor(Features condition, const AppModeDescriberProtocol& describer);
+void selectAppModeFor(AppMode condition, const AppModeDescriberProtocol& describer);
 
 /// Send App Mode information to the debugger
 void debug_sendAppMode(const char* title, AppMode appMode, bool withDebugPrefix = true);

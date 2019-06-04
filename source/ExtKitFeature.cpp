@@ -13,29 +13,5 @@
 #include "ExtKit.h"
 
 namespace microbit_dal_ext_kit {
-namespace feature {
 
-static Features sConfiguredFeatures = 0;
-
-void resetConfigured()
-{
-	sConfiguredFeatures = 0;
-}
-
-void setConfigured(Features features)
-{
-	sConfiguredFeatures |= features;
-}
-
-bool isConfigured(Features features)
-{
-	return((sConfiguredFeatures & features) == features);
-}
-
-Features configured()
-{
-	return sConfiguredFeatures;
-}
-
-}	// feature
 }	// microbit_dal_ext_kit

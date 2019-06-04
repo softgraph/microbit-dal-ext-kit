@@ -353,7 +353,7 @@ void SerialDebugger::debug_sendLines(const char* const * lineArray /* terminated
 	ExtKit& g = ExtKit::global();
 
 	debug_sendLine("--- Active App Mode ---", false);
-	debug_sendAppMode(0, feature::configured(), false);
+	debug_sendAppMode(0, appMode(), false);
 
 	debug_sendLine("--- Global object ---", false);
 	debug_sendLine("owner:         ", g.owner(), false);

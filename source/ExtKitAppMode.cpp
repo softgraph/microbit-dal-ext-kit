@@ -16,9 +16,21 @@ namespace microbit_dal_ext_kit {
 
 static const AppModeDescriberProtocol* sDescriber = 0;
 
+static AppMode sAppMode = kAppModeNone;
+
 static int /* count */ optionsFor(const AppMode* appModes, int appModeCount, int position, char** /* OUT new[] */ outOptions);
 static char charFor(const char* menuKey, unsigned int index);
 static void debug_sendPossibleAppModes(const AppMode* appModes);
+
+void setAppMode(AppMode appMode)
+{
+	sAppMode = appMode;
+}
+
+AppMode appMode()
+{
+	return sAppMode;
+}
 
 void registerAppModeDescriber(const AppModeDescriberProtocol& describer)
 {
@@ -30,7 +42,7 @@ const AppModeDescriberProtocol* appModeDescriber()	// returns null until `regist
 	return sDescriber;
 }
 
-void selectAppModeFor(Features condition, const AppModeDescriberProtocol& describer)
+void selectAppModeFor(AppMode condition, const AppModeDescriberProtocol& describer)
 {
 	EXT_KIT_ASSERT(condition);
 
@@ -38,8 +50,7 @@ void selectAppModeFor(Features condition, const AppModeDescriberProtocol& descri
 	registerAppModeDescriber(describer);
 
 	// Clear the previous App Mode
-	feature::resetConfigured();
-	AppMode appMode = 0;
+	sAppMode = kAppModeNone;
 
 	// Initializa the list of App Modes
 	AppMode* appModes = 0;
@@ -63,7 +74,8 @@ void selectAppModeFor(Features condition, const AppModeDescriberProtocol& descri
 
 		// Exit if only one App Mode is available
 		if(appModeCount == 1) {
-			appMode = appModes[0];
+			// Set the App Mode
+			sAppMode = appModes[0];
 			break;
 		}
 
@@ -90,18 +102,15 @@ void selectAppModeFor(Features condition, const AppModeDescriberProtocol& descri
 		// Update the filter
 		menuKeyFilter[i] = c;
 	}
-	EXT_KIT_ASSERT(appMode);
-
-	// Set the App Mode
-	feature::setConfigured(appMode);
-	const char* menuKey = sDescriber->menuKeyFor(appMode);
+	EXT_KIT_ASSERT(sAppMode != kAppModeNone);
 
 	// Show the selected App Mode
+	const char* menuKey = sDescriber->menuKeyFor(sAppMode);
 	display::clear();
 	display::scrollString(ManagedString(menuKey));
 
 	// Send the selected App Mode to the debugger
-	debug_sendAppMode(EXT_KIT_DEBUG_INFO "Active App Mode: ", appMode);
+	debug_sendAppMode(EXT_KIT_DEBUG_INFO "Active App Mode: ", sAppMode);
  
 	delete[] appModes;
 	delete[] options;
