@@ -305,8 +305,6 @@ clear_buffer:
 
 	debug_sendLine("--- Line Commands (Enter key is required)", false);
 	/* virtual */ debug_sendHelpForLineCommands();
-
-	debug_sendLine("---", false);
 }
 
 /* SerialDebugger */ void SerialDebugger::debug_sendHelpForDirectCommands()
