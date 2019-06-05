@@ -25,12 +25,15 @@ namespace microbit_dal_ext_kit {
 namespace display {
 
 /// Set Display Rotation
-void setDisplayRotation(DisplayRotation displayRotation);
+void setDisplayRotation(DisplayRotation displayRotation, bool backToFront = false);
 
 /// Display Rotation
 DisplayRotation displayRotation();
 
-/// Check that the device is Upside Down
+/// Check that the device is mounted back to front, i.e., left and right are inverted.
+bool isBackToFront();
+
+/// Check that the device is mounted upside down, i.e. top and bottom are inverted.
 bool isUpsideDown();
 
 /// Clear Display

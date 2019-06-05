@@ -41,12 +41,14 @@ static const char* hintFor(char c, const char* const * hints);
 
 int microBitIDButtonLeft()	// returns MICROBIT_ID_BUTTON_A or MICROBIT_ID_BUTTON_B
 {
-	return display::isUpsideDown() ? MICROBIT_ID_BUTTON_B : MICROBIT_ID_BUTTON_A;
+	bool inverted = display::isBackToFront() != display::isUpsideDown();
+	return inverted ? MICROBIT_ID_BUTTON_B : MICROBIT_ID_BUTTON_A;
 }
 
 int microBitIDButtonRight()	// returns MICROBIT_ID_BUTTON_A or MICROBIT_ID_BUTTON_B
 {
-	return display::isUpsideDown() ? MICROBIT_ID_BUTTON_A : MICROBIT_ID_BUTTON_B;
+	bool inverted = display::isBackToFront() != display::isUpsideDown();
+	return inverted ? MICROBIT_ID_BUTTON_A : MICROBIT_ID_BUTTON_B;
 }
 
 void clickPseudoButton(char button /* a, b or w */)
@@ -107,7 +109,8 @@ Buttons readMicroBitButtons()
 	Buttons buttons = 0;
 	bool isButtonLPressed = isButtonAPressed();
 	bool isButtonRPressed = isButtonBPressed();
-	if(display::isUpsideDown()) {
+	bool inverted = display::isBackToFront() != display::isUpsideDown();
+	if(inverted) {
 		swap(isButtonLPressed, isButtonRPressed);
 	}
 	if(isButtonLPressed) {

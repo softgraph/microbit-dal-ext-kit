@@ -76,11 +76,13 @@ static const Graph sBarGraph[] = {
 };
 
 static DisplayRotation sDisplayRotation = MICROBIT_DISPLAY_ROTATION_0;
+static bool sBackToFront = false;
 static int sScrollSpeed = MICROBIT_DEFAULT_SCROLL_SPEED;
 
-void setDisplayRotation(DisplayRotation displayRotation)
+void setDisplayRotation(DisplayRotation displayRotation, bool backToFront)
 {
 	sDisplayRotation = displayRotation;
+	sBackToFront = backToFront;
 
 	MicroBitDisplay& d = ExtKit::global().display();
 	d.rotateTo(displayRotation);
@@ -89,6 +91,11 @@ void setDisplayRotation(DisplayRotation displayRotation)
 DisplayRotation displayRotation()
 {
 	return sDisplayRotation;
+}
+
+bool isBackToFront()
+{
+	return sBackToFront;
 }
 
 bool isUpsideDown()
@@ -215,21 +222,22 @@ EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirStop,	0,0,0,0
 
 void showDirection(Direction direction)
 {
+	bool backToFront = isBackToFront();
 	MicroBitDisplay& d = ExtKit::global().display();
 	switch(direction) {
 		case direction::kCenter:	d.clear();				break;
-		case direction::kN:			d.print(sImageDirN);	break;
-		case direction::kE:			d.print(sImageDirE);	break;
-		case direction::kW:			d.print(sImageDirW);	break;
-		case direction::kS:			d.print(sImageDirS);	break;
-		case direction::kNE:		d.print(sImageDirNE);	break;
-		case direction::kNW:		d.print(sImageDirNW);	break;
-		case direction::kSE:		d.print(sImageDirSE);	break;
-		case direction::kSW:		d.print(sImageDirSW);	break;
-		case direction::kLF:		d.print(sImageDirLF);	break;
-		case direction::kLB:		d.print(sImageDirLB);	break;
-		case direction::kRF:		d.print(sImageDirRF);	break;
-		case direction::kRB:		d.print(sImageDirRB);	break;
+		case direction::kN:			d.print(backToFront ? sImageDirS : sImageDirN);		break;
+		case direction::kE:			d.print(backToFront ? sImageDirW : sImageDirE);		break;
+		case direction::kW:			d.print(backToFront ? sImageDirE : sImageDirW);		break;
+		case direction::kS:			d.print(backToFront ? sImageDirN : sImageDirS);		break;
+		case direction::kNE:		d.print(backToFront ? sImageDirSW : sImageDirNE);	break;
+		case direction::kNW:		d.print(backToFront ? sImageDirSE : sImageDirNW);	break;
+		case direction::kSE:		d.print(backToFront ? sImageDirNW : sImageDirSE);	break;
+		case direction::kSW:		d.print(backToFront ? sImageDirNE : sImageDirSW);	break;
+		case direction::kLF:		d.print(backToFront ? sImageDirRB : sImageDirLF);	break;
+		case direction::kLB:		d.print(backToFront ? sImageDirRF : sImageDirLB);	break;
+		case direction::kRF:		d.print(backToFront ? sImageDirLB : sImageDirRF);	break;
+		case direction::kRB:		d.print(backToFront ? sImageDirLF : sImageDirRB);	break;
 		case direction::kStop:		d.print(sImageDirStop);	break;
 		case direction::kInvalid:	d.printChar('!');		break;
 		default:					d.printChar('?');		break;
