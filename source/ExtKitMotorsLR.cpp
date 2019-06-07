@@ -32,11 +32,11 @@ MotorsLR::MotorsLR(const char* name)
 {
 	if(action == kStart)
 	{
-		/* virtual */ setMotorSpeed(kForward, kForward, 0, 0);
+		/* virtual */ setMotorSpeed(kBrake, kBrake, 0, 0);
 	}
 	else if(action == kStop)
 	{
-		/* virtual */ setMotorSpeed(kForward, kForward, 0, 0);
+		/* virtual */ setMotorSpeed(kBrake, kBrake, 0, 0);
 	}
 
 	/* super */ Component::doHandleComponentAction(action);

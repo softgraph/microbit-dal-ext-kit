@@ -22,8 +22,9 @@ namespace microbit_dal_ext_kit {
 public:
 	/// Motor Direction
 	enum MotorDirection {
-		kForward,
-		kBackward
+		kBrake,		// `speedInPercent` shold be 0
+		kForward,	// `speedInPercent` shold be between 0 and 100
+		kBackward	// `speedInPercent` shold be between 0 and 100
 	};
 
 	/// Constructor
