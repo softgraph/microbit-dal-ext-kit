@@ -20,7 +20,7 @@ class MicroBitPin;
 
 namespace microbit_dal_ext_kit {
 
-/// An ext-kit Component which provides the support for a generic sonar modules such as HC-SR04
+/// An ext-kit Component which provides the support for ElecFreaks' sonar:bit or a generic sonar module such as HC-SR04
 class Sonar : public Component
 {
 public:
@@ -38,13 +38,13 @@ public:
 	/// Echo Input Stabilizer
 	/**
 		0: No stabilizer - raw data
-		1: The weakest stabilizer - mix the latest and the previous data in the proportion 7:1
+		1: The weakest stabilizer - mix the latest raw data and the previous stabilized data in the proportion 7:1
 		:
-		7: The strongest stabilizer - mix the latest and the previous data in the proportion 1:7
+		7: The strongest stabilizer - mix the latest raw data and the previous stabilized data in the proportion 1:7
 	*/
 	typedef uint8_t EchoInputStabilizer;
 
-	/// Constructor
+	/// Constructor. `triggerOutput` and `echoInput` can be identical.
 	Sonar(const char* name, MicroBitPin& triggerOutput, MicroBitPin& echoInput, uint16_t echoInputEventID, HandlerProtocol& handler, EchoInputStabilizer echoInputStabilizer = 0);
 
 	/// Trigger sonar.
