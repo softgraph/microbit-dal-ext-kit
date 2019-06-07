@@ -56,6 +56,9 @@ protected:
 	/// Trigger Output Port
 	MicroBitPin&		mTriggerOutput;
 
+	/// Echo Input Port
+	MicroBitPin&		mEchoInput;
+
 	/// Handler
 	HandlerProtocol&	mHandler;
 

@@ -26,28 +26,29 @@ namespace microbit_dal_ext_kit {
 Sonar::Sonar(const char* name, MicroBitPin& triggerOutput, MicroBitPin& echoInput, uint16_t echoInputEventID, HandlerProtocol& handler, EchoInputStabilizer echoInputStabilizer)
 	: Component(name)
 	, mTriggerOutput(triggerOutput)
+	, mEchoInput(echoInput)
 	, mHandler(handler)
 	, mPreviousSonarDuration(0)
 	, mEchoInputStabilizer(echoInputStabilizer)
 {
 	ExtKit::global().messageBus().listen(echoInputEventID, MICROBIT_PIN_EVT_PULSE_HI, this, &Sonar::handleEchoInput);
-
-	echoInput.eventOn(MICROBIT_PIN_EVENT_ON_PULSE);
-
-	/*
-		- https://lancaster-university.github.io/microbit-docs/ubit/io/#eventon
-			eventOn
-			Note
-			In the MICROBIT_PIN_EVENT_ON_PULSE mode, the smallest pulse that was reliably detected was 85us, around 5khz.
-	*/
 }
 
 void Sonar::trigger()
 {
-	mTriggerOutput.setPull(PullNone);
+	// Note that the echo input port and the trigger output port might be identical.
+
+	// Configures the trigger output port as a digital output and output a trigger.
+	mTriggerOutput.setPull(PullNone);	// may not be required
 	mTriggerOutput.setDigitalValue(0);	wait_us(2);
 	mTriggerOutput.setDigitalValue(1);	wait_us(10);	// 10 us is required
 	mTriggerOutput.setDigitalValue(0);
+
+	// Configures the echo input port as a digital input and generates events where the timestamp is the duration that this pin was HI (MICROBIT_PIN_EVT_PULSE_HI).
+	// Note the smallest pulse that was reliably detected was 85us, around 5khz.
+	// See also
+	//	- https://lancaster-university.github.io/microbit-docs/ubit/io/#eventon
+	mEchoInput.eventOn(MICROBIT_PIN_EVENT_ON_PULSE);
 }
 
 void Sonar::handleEchoInput(MicroBitEvent event)
