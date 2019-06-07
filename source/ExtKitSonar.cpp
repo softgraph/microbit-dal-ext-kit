@@ -53,7 +53,7 @@ void Sonar::trigger()
 
 void Sonar::handleEchoInput(MicroBitEvent event)
 {
-	const uint32_t kMaxDuration = 36 * 1000;	// 36 ms
+	const uint32_t kMaxDuration = 36 * 1000;	// 36 ms (Approx. 620 cm of distance)
 
 	// Apply the upper limit.
 	uint32_t duration;	// duration in microseconds
