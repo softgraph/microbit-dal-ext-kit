@@ -32,6 +32,8 @@ AppMode appMode();
 {
 public:
 	/// Hints for Menu Keys
+	/**	An array of hint strings terminated by a null pointer. A hint string consists of a character in menu key string followed by `:` and the description for the character.
+	*/
 	virtual /* to be implemented */ const char* const * hints() const = 0;
 
 	/// A menu key for an App Mode
