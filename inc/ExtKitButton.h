@@ -64,7 +64,7 @@ Buttons readMicroBitButtons();	///< Read MicroBit buttons
 void waitUntilMicroBitButtonsAreReleased();		///< Wait until MicroBit buttons are released
 
 /// Choose a character from string `options`.
-/**	`hints` is used as an array of hint strings terminated by a null pointer. Each hint string should consist of a character in `options` followed by the hint text for the character.
+/**	`hints` provides an array of hint strings terminated by a null pointer. A hint string consists of a character in `options` followed by `:` and the description for the character.
 */
 char chooseFrom(const char* options, const char* const * hints = 0);
 
