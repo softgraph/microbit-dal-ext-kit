@@ -39,31 +39,34 @@ bool isUpsideDown();
 /// Clear Display
 void clear();
 
-/// Show Image
+/// Show an Image
 void showImage(MicroBitImage image);
 
-/// Show Character
+/// Show a Character
 void showChar(char c);
 
-/// Flash Character
+/// Flash a Character
 void flashChar(char c, uint32_t durationInMilliseconds = 500);
 
 /// Set Scroll Speed
 void setScrollSpeed(int speed);
 
-/// Scroll Sring
-void scrollString(const ManagedString& s);
+/// Scroll a Sring and then Show a Character
+void scrollString(const ManagedString& s, char c = 0);
 
-/// Show Number
+/// Scroll a Sring and then Show a Character Asynchronously
+void scrollStringAsync(const ManagedString& s, char c = 0);
+
+/// Show a Number
 void showNumber(int twoDigitNumber /* 00-99 */);
 
 /// Show Bits
 void showBits(uint32_t bits /* 0x00000 - 0xfffff */);
 
-/// Show Button
+/// Show Button State
 void showButton(Buttons buttons);
 
-/// Show Direction
+/// Show Direction State
 void showDirection(Direction direction);
 
 }	// display

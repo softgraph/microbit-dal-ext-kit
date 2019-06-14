@@ -79,6 +79,19 @@ static DisplayRotation sDisplayRotation = MICROBIT_DISPLAY_ROTATION_0;
 static bool sBackToFront = false;
 static int sScrollSpeed = MICROBIT_DEFAULT_SCROLL_SPEED;
 
+struct ScrollParam
+{
+	ScrollParam(const ManagedString& s, char c)
+		: s(s), c(c)
+	{
+	}
+
+	ManagedString	s;
+	char	c;
+};
+
+static void scrollString(void* /* new */ p);
+
 void setDisplayRotation(DisplayRotation displayRotation, bool backToFront)
 {
 	sDisplayRotation = displayRotation;
@@ -136,12 +149,43 @@ void setScrollSpeed(int scrollSpeed)
 	sScrollSpeed = scrollSpeed;
 }
 
-void scrollString(const ManagedString& s)
+void scrollString(const ManagedString& s, char c)
 {
+	ScrollParam* scrollParam = new ScrollParam(s, c);
+	EXT_KIT_ASSERT_OR_PANIC(scrollParam, kPanicOutOfMemory);
+
+	scrollString(scrollParam);
+}
+
+void scrollStringAsync(const ManagedString& s, char c)
+{
+	ScrollParam* scrollParam = new ScrollParam(s, c);
+	EXT_KIT_ASSERT_OR_PANIC(scrollParam, kPanicOutOfMemory);
+
+	create_fiber(scrollString, scrollParam);
+}
+
+void scrollString(void* /* new */ p)
+{
+	EXT_KIT_ASSERT(p);
+
 	MicroBitDisplay& d = ExtKit::global().display();
-	MicroBitImage saved = d.screenShot();
-	d.scroll(s, sScrollSpeed);
-	d.print(saved);
+	d.stopAnimation();
+	fiber_sleep(1 /* milliseconds */);
+
+	ScrollParam* /* new */ scrollParam = (ScrollParam*) p;
+	if(scrollParam->c) {
+		d.clear();
+		d.scroll(scrollParam->s, sScrollSpeed);
+		d.printChar(scrollParam->c);
+	}
+	else {
+		MicroBitImage saved = d.screenShot();
+		d.clear();
+		d.scroll(scrollParam->s, sScrollSpeed);
+		d.print(saved);
+	}
+	delete scrollParam;
 }
 
 void showNumber(int twoDigitNumber /* 00-99 */)
