@@ -31,13 +31,13 @@ AppMode appMode();
 public:
 	/// Hints for Menu Keys
 	/**	An array of hint strings terminated by a null pointer. A hint string consists of the following three parts.
-		- A character in any menu key
-		- A position ('0'-'9' or '*') of the character in any menu key
-		- the hint about the character
+		- A menu key character for an sub-menu item
+		- Available sub-menu depths: '0'-'9' or '*'
+		- The hint about the sub-menu item
 	*/
 	virtual /* to be implemented */ const char* const * hints() const = 0;
 
-	/// A menu key for an App Mode
+	/// A short menu key string uniquely summarizes an App Mode
 	virtual /* to be implemented */ const char* menuKeyFor(AppMode appMode) const = 0;
 
 	/// A description for an App Mode

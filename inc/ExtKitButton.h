@@ -63,11 +63,11 @@ bool isButtonBPressed();		///< Check whether button B is pressed or not
 Buttons readMicroBitButtons();	///< Read MicroBit buttons
 void waitUntilMicroBitButtonsAreReleased();		///< Wait until MicroBit buttons are released
 
-/// Choose a character from string `options`.
+/// Choose a character from string `options` for the sub-menu item at `position`.
 /**	`hints` provides an array of hint strings terminated by a null pointer. A hint string consists of the following three parts.
-	- A character in `options`
-	- A position ('0'-'9' or '*') of the character in the menu key
-	- the hint about the character
+	- A menu key character in `options` for an sub-menu item
+	- Available sub-menu depths: '0'-'9' or '*'
+	- The hint about the sub-menu item
 */
 char chooseFrom(const char* options, int position, const char* const * hints = 0);
 
