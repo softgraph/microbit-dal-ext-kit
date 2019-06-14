@@ -16,7 +16,7 @@ namespace microbit_dal_ext_kit {
 
 static const AppModeDescriberProtocol* sDescriber = 0;
 
-static AppMode sAppMode = kAppModeNone;
+static AppMode sAppMode = 0;
 
 static int /* count */ optionsFor(const AppMode* appModes, int appModeCount, int position, char** /* OUT new[] */ outOptions);
 static char charFor(const char* menuKey, unsigned int index);
@@ -50,7 +50,7 @@ void selectAppModeFor(AppMode condition, const AppModeDescriberProtocol& describ
 	registerAppModeDescriber(describer);
 
 	// Clear the previous App Mode
-	sAppMode = kAppModeNone;
+	sAppMode = 0;
 
 	// Initializa the list of App Modes
 	AppMode* appModes = 0;
@@ -97,17 +97,16 @@ void selectAppModeFor(AppMode condition, const AppModeDescriberProtocol& describ
 		}
 
 		// Choose an option
-		char c = button::chooseFrom(options, hints);
+		char c = button::chooseFrom(options, i, hints);
 
 		// Update the filter
 		menuKeyFilter[i] = c;
 	}
-	EXT_KIT_ASSERT(sAppMode != kAppModeNone);
+	EXT_KIT_ASSERT(sAppMode);
 
-	// Show the selected App Mode
+	// Show the selected App Mode and then clear
 	const char* menuKey = sDescriber->menuKeyFor(sAppMode);
-	display::clear();
-	display::scrollString(ManagedString(menuKey));
+	display::scrollString(ManagedString(menuKey), ' ');
 
 	// Send the selected App Mode to the debugger
 	debug_sendAppMode(EXT_KIT_DEBUG_INFO "Active App Mode: ", sAppMode);

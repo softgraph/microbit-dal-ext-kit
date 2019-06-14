@@ -36,8 +36,8 @@ static bool hasPseudoButtonAClicked = false;
 static bool hasPseudoButtonBClicked = false;
 
 static void swap(bool& a, bool& b);
-static void showOption(char c, const char* const * hints);
-static const char* hintFor(char c, const char* const * hints);
+static void showOption(char c, int position, const char* const * hints);
+static const char* hintFor(char c, int position, const char* const * hints);
 
 int microBitIDButtonLeft()	// returns MICROBIT_ID_BUTTON_A or MICROBIT_ID_BUTTON_B
 {
@@ -129,14 +129,14 @@ void waitUntilMicroBitButtonsAreReleased()
 	}
 }
 
-char chooseFrom(const char* options, const char* const * hints)
+char chooseFrom(const char* options, int position, const char* const * hints)
 {
 	size_t count = strlen(options);
 	EXT_KIT_ASSERT(0 < count);
 
 	// Show the first option
 	size_t i = 0;
-	showOption(options[i], hints);
+	showOption(options[i], i, hints);
 
 	while(true) {
 		if(isButtonAPressed()) {
@@ -148,7 +148,7 @@ char chooseFrom(const char* options, const char* const * hints)
 			if(count <= i) {
 				i = 0;
 			}
-			showOption(options[i], hints);
+			showOption(options[i], position, hints);
 		}
 		else if(isButtonBPressed()) {
 			// Wait until the button is released
@@ -162,25 +162,33 @@ char chooseFrom(const char* options, const char* const * hints)
 	}
 }
 
-void showOption(char c, const char* const * hints)
+void showOption(char c, int position, const char* const * hints)
 {
-	const char* hint = hintFor(c, hints);
+	const char* hint = hintFor(c, position, hints);
 	if(hint) {
-		display::showChar(' ');
-		display::scrollString(ManagedString(hint));
+		display::scrollStringAsync(ManagedString(hint), c);
 	}
-	display::showChar(c);
+	else {
+		display::showChar(c);
+	}
 }
 
-const char* hintFor(char c, const char* const * hints)
+const char* hintFor(char c, int position, const char* const * hints)
 {
 	if(!hints) {
 		return 0;
 	}
-	const char* p;
-	while((p = *hints++)) {
-		if(*p == c) {
-			return p + 1;
+	const char* hint;
+	while((hint = *hints++)) {
+		if(*hint++ != c) {
+			continue;
+		}
+		char acceptablePosition = *hint++;
+		if(acceptablePosition == '*') {
+			return hint;
+		}
+		else if(acceptablePosition == ('0' + position)) {
+			return hint;
 		}
 	}
 	return 0;

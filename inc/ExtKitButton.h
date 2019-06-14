@@ -64,9 +64,12 @@ Buttons readMicroBitButtons();	///< Read MicroBit buttons
 void waitUntilMicroBitButtonsAreReleased();		///< Wait until MicroBit buttons are released
 
 /// Choose a character from string `options`.
-/**	`hints` provides an array of hint strings terminated by a null pointer. A hint string consists of a character in `options` followed by `:` and the description for the character.
+/**	`hints` provides an array of hint strings terminated by a null pointer. A hint string consists of the following three parts.
+	- A character in `options`
+	- A position ('0'-'9' or '*') of the character in the menu key
+	- the hint about the character
 */
-char chooseFrom(const char* options, const char* const * hints = 0);
+char chooseFrom(const char* options, int position, const char* const * hints = 0);
 
 }	// button
 }	// microbit_dal_ext_kit

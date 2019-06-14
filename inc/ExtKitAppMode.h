@@ -19,8 +19,6 @@ namespace microbit_dal_ext_kit {
 /// App Mode
 typedef uint32_t	AppMode;
 
-const AppMode kAppModeNone = 0;
-
 /// Set App Mode
 void setAppMode(AppMode appMode);
 
@@ -32,7 +30,10 @@ AppMode appMode();
 {
 public:
 	/// Hints for Menu Keys
-	/**	An array of hint strings terminated by a null pointer. A hint string consists of a character in menu key strings followed by `:` and the description for the character.
+	/**	An array of hint strings terminated by a null pointer. A hint string consists of the following three parts.
+		- A character in any menu key
+		- A position ('0'-'9' or '*') of the character in any menu key
+		- the hint about the character
 	*/
 	virtual /* to be implemented */ const char* const * hints() const = 0;
 
