@@ -29,11 +29,11 @@ AppMode appMode();
 /* interface */ class AppModeDescriberProtocol
 {
 public:
-	/// Hints for Menu Keys
-	/**	An array of hint strings terminated by a null pointer. A hint string consists of the following three parts for an sub-menu item.
-		- A menu key character for the item
-		- Available sub-menu depths: '0'-'9' or '*'
-		- A hint about the item
+	/// Menu Key Hints
+	/**	An array of hint strings terminated by a null pointer. A hint string consists of the following three parts for a sub-menu item.
+		- Character 0: A menu key character
+		- Character 1: Available sub-menu depth - one of '0'-'9' or '*'
+		- Character 2-: A hint description
 	*/
 	virtual /* to be implemented */ const char* const * hints() const = 0;
 
