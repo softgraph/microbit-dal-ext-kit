@@ -30,7 +30,7 @@ AppMode appMode();
 {
 public:
 	/// Menu Key Hints
-	/**	An array of hint strings terminated by a null pointer. A hint string consists of the following three parts for a sub-menu item.
+	/**	Returns an array of hint strings terminated by a null pointer. A hint string consists of the following three parts for a sub-menu item.
 		- Character 0: A menu key character
 		- Character 1: Available sub-menu depth - one of '0'-'9' or '*'
 		- Character 2-: A hint description
@@ -48,8 +48,10 @@ public:
 
 };	// AppModeDescriberProtocol
 
-/// Active App Mode Describer.
-const AppModeDescriberProtocol* appModeDescriber();	// returns null until `registerAppModeDescriber()` or `selectAppModeFor()` is called
+/// Active App Mode Describer
+/**	Returns null until `registerAppModeDescriber()` or `selectAppModeFor()` is called.
+*/
+const AppModeDescriberProtocol* appModeDescriber();	// 
 
 /// Register App Mode Describer
 void registerAppModeDescriber(const AppModeDescriberProtocol& describer);

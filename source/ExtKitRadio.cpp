@@ -54,7 +54,7 @@ ManagedString /*received */ recv()
 		return ManagedString(ManagedString::EmptyString);
 	}
 
-	ManagedString received = r->datagram.recv(); // return the data received, or an empty PacketBuffer if no data is available.
+	ManagedString received = r->datagram.recv(); // returns the data received, or an empty PacketBuffer if no data is available.
 //	debug_sendLine(EXT_KIT_DEBUG_EVENT "Radio Datagram: \'", received.toCharArray(), "\'");
 	return received;
 }
