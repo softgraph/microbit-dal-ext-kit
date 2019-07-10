@@ -351,7 +351,7 @@ void SerialDebugger::debug_sendLines(const char* const * lineArray /* terminated
 	ExtKit& g = ExtKit::global();
 
 	debug_sendLine("--- Active App Mode ---", false);
-	debug_sendAppMode(0, appMode(), false);
+	appMode::debug_sendAppMode(0, appMode::activeMode(), false);
 
 	debug_sendLine("--- Global object ---", false);
 	debug_sendLine("owner:         ", g.owner(), false);
@@ -451,7 +451,7 @@ void raiseFailedAssertion()
 void raiseUnexpectedError()
 {
 	time::sleep(500 /* milliseconds */);
-	EXT_KIT_ASSERT_OR_PANIC(!"Error raised by the serial debugger", kPanicUnexpectedError);
+	EXT_KIT_ASSERT_OR_PANIC(!"Error raised by the serial debugger", panic::kUnexpectedError);
 }
 
 }	// microbit_dal_ext_kit

@@ -67,7 +67,7 @@ Transmitter::~Transmitter()
 void Transmitter::listen(char category, CategoryProtocol& protocol)
 {
 	Node* p = new CategoryRecord(category, protocol);
-	EXT_KIT_ASSERT_OR_PANIC(p, kPanicOutOfMemory);
+	EXT_KIT_ASSERT_OR_PANIC(p, panic::kOutOfMemory);
 
 	p->linkBefore(mRoot);
 }
@@ -76,7 +76,7 @@ void Transmitter::ignore(char category)
 {
 	Node* p = &mRoot;
 	while((p = p->next) != &mRoot) {
-		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), panic::kCorruptedNode);
 
 		CategoryRecord* r = static_cast<CategoryRecord*>(p);
 		if(r->category == category) {
@@ -91,7 +91,7 @@ void Transmitter::requestToSend(char category)
 {
 	Node* p = &mRoot;
 	while((p = p->next) != &mRoot) {
-		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), panic::kCorruptedNode);
 
 		CategoryRecord* r = static_cast<CategoryRecord*>(p);
 		if(r->category == category) {
@@ -111,7 +111,7 @@ void Transmitter::handleRadioDatagramReceived(MicroBitEvent /* event */)
 	char category = received.charAt(0);
 	Node* p = &mRoot;
 	while((p = p->next) != &mRoot) {
-		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), panic::kCorruptedNode);
 
 		CategoryRecord* r = static_cast<CategoryRecord*>(p);
 		if(r->category == category) {
@@ -230,7 +230,7 @@ Receiver::~Receiver()
 void Receiver::listen(char category, CategoryProtocol& protocol)
 {
 	Node* p = new CategoryRecord(category, protocol);
-	EXT_KIT_ASSERT_OR_PANIC(p, kPanicOutOfMemory);
+	EXT_KIT_ASSERT_OR_PANIC(p, panic::kOutOfMemory);
 
 	p->linkBefore(mRoot);
 }
@@ -239,7 +239,7 @@ void Receiver::ignore(char category)
 {
 	Node* p = &mRoot;
 	while((p = p->next) != &mRoot) {
-		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), panic::kCorruptedNode);
 
 		CategoryRecord* r = static_cast<CategoryRecord*>(p);
 		if(r->category == category) {
@@ -262,7 +262,7 @@ void Receiver::handleRadioDatagramReceived(MicroBitEvent /* event */)
 	char category = received.charAt(0);
 	Node* p = &mRoot;
 	while((p = p->next) != &mRoot) {
-		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), panic::kCorruptedNode);
 
 		CategoryRecord* r = static_cast<CategoryRecord*>(p);
 		if(r->category == category) {
@@ -276,7 +276,7 @@ void Receiver::handleRadioDatagramReceived(MicroBitEvent /* event */)
 {
 	Node* p = &mRoot;
 	while((p = p->next) != &mRoot) {
-		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), panic::kCorruptedNode);
 
 		CategoryRecord* r = static_cast<CategoryRecord*>(p);
 		r->handlePeriodicEvent(count, unit);

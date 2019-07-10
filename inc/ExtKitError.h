@@ -17,21 +17,26 @@
 
 namespace microbit_dal_ext_kit {
 
+///	Panic utility
+namespace panic {
+
 /// Panic Code
 enum PanicCode {
 	/// Unexpected Error
-	kPanicUnexpectedError	= 270,
+	kUnexpectedError	= 270,
 
 	/// Not Supported
-	kPanicNotSupported,
+	kNotSupported,
 
 	/// Out Of Memory
-	kPanicOutOfMemory,
+	kOutOfMemory,
 
-	/// Corrupted Node
-	kPanicCorruptedNode
+	/// Corrupted %Node
+	kCorruptedNode
 
 };
+
+}	// panic
 
 ///	Error utility
 namespace error {

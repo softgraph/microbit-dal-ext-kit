@@ -72,7 +72,7 @@ CompositeComponent::CompositeComponent(const char* name)
 void CompositeComponent::addChild(Component& component)
 {
 	Node* p = new ComponentRecord(component);
-	EXT_KIT_ASSERT_OR_PANIC(p, kPanicOutOfMemory);
+	EXT_KIT_ASSERT_OR_PANIC(p, panic::kOutOfMemory);
 
 	p->linkBefore(mRoot);
 }
@@ -81,7 +81,7 @@ void CompositeComponent::removeChild(Component& component)
 {
 	Node* p = &mRoot;
 	while((p = p->next) != &mRoot) {
-		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), panic::kCorruptedNode);
 
 		ComponentRecord* r = static_cast<ComponentRecord*>(p);
 		if(&(r->component) == &component) {
@@ -96,7 +96,7 @@ void CompositeComponent::removeChild(Component& component)
 {
 	Node* p = &mRoot;
 	while((p = p->next) != &mRoot) {
-		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), panic::kCorruptedNode);
 
 		ComponentRecord* r = static_cast<ComponentRecord*>(p);
 		r->component.doHandleComponentAction(action);

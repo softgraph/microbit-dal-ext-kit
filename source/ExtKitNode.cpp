@@ -63,7 +63,7 @@ RootForDynamicNodes::~RootForDynamicNodes()
 {
 	Node* p = this;
 	while((p = p->next) != this) {
-		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), panic::kCorruptedNode);
 
 		Node* r = p;
 		p = r->prev;	// rewind p

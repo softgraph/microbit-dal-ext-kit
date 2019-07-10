@@ -16,8 +16,6 @@
 
 class ManagedString;
 
-namespace microbit_dal_ext_kit {
-
 /// The debug log prefix for an event item log
 #define	EXT_KIT_DEBUG_EVENT			"[E] "
 
@@ -32,6 +30,8 @@ namespace microbit_dal_ext_kit {
 
 /// The debug log prefix for a trace item
 #define	EXT_KIT_DEBUG_STATISTICS	"[S] "
+
+namespace microbit_dal_ext_kit {
 
 /// Activate or deactivate the debugger
 void debug_activateDebugger(bool activate);

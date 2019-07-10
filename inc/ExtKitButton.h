@@ -64,7 +64,7 @@ Buttons readMicroBitButtons();	///< Read MicroBit buttons
 void waitUntilMicroBitButtonsAreReleased();		///< Wait until MicroBit buttons are released
 
 /// Choose a menu key character from `options` as a sub-menu item at `position`.
-/**	For the details of `hints`, see also `AppModeDescriberProtocol::hints()`.
+/**	For the details of `hints`, see also `appMode::DescriberProtocol::hints()`.
 */
 char chooseFrom(const char* options, int position, const char* const * hints = 0);
 

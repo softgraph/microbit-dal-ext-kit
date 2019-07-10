@@ -131,7 +131,7 @@ void PrimitiveExtKit::init()
 
 #if CONFIG_ENABLED(MICROBIT_BLE_ENABLED) || CONFIG_ENABLED(MICROBIT_BLE_PAIRING_MODE)
 
-	EXT_KIT_ASSERT_OR_PANIC(!"Use MicroBitExtKit insted of PrimitiveExtKit if BLE is required. Note MICROBIT_BLE_ENABLED and MICROBIT_BLE_PAIRING_MODE are enabled by default in `MicroBitConfig.h`.", kPanicNotSupported);
+	EXT_KIT_ASSERT_OR_PANIC(!"Use MicroBitExtKit insted of PrimitiveExtKit if BLE is required. Note MICROBIT_BLE_ENABLED and MICROBIT_BLE_PAIRING_MODE are enabled by default in `MicroBitConfig.h`.", panic::kNotSupported);
 
 #endif	// MICROBIT_BLE_ENABLED || MICROBIT_BLE_PAIRING_MODE
 }

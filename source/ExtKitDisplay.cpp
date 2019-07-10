@@ -152,7 +152,7 @@ void setScrollSpeed(int scrollSpeed)
 void scrollString(const ManagedString& s, char c)
 {
 	ScrollParam* scrollParam = new ScrollParam(s, c);
-	EXT_KIT_ASSERT_OR_PANIC(scrollParam, kPanicOutOfMemory);
+	EXT_KIT_ASSERT_OR_PANIC(scrollParam, panic::kOutOfMemory);
 
 	scrollString(scrollParam);
 }
@@ -160,7 +160,7 @@ void scrollString(const ManagedString& s, char c)
 void scrollStringAsync(const ManagedString& s, char c)
 {
 	ScrollParam* scrollParam = new ScrollParam(s, c);
-	EXT_KIT_ASSERT_OR_PANIC(scrollParam, kPanicOutOfMemory);
+	EXT_KIT_ASSERT_OR_PANIC(scrollParam, panic::kOutOfMemory);
 
 	create_fiber(scrollString, scrollParam);
 }

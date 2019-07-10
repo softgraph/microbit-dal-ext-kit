@@ -46,7 +46,7 @@ void Statistics::debug_sendItems()
 {
 	Node* p = &sRoot;
 	while((p = p->next) != &sRoot) {
-		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), panic::kCorruptedNode);
 
 		StatisticRecord* r = static_cast<StatisticRecord*>(p);
 		if(!r->count) {
@@ -64,7 +64,7 @@ Statistics::StatisticRecord& Statistics::prepareItem(const ManagedString& title)
 {
 	Node* p = &sRoot;
 	while((p = p->next) != &sRoot) {
-		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), panic::kCorruptedNode);
 
 		StatisticRecord* r = static_cast<StatisticRecord*>(p);
 		if(&(r->title) == &title) {
@@ -73,7 +73,7 @@ Statistics::StatisticRecord& Statistics::prepareItem(const ManagedString& title)
 	}
 
 	StatisticRecord* r = new StatisticRecord(title);
-	EXT_KIT_ASSERT_OR_PANIC(r, kPanicOutOfMemory);
+	EXT_KIT_ASSERT_OR_PANIC(r, panic::kOutOfMemory);
 
 	r->linkBefore(sRoot);
 	return *r;

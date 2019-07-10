@@ -51,7 +51,7 @@ NeoPixel::NeoPixel(const char* name, MicroBitPin& ledPort, int ledCount)
 	mLedHueUnit = 360 / ledCount;
 	mLedBufferLength = ledCount * kBytesPerLed;
 	mLedBuffer = new uint8_t[mLedBufferLength * 2];	// consists of two buffers with and without brightness control
-	EXT_KIT_ASSERT_OR_PANIC(mLedBuffer, kPanicOutOfMemory);
+	EXT_KIT_ASSERT_OR_PANIC(mLedBuffer, panic::kOutOfMemory);
 }
 
 NeoPixel::~NeoPixel()

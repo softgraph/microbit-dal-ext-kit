@@ -19,14 +19,17 @@ namespace microbit_dal_ext_kit {
 /// App Mode
 typedef uint32_t	AppMode;
 
-/// Set App Mode
-void setAppMode(AppMode appMode);
+///	App Mode utility
+namespace appMode {
 
-/// App Mode
-AppMode appMode();
+/// Set Active Mode
+void setActiveMode(AppMode appMode);
+
+/// Active Mode
+AppMode activeMode();
 
 /// The Describer Protocol for App Mode
-/* interface */ class AppModeDescriberProtocol
+/* interface */ class DescriberProtocol
 {
 public:
 	/// Menu Key Hints
@@ -46,22 +49,23 @@ public:
 	/// Creates a new array of App Modes which meets `condition` and `menuKeyFilter`
 	virtual /* to be implemented */ int /* count */ appModesFor(AppMode condition, const char* menuKeyFilter, AppMode** /* OUT new[] */ outAppModes) const = 0;
 
-};	// AppModeDescriberProtocol
+};	// DescriberProtocol
 
 /// Active App Mode Describer
 /**	Returns null until `registerAppModeDescriber()` or `selectAppModeFor()` is called.
 */
-const AppModeDescriberProtocol* appModeDescriber();	// 
+const DescriberProtocol* describer();
 
-/// Register App Mode Describer
-void registerAppModeDescriber(const AppModeDescriberProtocol& describer);
+/// Register an App Mode Describer
+void registerDescriber(const DescriberProtocol& describer);
 
-/// Select App Mode for the condition
-void selectAppModeFor(AppMode condition, const AppModeDescriberProtocol& describer);
+/// Select an App Mode match for the condition or allow the user to choose an App Mode
+void selectFor(AppMode condition, const DescriberProtocol& describer);
 
 /// Send App Mode information to the debugger
 void debug_sendAppMode(const char* title, AppMode appMode, bool withDebugPrefix = true);
 
+}	// appMode
 }	// microbit_dal_ext_kit
 
 #endif	// EXT_KIT_APP_MODE_H

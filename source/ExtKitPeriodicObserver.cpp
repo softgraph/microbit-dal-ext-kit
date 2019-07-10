@@ -145,7 +145,7 @@ void PeriodicObserver::notify(uint32_t count, PeriodUnit unit, HandlerPriority p
 {
 	Node* p = &mRoot;
 	while((p = p->next) != &mRoot) {
-		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), panic::kCorruptedNode);
 
 		HandlerRecord* r = static_cast<HandlerRecord*>(p);
 		if(r->unit != unit || r->priority != priority) {
@@ -170,7 +170,7 @@ void PeriodicObserver::listen(PeriodUnit unit, HandlerFunction& function, Handle
 {
 	PeriodicObserver& g = PeriodicObserver::global();
 	Node* p = new HandlerRecord(unit, function, priority);
-	EXT_KIT_ASSERT_OR_PANIC(p, kPanicOutOfMemory);
+	EXT_KIT_ASSERT_OR_PANIC(p, panic::kOutOfMemory);
 
 	p->linkBefore(g.mRoot);
 }
@@ -179,7 +179,7 @@ void PeriodicObserver::listen(PeriodUnit unit, HandlerProtocol& protocol, Handle
 {
 	PeriodicObserver& g = PeriodicObserver::global();
 	Node* p = new HandlerRecord(unit, protocol, priority);
-	EXT_KIT_ASSERT_OR_PANIC(p, kPanicOutOfMemory);
+	EXT_KIT_ASSERT_OR_PANIC(p, panic::kOutOfMemory);
 
 	p->linkBefore(g.mRoot);
 }
@@ -190,7 +190,7 @@ void PeriodicObserver::ignore(PeriodUnit unit, HandlerFunction& function)
 	Node& root = g.mRoot;
 	Node* p = &root;
 	while((p = p->next) != &root) {
-		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), panic::kCorruptedNode);
 
 		HandlerRecord* r = static_cast<HandlerRecord*>(p);
 		if((r->function == &function) && (r->unit == unit)) {
@@ -207,7 +207,7 @@ void PeriodicObserver::ignore(PeriodUnit unit, HandlerProtocol& protocol)
 	Node& root = g.mRoot;
 	Node* p = &root;
 	while((p = p->next) != &root) {
-		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), kPanicCorruptedNode);
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), panic::kCorruptedNode);
 
 		HandlerRecord* r = static_cast<HandlerRecord*>(p);
 		if((r->protocol == &protocol) && (r->unit == unit)) {
