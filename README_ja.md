@@ -21,6 +21,7 @@
 	</td></tr>
 	<tr><td align="center">
 <code>microbit</code>
+・
 <code>microbit-dal</code>
 	<br>
 (別名 micro:bit runtime)
