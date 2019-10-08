@@ -1,9 +1,10 @@
 # https://git-scm.com/docs/gitignore
 
-.brackets.json
 .DS_Store
+
+/_/
 /build/
 /doxygen/
-/microbit-dal-ext-kit.wiki/
 /yotta_modules/
 /yotta_targets/
+/.markdownlint.json
