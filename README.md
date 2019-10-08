@@ -12,24 +12,18 @@ The `microbit-dal-ext-kit` provides components and utilities compatible with BBC
 
 <table>
 	<tr><td align="center">	
-	<code>
-microbit-dal-ext-kit-example
-	</code><br>
+<code>microbit-dal-ext-kit-example</code>
+	<br>
 (or any module written in C++)
 	</td></tr>
 	<tr><td align="center">
-	<code>
-microbit-dal-ext-kit
-	</code>
+<code>microbit-dal-ext-kit</code>
 	</td></tr>
 	<tr><td align="center">
-	<code>
-microbit
-	</code>
+<code>microbit</code>
 and
-	<code>
-microbit-dal
-	</code><br>
+<code>microbit-dal</code>
+	<br>
 (also known as micro:bit runtime)
 	</td></tr>
 	<tr><td align="center">
