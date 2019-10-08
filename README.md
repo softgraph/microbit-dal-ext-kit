@@ -70,11 +70,13 @@ Run [Doxygen (doxygen.nl)](http://www.doxygen.nl/download.html#latestsrc) with `
 
 Module         | URL
 -------------- | ---
-`microbit-dal-ext-kit-example` | https://github.com/softgraph/microbit-dal-ext-kit-example
+`microbit-dal-ext-kit-example` | <https://github.com/softgraph/microbit-dal-ext-kit-example>
 
 ### Required Modules
 
 Module         | URL | Version
 -------------- | --- | -------
-`microbit`     | https://github.com/lancaster-university/microbit     | v2.1.1
-`microbit-dal` | https://github.com/lancaster-university/microbit-dal | v2.1.1
+`microbit`     | <https://github.com/lancaster-university/microbit>     | v2.1.1
+`microbit-dal` | <https://github.com/lancaster-university/microbit-dal> | v2.1.1
+
+© 2019 Softgraph, Inc.
