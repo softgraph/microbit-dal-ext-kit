@@ -11,7 +11,7 @@ The `microbit-dal-ext-kit` provides components and utilities compatible with BBC
 ### Structure
 
 <table>
-	<tr><td align="center">	
+	<tr><td align="center">
 <code>microbit-dal-ext-kit-example</code>
 	<br>
 (or any module written in C++)
