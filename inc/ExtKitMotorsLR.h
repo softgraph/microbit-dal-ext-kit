@@ -44,7 +44,7 @@ protected:
 	/* Component */ void doHandleComponentAction(Action action);
 
 	/// Set Motor Speed
-	virtual /* MotorsLR */ int setMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent) = 0;	// returns MICROBIT_INVALID_PARAMETER, MICROBIT_NOT_SUPPORTED, MICROBIT_I2C_ERROR or MICROBIT_OK
+	virtual /* MotorsLR */ int /* ErrorCode */ setMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent) = 0;
 
 };	// MotorsLR
 

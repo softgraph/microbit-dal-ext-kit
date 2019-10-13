@@ -73,7 +73,7 @@ MotoBit::MotoBit(bool inverted)
 	setMotorPower(power);
 }
 
-int MotoBit::setMotorPower(bool power)	// returns MICROBIT_I2C_ERROR or MICROBIT_OK
+int /* ErrorCode */ MotoBit::setMotorPower(bool power)
 {
 	char i2cData[2];
 	i2cData[0] = kI2cCmdSetMotorPower;
@@ -81,7 +81,7 @@ int MotoBit::setMotorPower(bool power)	// returns MICROBIT_I2C_ERROR or MICROBIT
 	return ExtKit::global().i2c().write(kI2cAddress, i2cData, COUNT_OF(i2cData));
 }
 
-/* MotorsLR */ int MotoBit::setMotorSpeed(MotoBit::Motor motor, MotoBit::MotorDirection direction, int speedInPercent)	// returns MICROBIT_I2C_ERROR or MICROBIT_OK
+/* MotorsLR */ int /* ErrorCode */ MotoBit::setMotorSpeed(MotoBit::Motor motor, MotoBit::MotorDirection direction, int speedInPercent)
 {
 	speedInPercent = numeric::clamp(0, 100, speedInPercent);
 	int speed = speedInPercent * 127 / 100;	// range: 0 - 127
@@ -94,7 +94,7 @@ int MotoBit::setMotorPower(bool power)	// returns MICROBIT_I2C_ERROR or MICROBIT
 	return ExtKit::global().i2c().write(kI2cAddress, i2cData, COUNT_OF(i2cData));
 }
 
-int MotoBit::setMotorPolarity(MotoBit::Motor motor, bool invert)	// returns MICROBIT_I2C_ERROR or MICROBIT_OK
+int /* ErrorCode */ MotoBit::setMotorPolarity(MotoBit::Motor motor, bool invert)
 {
 	char i2cData[2];
 	i2cData[0] = ((motor == kLeft) != mInverted) ? kI2cCmdSetMotorPolarityL: kI2cCmdSetMotorPolarityR;

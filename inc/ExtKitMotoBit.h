@@ -39,14 +39,14 @@ protected:
 	/* Component */ void doHandleComponentAction(Action action);
 
 	/// Inherited
-	/* MotorsLR */ int setMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent);	// returns MICROBIT_INVALID_PARAMETER, MICROBIT_NOT_SUPPORTED, MICROBIT_I2C_ERROR or MICROBIT_OK
+	/* MotorsLR */ int /* ErrorCode */ setMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent);
 
 private:
 	/// Set Motor Power
-	static int setMotorPower(bool power);	// returns MICROBIT_I2C_ERROR or MICROBIT_OK
+	static int /* ErrorCode */ setMotorPower(bool power);
 
 	/// Set Motor Polarity
-	int setMotorPolarity(Motor motor, bool invert);	// returns MICROBIT_I2C_ERROR or MICROBIT_OK
+	int /* ErrorCode */ setMotorPolarity(Motor motor, bool invert);
 
 	/// Inverted
 	bool mInverted;
