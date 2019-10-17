@@ -31,19 +31,19 @@ public:
 	/// Constructor
 	MotoBit(bool inverted);
 
-	/// Inherited
-	/* MotorsLR */ void setMotorSpeed(MotorDirection directionL, MotorDirection directionR, int speedInPercentL, int speedInPercentR);
-
 protected:
 	/// Inherited
 	/* Component */ void doHandleComponentAction(Action action);
 
 	/// Inherited
-	/* MotorsLR */ int /* ErrorCode */ setMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent);
+	/* Motors */ int /* ErrorCode */ setMotorPower(bool power);
+
+	/// Inherited
+	/* Motors */ int /* ErrorCode */ setMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent);
 
 private:
-	/// Set Motor Power
-	static int /* ErrorCode */ setMotorPower(bool power);
+	/// Check Motor Power
+	static int /* ErrorCode */ checkMotorPower(bool power);
 
 	/// Set Motor Polarity
 	int /* ErrorCode */ setMotorPolarity(Motor motor, bool invert);

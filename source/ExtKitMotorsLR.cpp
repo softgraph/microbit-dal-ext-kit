@@ -18,28 +18,20 @@ namespace microbit_dal_ext_kit {
 */
 
 MotorsLR::MotorsLR(const char* name)
-	: Component(name)
+	: Motors(name, kMotorCount)
 {
 }
 
-/* MotorsLR */ void MotorsLR::setMotorSpeed(MotorsLR::MotorDirection directionL, MotorsLR::MotorDirection directionR, int speedInPercentL, int speedInPercentR)
+/* Motors */ void MotorsLR::configureMotors()
 {
-	/* virtual */ setMotorSpeed(kLeft, directionL, speedInPercentL);
-	/* virtual */ setMotorSpeed(kRight, directionR, speedInPercentR);
+	configureSpeedMotor(kLeft);
+	configureSpeedMotor(kRight);
 }
 
-/* Component */ void MotorsLR::doHandleComponentAction(Action action)
+/* MotorsLR */ void MotorsLR::setMotorSpeed(MotorDirection directionL, MotorDirection directionR, int speedInPercentL, int speedInPercentR)
 {
-	if(action == kStart)
-	{
-		/* virtual */ setMotorSpeed(kBrake, kBrake, 0, 0);
-	}
-	else if(action == kStop)
-	{
-		/* virtual */ setMotorSpeed(kBrake, kBrake, 0, 0);
-	}
-
-	/* super */ Component::doHandleComponentAction(action);
+	updateMotorSpeed(kLeft, directionL, speedInPercentL);
+	updateMotorSpeed(kRight, directionR, speedInPercentR);
 }
 
 }	// microbit_dal_ext_kit

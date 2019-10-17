@@ -12,39 +12,32 @@
 #ifndef EXT_KIT_MOTORS_LR_H
 #define EXT_KIT_MOTORS_LR_H
 
-#include "ExtKitComponent.h"
+#include "ExtKitMotors.h"
 
 namespace microbit_dal_ext_kit {
 
-/// An abstract ext-kit Component which provides left and right motors
-/* abstract */ class MotorsLR : public Component
+/// an abstract ext-kit Component which provides left and right speed motors
+/* abstract */ class MotorsLR : public Motors
 {
 public:
-	/// Motor Direction
-	enum MotorDirection {
-		kBrake,		// `speedInPercent` shold be 0
-		kForward,	// `speedInPercent` shold be between 0 and 100
-		kBackward	// `speedInPercent` shold be between 0 and 100
-	};
-
-	/// Constructor
-	MotorsLR(const char* name);
-
-	/// Set Motor Speed
+	/// set motor speed
 	virtual /* MotorsLR */ void setMotorSpeed(MotorDirection directionL, MotorDirection directionR, int speedInPercentL, int speedInPercentR);
 
 protected:
-	/// Motor
-	enum Motor {
-		kLeft,
-		kRight
-	};
+	/// constructor
+	MotorsLR(const char* name);
 
-	/// Inherited
-	/* Component */ void doHandleComponentAction(Action action);
+	/// inherited
+	/* Motors */ void configureMotors();
 
-	/// Set Motor Speed
-	virtual /* MotorsLR */ int /* ErrorCode */ setMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent) = 0;
+	/// left motor
+	static const Motor kLeft = 0;
+
+	/// right motor
+	static const Motor kRight = 1;
+
+	/// motor count
+	static const int kMotorCount = 2;
 
 };	// MotorsLR
 
