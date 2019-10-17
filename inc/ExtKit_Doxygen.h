@@ -55,6 +55,8 @@ namespace microbit_dal_ext_kit {
 		</td></tr><tr><td>
 		`CompositeComponent`		</td><td>	@copybrief	CompositeComponent
 		</td></tr><tr><td>
+		`Motors`					</td><td>	@copybrief	Motors
+		</td></tr><tr><td>
 		`PeriodicObserver`			</td><td>	@copybrief	PeriodicObserver
 		</td></tr><tr><td>
 		`remoteState::Transmitter`	</td><td>	@copybrief	remoteState::Transmitter
