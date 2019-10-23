@@ -2,9 +2,10 @@
 
 .DS_Store
 
+/.markdownlint.json
+/.vscode/settings.json
 /_/
 /build/
 /doxygen/
 /yotta_modules/
 /yotta_targets/
-/.markdownlint.json
