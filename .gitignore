@@ -2,8 +2,6 @@
 
 .DS_Store
 
-/.markdownlint.json
-/.vscode/settings.json
 /_/
 /build/
 /doxygen/
