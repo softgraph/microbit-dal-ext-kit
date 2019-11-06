@@ -42,6 +42,8 @@ namespace microbit_dal_ext_kit {
 		</td></tr><tr><td>
 		`MotorsLR`		</td><td>	@copybrief	MotorsLR
 		</td></tr><tr><td>
+		`MotorsPT`		</td><td>	@copybrief	MotorsPT
+		</td></tr><tr><td>
 		`NeoPixel`		</td><td>	@copybrief	NeoPixel
 		</td></tr><tr><td>
 		`Sonar`			</td><td>	@copybrief	Sonar

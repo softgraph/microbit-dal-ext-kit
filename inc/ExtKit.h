@@ -32,6 +32,7 @@ namespace microbit_dal_ext_kit {
 		- ExtKitMotoBit.h
 		- ExtKitMotors.h
 		- ExtKitMotorsLR.h
+		- ExtKitMotorsPT.h
 		- ExtKitNeoPixel.h
 		- ExtKitPeriodicObserver.h
 		- ExtKitRemoteState.h
@@ -102,6 +103,7 @@ namespace microbit_dal_ext_kit {
 #include "ExtKitMotoBit.h"
 #include "ExtKitMotors.h"
 #include "ExtKitMotorsLR.h"
+#include "ExtKitMotorsPT.h"
 #include "ExtKitNeoPixel.h"
 #include "ExtKitNode.h"
 #include "ExtKitNumeric.h"
