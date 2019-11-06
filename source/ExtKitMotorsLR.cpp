@@ -17,19 +17,22 @@ namespace microbit_dal_ext_kit {
 /**	@class	MotorsLR
 */
 
-MotorsLR::MotorsLR(const char* name)
+MotorsLR::MotorsLR(const char* name, int scaleInPercent)
 	: Motors(name, kMotorCount)
+	, mScaleInPercent(scaleInPercent)
 {
 }
 
 /* Motors */ void MotorsLR::configureMotors()
 {
-	configureSpeedMotor(kLeft);
-	configureSpeedMotor(kRight);
+	//	debug_sendLine(EXT_KIT_DEBUG_ACTION "MotorsLR::configureMotors");
+	configureSpeedMotor(kLeft, mScaleInPercent);
+	configureSpeedMotor(kRight, mScaleInPercent);
 }
 
 /* MotorsLR */ void MotorsLR::setMotorSpeed(MotorDirection directionL, MotorDirection directionR, int speedInPercentL, int speedInPercentR)
 {
+	//	debug_sendLine(EXT_KIT_DEBUG_ACTION "MotorsLR::setMotorSpeed");
 	updateMotorSpeed(kLeft, directionL, speedInPercentL);
 	updateMotorSpeed(kRight, directionR, speedInPercentR);
 }

@@ -38,10 +38,16 @@ public:
 	int /* ErrorCode */ updateMotorPower(bool power);
 
 	/// update motor speed
-	int /* ErrorCode */ updateMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent);
+	int /* ErrorCode */ updateMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent /* 0 ... 100 */);
+
+	/// change motor speed
+	int /* ErrorCode */ incrementMotorSpeed(Motor motor, MotorDirection direction, int relativeSpeedInPercent /* -100 ... 100 */);
 
 	/// update motor angle
-	int /* ErrorCode */ updateMotorAngle(Motor motor, int angleInDegree);
+	int /* ErrorCode */ updateMotorAngle(Motor motor, int angleInDegree /* 0 ... 180 */);
+
+	/// change motor angle
+	int /* ErrorCode */ incrementMotorAngle(Motor motor, int relativeAngleInDegree /* -180 ... 180 */);
 
 protected:
 	/// motor device
@@ -110,8 +116,8 @@ protected:
 	/* Component */ void doHandleComponentAction(Action action);
 
 	/// configure motors
-	/** should be overridden */
-	virtual /* Motors */ void configureMotors();
+	/** should be overridden - call `configureSpeedMotor()` and/or `configureAngleMotor()` for each motor */
+	virtual /* Motors */ void configureMotors() = 0;
 
 	/// configure speed motor
 	void configureSpeedMotor(Motor motor, int scaleInPercent = 100);

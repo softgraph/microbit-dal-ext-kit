@@ -16,20 +16,10 @@
 
 namespace microbit_dal_ext_kit {
 
-/// an abstract ext-kit Component which provides left and right speed motors
+/// an abstract ext-kit Component which provides two speed motors for left and right
 /* abstract */ class MotorsLR : public Motors
 {
 public:
-	/// set motor speed
-	virtual /* MotorsLR */ void setMotorSpeed(MotorDirection directionL, MotorDirection directionR, int speedInPercentL, int speedInPercentR);
-
-protected:
-	/// constructor
-	MotorsLR(const char* name);
-
-	/// inherited
-	/* Motors */ void configureMotors();
-
 	/// left motor
 	static const Motor kLeft = 0;
 
@@ -38,6 +28,20 @@ protected:
 
 	/// motor count
 	static const int kMotorCount = 2;
+
+	/// <obsoleted> set motor speed
+	/** remained for backward compatibility before v1.2 */
+	virtual /* MotorsLR */ void setMotorSpeed(MotorDirection directionL, MotorDirection directionR, int speedInPercentL, int speedInPercentR);
+
+protected:
+	/// constructor
+	MotorsLR(const char* name, int scaleInPercent = 100);
+
+	/// inherited
+	/* Motors */ void configureMotors();
+
+	/// scale in percent
+	int mScaleInPercent;
 
 };	// MotorsLR
 

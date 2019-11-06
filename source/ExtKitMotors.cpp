@@ -26,7 +26,6 @@ Motors::Motors(const char* name, int motorCount)
 	for(int i = 0; i < mMotorCount; i++) {
 		mMotorDevices[i] = new MotorDevice();
 	}
-	configureMotors();
 }
 
 /* Component */ void Motors::doHandleComponentAction(Action action)
@@ -42,13 +41,9 @@ Motors::Motors(const char* name, int motorCount)
 	/* super */ Component::doHandleComponentAction(action);
 }
 
-/* Motors */ void Motors::configureMotors()
-{
-	// to be overridden
-}
-
 void Motors::configureSpeedMotor(Motor motor, int scaleInPercent)
 {
+	//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Motors::configureSpeedMotor");
 	EXT_KIT_ASSERT(motor >= 0);
 	EXT_KIT_ASSERT(motor < mMotorCount);
 	EXT_KIT_ASSERT(scaleInPercent >= 0);
@@ -63,6 +58,7 @@ void Motors::configureSpeedMotor(Motor motor, int scaleInPercent)
 
 void Motors::configureAngleMotor(Motor motor, int minAngleInDegree, int maxAngleInDegree, int centerAngleInDegree)
 {
+	//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Motors::configureAngleMotor");
 	EXT_KIT_ASSERT(motor >= 0);
 	EXT_KIT_ASSERT(motor < mMotorCount);
 	EXT_KIT_ASSERT(minAngleInDegree >= 0);
@@ -87,13 +83,15 @@ void Motors::configureAngleMotor(Motor motor, int minAngleInDegree, int maxAngle
 int /* ErrorCode */ Motors::updateMotorPower(bool power)
 {
 	if(mMotorPower == power) {
+		//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Motors::updateMotorPower: MICROBIT_OK");
 		return MICROBIT_OK;
 	}
+	//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Motors::updateMotorPower: setMotorPower()");
 	mMotorPower = power;
 	return setMotorPower(power);
 }
 
-int /* ErrorCode */ Motors::updateMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent)
+int /* ErrorCode */ Motors::updateMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent /* 0 ... 100 */)
 {
 	EXT_KIT_ASSERT(motor >= 0);
 	EXT_KIT_ASSERT(motor < mMotorCount);
@@ -101,18 +99,43 @@ int /* ErrorCode */ Motors::updateMotorSpeed(Motor motor, MotorDirection directi
 	EXT_KIT_ASSERT(speedInPercent <= 100);
 	MotorDevice& md = *mMotorDevices[motor];
 	if(md.type != MotorDevice::kSpeedMotor) {
+		//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Motors::updateMotorSpeed: MICROBIT_INVALID_PARAMETER");
 		return MICROBIT_INVALID_PARAMETER;
 	}
 	md.u.speed.direction = direction;
 	md.u.speed.current = speedInPercent;
-	if(mMotorPower) {
-		int speed = md.u.speed.current * md.u.speed.scale / 100;
-		return setMotorSpeed(motor, direction, speed);
+	if(!mMotorPower) {
+		//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Motors::updateMotorSpeed: MICROBIT_OK");
+		return MICROBIT_OK;
 	}
-	return MICROBIT_OK;
+	//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Motors::updateMotorSpeed: setMotorSpeed()");
+	int speed = md.u.speed.current * md.u.speed.scale / 100;
+	return setMotorSpeed(motor, direction, speed);
 }
 
-int /* ErrorCode */ Motors::updateMotorAngle(Motor motor, int angleInDegree)
+int /* ErrorCode */ Motors::incrementMotorSpeed(Motor motor, MotorDirection direction, int relativeSpeedInPercent /* -100 ... 100 */)
+{
+	EXT_KIT_ASSERT(motor >= 0);
+	EXT_KIT_ASSERT(motor < mMotorCount);
+	EXT_KIT_ASSERT(relativeSpeedInPercent >= -100);
+	EXT_KIT_ASSERT(relativeSpeedInPercent <= 100);
+	MotorDevice& md = *mMotorDevices[motor];
+	if(md.type != MotorDevice::kSpeedMotor) {
+		//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Motors::incrementMotorSpeed: MICROBIT_INVALID_PARAMETER");
+		return MICROBIT_INVALID_PARAMETER;
+	}
+	md.u.speed.direction = direction;
+	md.u.speed.current = numeric::clamp(0, 100, md.u.speed.current + relativeSpeedInPercent);
+	if(!mMotorPower) {
+		//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Motors::incrementMotorSpeed: MICROBIT_OK");
+		return MICROBIT_OK;
+	}
+	//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Motors::incrementMotorSpeed: setMotorSpeed()");
+	int speed = md.u.speed.current * md.u.speed.scale / 100;
+	return setMotorSpeed(motor, direction, speed);
+}
+
+int /* ErrorCode */ Motors::updateMotorAngle(Motor motor, int angleInDegree /* 0 ... 180 */)
 {
 	EXT_KIT_ASSERT(motor >= 0);
 	EXT_KIT_ASSERT(motor < mMotorCount);
@@ -120,13 +143,36 @@ int /* ErrorCode */ Motors::updateMotorAngle(Motor motor, int angleInDegree)
 	EXT_KIT_ASSERT(angleInDegree <= 180);
 	MotorDevice& md = *mMotorDevices[motor];
 	if(md.type != MotorDevice::kAngleMotor) {
+		//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Motors::updateMotorAngle: MICROBIT_INVALID_PARAMETER");
 		return MICROBIT_INVALID_PARAMETER;
 	}
 	md.u.angle.current = numeric::clamp(md.u.angle.min, md.u.angle.max, angleInDegree);
-	if(mMotorPower) {
-		return setMotorAngle(motor, md.u.angle.current);
+	if(!mMotorPower) {
+		//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Motors::updateMotorAngle: MICROBIT_OK");
+		return MICROBIT_OK;
 	}
-	return MICROBIT_OK;
+	//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Motors::updateMotorAngle: setMotorAngle()");
+	return setMotorAngle(motor, md.u.angle.current);
+}
+
+int /* ErrorCode */ Motors::incrementMotorAngle(Motor motor, int relativeAngleInDegree /* -180 ... 180 */)
+{
+	EXT_KIT_ASSERT(motor >= 0);
+	EXT_KIT_ASSERT(motor < mMotorCount);
+	EXT_KIT_ASSERT(relativeAngleInDegree >= -180);
+	EXT_KIT_ASSERT(relativeAngleInDegree <= 180);
+	MotorDevice& md = *mMotorDevices[motor];
+	if(md.type != MotorDevice::kAngleMotor) {
+		//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Motors::incrementMotorAngle: MICROBIT_INVALID_PARAMETER");
+		return MICROBIT_INVALID_PARAMETER;
+	}
+	md.u.angle.current = numeric::clamp(md.u.angle.min, md.u.angle.max, md.u.angle.current + relativeAngleInDegree);
+	if(!mMotorPower) {
+		//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Motors::incrementMotorAngle: MICROBIT_OK");
+		return MICROBIT_OK;
+	}
+	//	debug_sendLine(EXT_KIT_DEBUG_ACTION "Motors::incrementMotorAngle: setMotorAngle()");
+	return setMotorAngle(motor, md.u.angle.current);
 }
 
 void Motors::resetAllMotors()
