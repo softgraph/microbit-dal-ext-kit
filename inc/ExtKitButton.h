@@ -54,6 +54,16 @@ const Buttons kF		= 1 << 7;		///< Button F
 const Buttons kG		= 1 << 8;		///< Button G
 const Buttons kH		= 1 << 9;		///< Button H
 const Buttons kLR		= kL | kR;		///< Button L + R
+const Buttons kDirN		= kA;			///< Button Direction North
+const Buttons kDirE		= kB;			///< Button Direction East
+const Buttons kDirS		= kC;			///< Button Direction South
+const Buttons kDirW		= kD;			///< Button Direction West
+const Buttons kTiltU	= kA;			///< Button Tilt Up
+const Buttons kTiltD	= kC;			///< Button Tilt Down
+const Buttons kPanR		= kB;			///< Button Pan Right
+const Buttons kPanL		= kD;			///< Button Pan Left
+const Buttons kSelR		= kE;			///< Button Selector Right
+const Buttons kSelL		= kF;			///< Button Selector Left
 
 int microBitIDButtonLeft();		///< MicroBit ID for left button.  Returns MICROBIT_ID_BUTTON_A or MICROBIT_ID_BUTTON_B.
 int microBitIDButtonRight();	///< MicroBit ID for right button. Returns MICROBIT_ID_BUTTON_A or MICROBIT_ID_BUTTON_B.
