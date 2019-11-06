@@ -41,7 +41,6 @@ protected:
 	/// Inherited
 	/* Motors */ int /* ErrorCode */ setMotorSpeed(Motor motor, MotorDirection direction, int speedInPercent);
 
-private:
 	/// Check Motor Power
 	static int /* ErrorCode */ checkMotorPower(bool power);
 
