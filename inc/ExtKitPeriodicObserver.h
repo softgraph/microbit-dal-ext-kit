@@ -25,8 +25,12 @@ class PeriodicObserver : public Component, RequestCompletionProtocol
 public:
 	/// Period Unit
 	enum PeriodUnit {
+		/// Never
+		kUnitNever,
 		/// 100 milliseconds
-		kUnit100ms
+		kUnit100ms,
+		/// 20 milliseconds
+		kUnit20ms
 	};
 
 	/// Handler Function
@@ -114,11 +118,14 @@ private:
 	/// The Main Loop
 	void loop();
 
+	/// Count Target handlers for a Period Unit
+	int countTarget(PeriodUnit unit);
+
 	/// Notify Periodic Event
 	void notify(uint32_t count, PeriodUnit unit);
 
 	/// Notify Periodic Event
-	void notify(uint32_t count, PeriodUnit unit, HandlerPriority priority);
+	int notify(uint32_t count, PeriodUnit unit, HandlerPriority priority);
 
 	/// Global instance
 	static PeriodicObserver*	sGlobal;

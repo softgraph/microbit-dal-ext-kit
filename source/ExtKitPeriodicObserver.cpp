@@ -112,19 +112,18 @@ void PeriodicObserver::loopEntry(void* param)
 void PeriodicObserver::loop()
 {
 	// Be running the loop
-	uint32_t count100ms = 0;
+	const time::SystemTime kNext = 20;
+	time::SystemTime target = time::systemTime() + kNext;
+	uint32_t count = 0;
 	while(!mRequestToCancel) {
-		time::SystemTime t1 = time::systemTime();
-		notify(count100ms, kUnit100ms);
-		time::SystemTime t2 = time::systemTime();
-		time::SystemTime t0 = t2 - t1;
-		if(100 > t0) {
-			time::sleep(100 - t0 /* milliseconds */);
+		notify(count, kUnit20ms);
+		if((count % 5) == 4) {	// for each count 4, 9, 14, ...
+			notify(count / 5, kUnit100ms);
 		}
-		else {
-			time::sleep(0 /* milliseconds */);
-		}
-		count100ms++;
+		time::SystemTime duration = time::durationFor(target);
+		time::sleep(duration);
+		target += kNext;
+		count++;
 	}
 
 	// Canceled
@@ -132,17 +131,49 @@ void PeriodicObserver::loop()
 	mRequestToCancel = false;
 }
 
+int PeriodicObserver::countTarget(PeriodUnit unit)
+{
+	int targetCount = 0;
+	Node* p = &mRoot;
+	while((p = p->next) != &mRoot) {
+		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), panic::kCorruptedNode);
+
+		HandlerRecord* r = static_cast<HandlerRecord*>(p);
+		if(r->unit == unit) {
+			targetCount++;
+		}
+	}
+	return targetCount;
+}
+
 void PeriodicObserver::notify(uint32_t count, PeriodUnit unit)
 {
-	notify(count, unit, kPriorityVeryHigh);
-	notify(count, unit, kPriorityHigh);
-	notify(count, unit, kPriorityMedium);
-	notify(count, unit, kPriorityLow);
+	int targetCount = countTarget(unit);
+	if(targetCount <= 0) {
+		return;
+	}
+	targetCount -= notify(count, unit, kPriorityVeryHigh);
+	if(targetCount <= 0) {
+		return;
+	}
+	targetCount -= notify(count, unit, kPriorityHigh);
+	if(targetCount <= 0) {
+		return;
+	}
+	targetCount -= notify(count, unit, kPriorityMedium);
+	if(targetCount <= 0) {
+		return;
+	}
+	targetCount -= notify(count, unit, kPriorityLow);
+	if(targetCount <= 0) {
+		return;
+	}
 	notify(count, unit, kPriorityVeryLow);
 }
 
-void PeriodicObserver::notify(uint32_t count, PeriodUnit unit, HandlerPriority priority)
+int PeriodicObserver::notify(uint32_t count, PeriodUnit unit, HandlerPriority priority)
 {
+	int targetCount = 0;
 	Node* p = &mRoot;
 	while((p = p->next) != &mRoot) {
 		EXT_KIT_ASSERT_OR_PANIC(p && p->isValid(), panic::kCorruptedNode);
@@ -155,15 +186,18 @@ void PeriodicObserver::notify(uint32_t count, PeriodUnit unit, HandlerPriority p
 		HandlerFunction* function = r->function;
 		if(function) {
 			(*function)(count, unit);
+			targetCount++;
 			continue;
 		}
 
 		HandlerProtocol* protocol = r->protocol;
 		if(protocol) {
 			protocol->handlePeriodicEvent(count, unit);
+			targetCount++;
 			continue;
 		}
 	}
+	return targetCount;
 }
 
 void PeriodicObserver::listen(PeriodUnit unit, HandlerFunction& function, HandlerPriority priority)
