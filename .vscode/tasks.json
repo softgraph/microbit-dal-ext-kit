@@ -1,0 +1,28 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558 
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "clean library",
+			"type": "shell",
+			"command": "test -f $_ENV_YOTTA && source $_ENV_YOTTA; yotta clean",
+			"windows": {
+				"command": "yotta clean"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "build library",
+			"type": "shell",
+			"command": "test -f $_ENV_YOTTA && source $_ENV_YOTTA; yotta build; ls -l build/bbc-microbit-classic-gcc/source/microbit-dal-ext-kit.a",
+			"windows": {
+				"command": "yotta build"
+			},
+			"problemMatcher": {
+				"base": "$gcc",
+				"fileLocation": "absolute"
+			}
+		}
+	]
+}
