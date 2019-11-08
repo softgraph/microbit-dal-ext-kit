@@ -26,16 +26,26 @@ LongSystemTime /* milliseconds */ longSystemTime()
 	return system_timer_current_time();
 }
 
-bool isElapsed(SystemTime target)
+SystemTime durationFor(SystemTime target)
 {
 	target -= systemTime();
-	return target > (LongSystemTime) INT32_MAX;
+	return (target > (SystemTime) INT32_MAX) ? 0 : target;
+}
+
+LongSystemTime durationFor(LongSystemTime target)
+{
+	target -= longSystemTime();
+	return (target > (LongSystemTime) INT64_MAX) ? 0 : target;
+}
+
+bool isElapsed(SystemTime target)
+{
+	return durationFor(target) == 0;
 }
 
 bool isElapsed(LongSystemTime target)
 {
-	target -= longSystemTime();
-	return target > (LongSystemTime) INT64_MAX;
+	return durationFor(target) == 0;
 }
 
 void sleep(uint32_t milliseconds)

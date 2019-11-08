@@ -31,10 +31,16 @@ SystemTime /* milliseconds */ systemTime();
 /// Get the current Long System Time in milliseconds
 LongSystemTime /* milliseconds */ longSystemTime();
 
-/// Check whether a System Time in elapsed or not
+/// Duration in milliseconds For a System Time
+SystemTime durationFor(SystemTime target);
+
+/// Duration in milliseconds For a Long System Time
+LongSystemTime durationFor(LongSystemTime target);
+
+/// Check whether a System Time is elapsed or not
 bool isElapsed(SystemTime target);
 
-/// Check whether a Long System Time in elapsed or not
+/// Check whether a Long System Time is elapsed or not
 bool isElapsed(LongSystemTime target);
 
 /// Sleep milliseconds
