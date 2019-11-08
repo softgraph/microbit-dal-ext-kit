@@ -62,8 +62,8 @@ const Buttons kTiltU	= kA;			///< Button Tilt Up
 const Buttons kTiltD	= kC;			///< Button Tilt Down
 const Buttons kPanR		= kB;			///< Button Pan Right
 const Buttons kPanL		= kD;			///< Button Pan Left
-const Buttons kSelR		= kE;			///< Button Selector Right
-const Buttons kSelL		= kF;			///< Button Selector Left
+const Buttons kStart	= kE;			///< Button Start
+const Buttons kSelect	= kF;			///< Button Select
 
 int microBitIDButtonLeft();		///< MicroBit ID for left button.  Returns MICROBIT_ID_BUTTON_A or MICROBIT_ID_BUTTON_B.
 int microBitIDButtonRight();	///< MicroBit ID for right button. Returns MICROBIT_ID_BUTTON_A or MICROBIT_ID_BUTTON_B.
