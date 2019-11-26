@@ -45,25 +45,26 @@ const Buttons kInvalid	= (Buttons) -1;	///< Invalid Value
 const Buttons kNone		= 0;			///< No button
 const Buttons kL		= 1 << 0;		///< Button L = micro:bit Button A (or B if either `display::isBackToFront()` or `display::isUpsideDown()` is true)
 const Buttons kR		= 1 << 1;		///< Button R = micro:bit Button B (or A if either `display::isBackToFront()` or `display::isUpsideDown()` is true)
-const Buttons kA		= 1 << 2;		///< Button A
-const Buttons kB		= 1 << 3;		///< Button B
-const Buttons kC		= 1 << 4;		///< Button C
-const Buttons kD		= 1 << 5;		///< Button D
-const Buttons kE		= 1 << 6;		///< Button E
-const Buttons kF		= 1 << 7;		///< Button F
-const Buttons kG		= 1 << 8;		///< Button G
-const Buttons kH		= 1 << 9;		///< Button H
 const Buttons kLR		= kL | kR;		///< Button L + R
-const Buttons kDirN		= kA;			///< Button Direction North
-const Buttons kDirE		= kB;			///< Button Direction East
-const Buttons kDirS		= kC;			///< Button Direction South
-const Buttons kDirW		= kD;			///< Button Direction West
-const Buttons kTiltU	= kA;			///< Button Tilt Up
-const Buttons kTiltD	= kC;			///< Button Tilt Down
-const Buttons kPanR		= kB;			///< Button Pan Right
-const Buttons kPanL		= kD;			///< Button Pan Left
-const Buttons kStart	= kE;			///< Button Start
-const Buttons kSelect	= kF;			///< Button Select
+const Buttons kDirN		= 1 << 2;		///< Button Direction North
+const Buttons kDirE		= 1 << 3;		///< Button Direction East
+const Buttons kDirS		= 1 << 4;		///< Button Direction South
+const Buttons kDirW		= 1 << 5;		///< Button Direction West
+const Buttons kTiltU	= kDirN;		///< Button Tilt Up
+const Buttons kTiltD	= kDirS;		///< Button Tilt Down
+const Buttons kPanR		= kDirE;		///< Button Pan Right
+const Buttons kPanL		= kDirW;		///< Button Pan Left
+const Buttons kStart	= 1 << 6;		///< Button Start
+const Buttons kSelect	= 1 << 7;		///< Button Select
+
+const Buttons kA		= 1 << 2;		///< Button A (deprecated)
+const Buttons kB		= 1 << 3;		///< Button B (deprecated)
+const Buttons kC		= 1 << 4;		///< Button C (deprecated)
+const Buttons kD		= 1 << 5;		///< Button D (deprecated)
+const Buttons kE		= 1 << 6;		///< Button E (deprecated)
+const Buttons kF		= 1 << 7;		///< Button F (deprecated)
+const Buttons kG		= 1 << 8;		///< Button G (deprecated)
+const Buttons kH		= 1 << 9;		///< Button H (deprecated)
 
 int microBitIDButtonLeft();		///< MicroBit ID for left button.  Returns MICROBIT_ID_BUTTON_A or MICROBIT_ID_BUTTON_B.
 int microBitIDButtonRight();	///< MicroBit ID for right button. Returns MICROBIT_ID_BUTTON_A or MICROBIT_ID_BUTTON_B.
