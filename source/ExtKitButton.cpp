@@ -136,7 +136,7 @@ char chooseFrom(const char* options, int position, const char* const * hints)
 
 	// Show the first option
 	size_t i = 0;
-	showOption(options[i], i, hints);
+	showOption(options[i], position, hints);
 
 	while(true) {
 		if(isButtonAPressed()) {
