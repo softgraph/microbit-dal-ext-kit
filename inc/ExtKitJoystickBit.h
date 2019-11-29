@@ -32,11 +32,18 @@ public:
 	/// Constructor
 	JoystickBit();
 
+	/// Set hardware version
+	void setHardwareVersion(int hardwareVersion);
+
 	/// Read joystick buttons
 	Buttons readJoystickButtons();
 
 	/// Read joystick direction
 	Direction readJoystickDirection();
+
+protected:
+	/// hardware version
+	int mHardwareVersion;
 
 };	// JoystickBit
 

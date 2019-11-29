@@ -34,7 +34,13 @@ bool JoystickBit::isAvaiable()
 
 JoystickBit::JoystickBit()
 	: Component("JoystickBit")
+	, mHardwareVersion(1)
 {
+}
+
+void JoystickBit::setHardwareVersion(int hardwareVersion)
+{
+	mHardwareVersion = hardwareVersion;
 }
 
 Buttons JoystickBit::readJoystickButtons()
