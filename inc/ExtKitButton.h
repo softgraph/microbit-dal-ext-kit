@@ -56,6 +56,9 @@ const Buttons kPanR		= kDirE;		///< Button Pan Right
 const Buttons kPanL		= kDirW;		///< Button Pan Left
 const Buttons kStart	= 1 << 6;		///< Button Start
 const Buttons kSelect	= 1 << 7;		///< Button Select
+const Buttons kOption1	= 1 << 8;		///< Button Option 1
+const Buttons kOption2	= 1 << 9;		///< Button Option 2
+const Buttons kOption3	= 1 << 10;		///< Button Option 3
 
 const Buttons kA		= 1 << 2;		///< Button A (deprecated)
 const Buttons kB		= 1 << 3;		///< Button B (deprecated)
