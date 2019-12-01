@@ -231,38 +231,168 @@ void showBits(uint32_t bits /* 0x00000 - 0xfffff */)
 	d.print(image);
 }
 
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageArrowN,
+	0,0,1,0,0,
+	0,1,0,1,0,
+	1,0,0,0,1,
+	0,0,0,0,0,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageArrowE,
+	0,0,1,0,0,
+	0,0,0,1,0,
+	0,0,0,0,1,
+	0,0,0,1,0,
+	0,0,1,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageArrowW,
+	0,0,1,0,0,
+	0,1,0,0,0,
+	1,0,0,0,0,
+	0,1,0,0,0,
+	0,0,1,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageArrowS,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	1,0,0,0,1,
+	0,1,0,1,0,
+	0,0,1,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageSquare,
+	1,1,1,1,1,
+	1,0,0,0,1,
+	1,0,0,0,1,
+	1,0,0,0,1,
+	1,1,1,1,1
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageSolidDiamond,
+	0,0,1,0,0,
+	0,1,1,1,0,
+	1,1,1,1,1,
+	0,1,1,1,0,
+	0,0,1,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageHollowDiamond,
+	0,0,1,0,0,
+	0,1,0,1,0,
+	1,0,0,0,1,
+	0,1,0,1,0,
+	0,0,1,0,0
+)
+
 void showButton(Buttons buttons)
 {
+	bool backToFront = isBackToFront();
 	MicroBitDisplay& d = ExtKit::global().display();
 	if(buttons == button::kNone)					{ d.clear(); }
 	else if(buttons == button::kInvalid)			{ d.printChar('!'); }
 	else if((buttons & button::kLR) == button::kLR)	{ d.printChar('W'); }
 	else if(buttons & button::kL)					{ d.printChar('L'); }
 	else if(buttons & button::kR)					{ d.printChar('R'); }
-	else if(buttons & button::kA)					{ d.printChar('A'); }
-	else if(buttons & button::kB)					{ d.printChar('B'); }
-	else if(buttons & button::kC)					{ d.printChar('C'); }
-	else if(buttons & button::kD)					{ d.printChar('D'); }
-	else if(buttons & button::kE)					{ d.printChar('E'); }
-	else if(buttons & button::kF)					{ d.printChar('F'); }
-	else if(buttons & button::kG)					{ d.printChar('G'); }
-	else if(buttons & button::kH)					{ d.printChar('H'); }
+	else if(buttons & button::kDirN)				{ d.print(backToFront ? sImageArrowS : sImageArrowN); }
+	else if(buttons & button::kDirE)				{ d.print(backToFront ? sImageArrowW : sImageArrowE); }
+	else if(buttons & button::kDirS)				{ d.print(backToFront ? sImageArrowN : sImageArrowS); }
+	else if(buttons & button::kDirW)				{ d.print(backToFront ? sImageArrowE : sImageArrowW); }
+	else if(buttons & button::kStart)				{ d.print(sImageSolidDiamond); }
+	else if(buttons & button::kSelect)				{ d.print(sImageHollowDiamond); }
+	else if(buttons & button::kOption1)				{ d.printChar('1'); }
+	else if(buttons & button::kOption2)				{ d.printChar('2'); }
+	else if(buttons & button::kOption3)				{ d.printChar('3'); }
 	else											{ d.printChar('?'); }
 }
 
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirN,		0,1,1,1,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirE,		0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirW,		0,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirS,		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,1,1,1,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirNE,		0,0,0,1,1, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirNW,		1,1,0,0,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirSE,		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,1,1)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirSW,		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,0, 1,1,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirLF,		1,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirLB,		0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0, 1,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirRF,		0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirRB,		0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,1, 0,0,0,0,1, 0,0,0,0,1)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirStop,	0,0,0,0,0, 0,1,0,1,0, 0,0,1,0,0, 0,1,0,1,0, 0,0,0,0,0)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirN,
+	0,1,1,1,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirE,
+	0,0,0,0,0,
+	0,0,0,0,1,
+	0,0,0,0,1,
+	0,0,0,0,1,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirW,
+	0,0,0,0,0,
+	1,0,0,0,0,
+	1,0,0,0,0,
+	1,0,0,0,0,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirS,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,1,1,1,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirNE,
+	0,0,0,1,1,
+	0,0,0,0,1,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirNW,
+	1,1,0,0,0,
+	1,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirSE,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,1,
+	0,0,0,1,1
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirSW,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	1,0,0,0,0,
+	1,1,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirLF,
+	1,0,0,0,0,
+	1,0,0,0,0,
+	1,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirLB,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	1,0,0,0,0,
+	1,0,0,0,0,
+	1,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirRF,
+	0,0,0,0,1,
+	0,0,0,0,1,
+	0,0,0,0,1,
+	0,0,0,0,0,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirRB,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,1,
+	0,0,0,0,1,
+	0,0,0,0,1
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirStop,
+	0,0,0,0,0,
+	0,1,0,1,0,
+	0,0,1,0,0,
+	0,1,0,1,0,
+	0,0,0,0,0
+)
 
 void showDirection(Direction direction)
 {
