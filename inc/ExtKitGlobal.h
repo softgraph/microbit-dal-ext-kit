@@ -13,6 +13,7 @@
 #define EXT_KIT_GLOBAL_H
 
 #include "MicroBitConfig.h"
+#include "MicroBitIO.h"
 #include "ExtKit_Common.h"
 
 class MicroBitAccelerometer;
@@ -58,9 +59,7 @@ public:
 		MicroBitDisplay&		display,
 		MicroBitI2C&			i2c,
 		MicroBitMessageBus&		messageBus,
-		MicroBitPin&			p0,
-		MicroBitPin&			p1,
-		MicroBitPin&			p2,
+		MicroBitIO&				io,
 		mbed::InterruptIn&		resetButton,
 		MicroBitSerial&			serial,
 		MicroBitAccelerometer*	accelerometer,	// may null
@@ -110,19 +109,24 @@ public:
 		return mMessageBus;
 	}
 
+	/// Get IO Object
+	inline MicroBitIO& io() {
+		return mIO;
+	}
+
 	/// Get Port P0 Object
 	inline MicroBitPin& p0() {
-		return mP0;
+		return mIO.P0;
 	}
 
 	/// Get Port P1 Object
 	inline MicroBitPin& p1() {
-		return mP1;
+		return mIO.P1;
 	}
 
 	/// Get Port P2 Object
 	inline MicroBitPin& p2() {
-		return mP2;
+		return mIO.P2;
 	}
 
 	/// Get Reset Button Object
@@ -188,9 +192,7 @@ private:
 	MicroBitDisplay&		mDisplay;
 	MicroBitI2C&			mI2c;
 	MicroBitMessageBus&		mMessageBus;
-	MicroBitPin&			mP0;
-	MicroBitPin&			mP1;
-	MicroBitPin&			mP2;
+	MicroBitIO&				mIO;
 	mbed::InterruptIn&		mResetButton;
 	MicroBitSerial&			mSerial;
 

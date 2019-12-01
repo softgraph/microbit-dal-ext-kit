@@ -42,7 +42,7 @@ namespace microbit_dal_ext_kit {
 			- `MicroBitDisplay`
 			- `MicroBitButton` for button A and B
 			- `MicroBitMultiButton` for button A+B
-			- `MicroBitPin` for port P0, P1 and P2
+			- `MicroBitPin` for all pins supported by `MicroBitIO`
 			.
 			If you need another instance which depends on the instances listed here, inherit `PrimitiveExtKit` and add the required class as a member variable. This approach ensures that the initialization of the instances listed here are done by the constructor of `PrimitiveExtKit` before the initialization of your member variables.
 */
@@ -59,12 +59,7 @@ namespace microbit_dal_ext_kit {
 			MicroBitButton			buttonA;
 			MicroBitButton			buttonB;
 			MicroBitMultiButton		buttonAB;
-			struct or class {
-				MicroBitPin				pin[0];
-				MicroBitPin				P0;
-				MicroBitPin				P1;
-				MicroBitPin				P2;
-			}						io;
+			MicroBitIO				io;
 */
 /* abstract */ class Device
 {
@@ -87,27 +82,6 @@ protected:
 	ExtKit	mExtKit;
 
 };	// MicroBitExtKit
-
-/// I/O ports for Primitive Ext Kit device
-class PrimitiveExtKitIO
-{
-public:
-	/// Constructor
-	PrimitiveExtKitIO(const int id[3], const PinName name[3], const PinCapability capability[3]);
-
-	/// The same name as class `MicroBit`
-	MicroBitPin		pin[0];
-
-	/// The same name as class `MicroBit`
-	MicroBitPin		P0;
-
-	/// The same name as class `MicroBit`
-	MicroBitPin		P1;
-
-	/// The same name as class `MicroBit`
-	MicroBitPin		P2;
-
-};	// PrimitiveExtKitIO
 
 /// A minimal ext-kit `Device`
 class PrimitiveExtKit : public Device
@@ -144,7 +118,7 @@ public:
 	MicroBitMultiButton		buttonAB;
 
 	/// The same name as class `MicroBit`
-	PrimitiveExtKitIO		io;
+	MicroBitIO				io;
 
 protected:
 	/// Ext Kit global instance

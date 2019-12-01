@@ -24,9 +24,7 @@ MicroBitExtKit::MicroBitExtKit()
 		display,
 		i2c,
 		messageBus,
-		io.P0,
-		io.P1,
-		io.P2,
+		io,
 		resetButton,
 		serial,
 		&accelerometer,
@@ -44,31 +42,6 @@ void MicroBitExtKit::init()
 	serial::initializeTx();
 }
 
-PrimitiveExtKitIO::PrimitiveExtKitIO(const int id[3], const PinName name[3], const PinCapability capability[3])
-	: P0(id[0], name[0], capability[0])
-	, P1(id[1], name[1], capability[1])
-	, P2(id[2], name[2], capability[2])
-{
-}
-
-static const int kId[3] = {
-	MICROBIT_ID_IO_P0,
-	MICROBIT_ID_IO_P1,
-	MICROBIT_ID_IO_P2
-};
-
-static const PinName kName[3] = {
-	MICROBIT_PIN_P0,
-	MICROBIT_PIN_P1,
-	MICROBIT_PIN_P2
-};
-
-static const PinCapability kCapability[3] = {
-	PIN_CAPABILITY_ALL,
-	PIN_CAPABILITY_ALL,
-	PIN_CAPABILITY_ALL
-};
-
 PrimitiveExtKit::PrimitiveExtKit()
 	: serial(USBTX, USBRX)
 	, resetButton(MICROBIT_PIN_BUTTON_RESET)
@@ -78,7 +51,29 @@ PrimitiveExtKit::PrimitiveExtKit()
 	, buttonA(MICROBIT_PIN_BUTTON_A, MICROBIT_ID_BUTTON_A)
 	, buttonB(MICROBIT_PIN_BUTTON_B, MICROBIT_ID_BUTTON_B)
 	, buttonAB(MICROBIT_ID_BUTTON_A,MICROBIT_ID_BUTTON_B, MICROBIT_ID_BUTTON_AB)
-	, io(kId, kName, kCapability)
+	, io(
+		MICROBIT_ID_IO_P0,
+		MICROBIT_ID_IO_P1,
+		MICROBIT_ID_IO_P2,
+		MICROBIT_ID_IO_P3,
+		MICROBIT_ID_IO_P4,
+		MICROBIT_ID_IO_P5,
+		MICROBIT_ID_IO_P6,
+		MICROBIT_ID_IO_P7,
+		MICROBIT_ID_IO_P8,
+		MICROBIT_ID_IO_P9,
+		MICROBIT_ID_IO_P10,
+		MICROBIT_ID_IO_P11,
+		MICROBIT_ID_IO_P12,
+		MICROBIT_ID_IO_P13,
+		MICROBIT_ID_IO_P14,
+		MICROBIT_ID_IO_P15,
+		MICROBIT_ID_IO_P16,
+	//	MICROBIT_ID_IO_P17,
+	//	MICROBIT_ID_IO_P18,
+		MICROBIT_ID_IO_P19,
+		MICROBIT_ID_IO_P20
+	)
 	, mExtKit(
 		"PrimitiveExtKit",
 		buttonA,
@@ -87,9 +82,7 @@ PrimitiveExtKit::PrimitiveExtKit()
 		display,
 		i2c,
 		messageBus,
-		io.P0,
-		io.P1,
-		io.P2,
+		io,
 		resetButton,
 		serial,
 		0,	// accelerometer

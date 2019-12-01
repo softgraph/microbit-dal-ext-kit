@@ -31,9 +31,7 @@ ExtKit::ExtKit(
 	MicroBitDisplay&		display,
 	MicroBitI2C&			i2c,
 	MicroBitMessageBus&		messageBus,
-	MicroBitPin&			p0,
-	MicroBitPin&			p1,
-	MicroBitPin&			p2,
+	MicroBitIO&				io,
 	mbed::InterruptIn&		resetButton,
 	MicroBitSerial&			serial,
 	MicroBitAccelerometer*	accelerometer,	// may null
@@ -48,9 +46,7 @@ ExtKit::ExtKit(
 	, mDisplay(display)
 	, mI2c(i2c)
 	, mMessageBus(messageBus)
-	, mP0(p0)
-	, mP1(p1)
-	, mP2(p2)
+	, mIO(io)
 	, mResetButton(resetButton)
 	, mSerial(serial)
 	, mAccelerometer(accelerometer)
