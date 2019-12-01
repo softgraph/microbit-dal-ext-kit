@@ -15,8 +15,9 @@
 namespace microbit_dal_ext_kit {
 
 /**	@class	Sonar
-	@reference	Microsoft pxt-sonar main.ts (MIT license)
+	@reference	pxt-sonar
 		- https://makecode.microbit.org/pkg/Microsoft/pxt-sonar
+	@reference	Microsoft/pxt-sonar/main.ts (MIT license)
 		- https://github.com/Microsoft/pxt-sonar
 		- https://github.com/Microsoft/pxt-sonar/blob/master/main.ts
 	@reference	HC-SR04 Ultrasonic Sensor Module
