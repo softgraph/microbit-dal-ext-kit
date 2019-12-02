@@ -20,20 +20,35 @@ namespace microbit_dal_ext_kit {
 
 /// An ext-kit Component which provides the support for ElecFreaks' Joystick:bit board
 /**
-	@reference	ElecFreaks Joystick:bit for Micro:bit
+	@reference	ElecFreaks Joystick:bit for Micro:bit (SKU: EF03407)
 		- https://www.elecfreaks.com/estore/elecfreaks-joystick-bit-for-micro-bit.html
+	@reference	ElecFreaks Joystick:bit V2 For micro:bit (SKU: EF03417)
+		- https://www.elecfreaks.com/estore/game-bit-for-micro-bit.html
 */
 class JoystickBit : public Component
 {
 public:
 	/// Check that the required hardware is avaialable.
+	/**
+	 * @return returns true if Joystick:bit for Micro:bit (SKU: EF03407) is available
+	 * @note returns false even if Joystick:bit V2 For micro:bit (SKU: EF03417) is available
+	 */
 	static bool isAvaiable();
 
-	/// Constructor
-	JoystickBit();
+	enum HardwareVariant
+	{
+		V1,
+		V2
 
-	/// Set hardware version
-	void setHardwareVersion(int hardwareVersion);
+	};	// HardwareVariant
+
+	/// Constructor
+	/**
+	 * @param hardwareVariant
+	 * - V1: Joystick:bit for Micro:bit (SKU: EF03407)
+	 * - V2: Joystick:bit V2 For micro:bit (SKU: EF03417)
+	 */
+	JoystickBit(HardwareVariant hardwareVariant = V1);
 
 	/// Read joystick buttons
 	Buttons readJoystickButtons();
@@ -42,8 +57,11 @@ public:
 	Direction readJoystickDirection();
 
 protected:
-	/// hardware version
-	int mHardwareVersion;
+	/// Inherited
+	/* Component */ void doHandleComponentAction(Action action);
+
+	/// Hardware Variant
+	HardwareVariant mHardwareVariant;
 
 };	// JoystickBit
 
