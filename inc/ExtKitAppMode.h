@@ -52,7 +52,7 @@ public:
 };	// DescriberProtocol
 
 /// Active App Mode Describer
-/**	Returns null until `registerAppModeDescriber()` or `selectAppModeFor()` is called.
+/**	Returns null until `appMode::registerDescriber()` or `appMode::selectFor()` is called.
 */
 const DescriberProtocol* describer();
 
