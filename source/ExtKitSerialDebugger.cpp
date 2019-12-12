@@ -350,64 +350,65 @@ void SerialDebugger::debug_sendLines(const char* const * lineArray /* terminated
 {
 	ExtKit& g = ExtKit::global();
 
-	debug_sendLine("--- Active App Mode ---", false);
-	appMode::debug_sendAppMode(0, appMode::activeMode(), false);
+	debug_sendLine("# Device Configuration", false);
+	debug_sendLine("## Active App Mode", false);
+	appMode::debug_sendAppMode("- ", appMode::activeMode(), false);
 
-	debug_sendLine("--- Global object ---", false);
-	debug_sendLine("owner:         ", g.owner(), false);
-	debug_sendLine("accelerometer: ", isRegistered(g.accelerometer()), false);
-	debug_sendLine("compass:       ", isRegistered(g.compass()), false);
-	debug_sendLine("radio:         ", isRegistered(g.radio()), false);
-	debug_sendLine("thermometer:   ", isRegistered(g.thermometer()), false);
+	debug_sendLine("## Global object", false);
+	debug_sendLine("- owner:         ", g.owner(), false);
+	debug_sendLine("- accelerometer: ", isRegistered(g.accelerometer()), false);
+	debug_sendLine("- compass:       ", isRegistered(g.compass()), false);
+	debug_sendLine("- radio:         ", isRegistered(g.radio()), false);
+	debug_sendLine("- thermometer:   ", isRegistered(g.thermometer()), false);
 
-	debug_sendLine("--- Yotta Config (microbit-dal) ---", false);
-	debug_sendLine("CONFIG MICROBIT_SRAM_BASE:   0x", string::hex(MICROBIT_SRAM_BASE).toCharArray(), false);
-	debug_sendLine("CONFIG MICROBIT_HEAP_END:    0x", string::hex(MICROBIT_HEAP_END).toCharArray(), false);
-	debug_sendLine("CONFIG CORTEX_M0_STACK_BASE: 0x", string::hex(CORTEX_M0_STACK_BASE).toCharArray(), false);
-	debug_sendLine("CONFIG MICROBIT_SRAM_END:    0x", string::hex(MICROBIT_SRAM_END).toCharArray(), false);
+	debug_sendLine("## Yotta Config (microbit-dal)", false);
+	debug_sendLine("- CONFIG MICROBIT_SRAM_BASE:   0x", string::hex(MICROBIT_SRAM_BASE).toCharArray(), false);
+	debug_sendLine("- CONFIG MICROBIT_HEAP_END:    0x", string::hex(MICROBIT_HEAP_END).toCharArray(), false);
+	debug_sendLine("- CONFIG CORTEX_M0_STACK_BASE: 0x", string::hex(CORTEX_M0_STACK_BASE).toCharArray(), false);
+	debug_sendLine("- CONFIG MICROBIT_SRAM_END:    0x", string::hex(MICROBIT_SRAM_END).toCharArray(), false);
 
 #if CONFIG_ENABLED(MICROBIT_BLE_ENABLED)
-	debug_sendLine("CONFIG MICROBIT_BLE_ENABLED: enabled", false);
+	debug_sendLine("- CONFIG MICROBIT_BLE_ENABLED: enabled", false);
 #else	// MICROBIT_BLE_ENABLED
-	debug_sendLine("CONFIG MICROBIT_BLE_ENABLED: disabled", false);
+	debug_sendLine("- CONFIG MICROBIT_BLE_ENABLED: disabled", false);
 #endif	// MICROBIT_BLE_ENABLED
 
 #if CONFIG_ENABLED(MICROBIT_BLE_PAIRING_MODE)
-	debug_sendLine("CONFIG MICROBIT_BLE_PAIRING_MODE: enabled", false);
+	debug_sendLine("- CONFIG MICROBIT_BLE_PAIRING_MODE: enabled", false);
 #else	// MICROBIT_BLE_PAIRING_MODE
-	debug_sendLine("CONFIG MICROBIT_BLE_PAIRING_MODE: disabled", false);
+	debug_sendLine("- CONFIG MICROBIT_BLE_PAIRING_MODE: disabled", false);
 #endif	// MICROBIT_BLE_PAIRING_MODE
 
 #if CONFIG_ENABLED(MICROBIT_DBG)
-	debug_sendLine("CONFIG MICROBIT_DBG: enabled", false);
+	debug_sendLine("- CONFIG MICROBIT_DBG: enabled", false);
 #else	// MICROBIT_DBG
-	debug_sendLine("CONFIG MICROBIT_DBG: disabled", false);
+	debug_sendLine("- CONFIG MICROBIT_DBG: disabled", false);
 #endif	// MICROBIT_DBG
 
 #if CONFIG_ENABLED(MICROBIT_HEAP_DBG)
-	debug_sendLine("CONFIG MICROBIT_HEAP_DBG: enabled", false);
+	debug_sendLine("- CONFIG MICROBIT_HEAP_DBG: enabled", false);
 #else	// MICROBIT_HEAP_DBG
-	debug_sendLine("CONFIG MICROBIT_HEAP_DBG: disabled", false);
+	debug_sendLine("- CONFIG MICROBIT_HEAP_DBG: disabled", false);
 #endif	// MICROBIT_HEAP_DBG
 
-	debug_sendLine("--- Yotta Config (microbit-dal-ext-kit) ---", false);
+	debug_sendLine("## Yotta Config (microbit-dal-ext-kit)", false);
 
 #if EXT_KIT_CONFIG_ENABLED(ASSERT)
-	debug_sendLine("CONFIG ASSERT: enabled", false);
+	debug_sendLine("- CONFIG ASSERT: enabled", false);
 #else	// ASSERT
-	debug_sendLine("CONFIG ASSERT: disabled", false);
+	debug_sendLine("- CONFIG ASSERT: disabled", false);
 #endif	// ASSERT
 
-	debug_sendLine("CONFIG RADIO_GROUP: ", ManagedString(EXT_KIT_CONFIG_VALUE(RADIO_GROUP)).toCharArray(), false);
+	debug_sendLine("- CONFIG RADIO_GROUP: ", ManagedString(EXT_KIT_CONFIG_VALUE(RADIO_GROUP)).toCharArray(), false);
 
 #if EXT_KIT_CONFIG_ENABLED(SERIAL_EXT_DEBUG)
-	debug_sendLine("CONFIG SERIAL_EXT_DEBUG: enabled", false);
+	debug_sendLine("- CONFIG SERIAL_EXT_DEBUG: enabled", false);
 #else	// SERIAL_EXT_DEBUG
-	debug_sendLine("CONFIG SERIAL_EXT_DEBUG: disabled", false);
+	debug_sendLine("- CONFIG SERIAL_EXT_DEBUG: disabled", false);
 #endif	// SERIAL_EXT_DEBUG
 
-	debug_sendLine("CONFIG SERIAL_RXBUF: ", ManagedString(EXT_KIT_CONFIG_VALUE(SERIAL_RXBUF)).toCharArray(), false);
-	debug_sendLine("CONFIG SERIAL_TXBUF: ", ManagedString(EXT_KIT_CONFIG_VALUE(SERIAL_TXBUF)).toCharArray(), false);
+	debug_sendLine("- CONFIG SERIAL_RXBUF: ", ManagedString(EXT_KIT_CONFIG_VALUE(SERIAL_RXBUF)).toCharArray(), false);
+	debug_sendLine("- CONFIG SERIAL_TXBUF: ", ManagedString(EXT_KIT_CONFIG_VALUE(SERIAL_TXBUF)).toCharArray(), false);
 
 //	debug_sendLine("gSerial.getRxBufferSize(): ", ManagedString(gSerial.getRxBufferSize()).toCharArray(), false);
 //	debug_sendLine("gSerial.getTxBufferSize(): ", ManagedString(gSerial.getTxBufferSize()).toCharArray(), false);
@@ -415,26 +416,26 @@ void SerialDebugger::debug_sendLines(const char* const * lineArray /* terminated
 
 /* SerialDebugger */ void SerialDebugger::debug_sendDeviceInfo()
 {
-	debug_sendLine("--- Device Information ---", false);
-	debug_sendLine("-- Hardware Information", false);
-	debug_sendLine("Serial Number: 0x", string::hex(microbit_serial_number()).toCharArray(), false);
-	debug_sendLine("Friendly Name: ", microbit_friendly_name(), false);
+	debug_sendLine("# Device Information", false);
+	debug_sendLine("## Hardware Information", false);
+	debug_sendLine("- Serial Number: 0x", string::hex(microbit_serial_number()).toCharArray(), false);
+	debug_sendLine("- Friendly Name: ", microbit_friendly_name(), false);
 
-	debug_sendLine("-- Build Environment", false);
-	debug_sendLine("sizeof(bool):   ", ManagedString((int) sizeof(bool)).toCharArray(), false);
-	debug_sendLine("sizeof(int):    ", ManagedString((int) sizeof(int)).toCharArray(), false);
-	debug_sendLine("sizeof(void*):  ", ManagedString((int) sizeof(void*)).toCharArray(), false);
-	debug_sendLine("sizeof(size_t): ", ManagedString((int) sizeof(size_t)).toCharArray(), false);
+	debug_sendLine("## Build Environment", false);
+	debug_sendLine("- sizeof(bool):   ", ManagedString((int) sizeof(bool)).toCharArray(), false);
+	debug_sendLine("- sizeof(int):    ", ManagedString((int) sizeof(int)).toCharArray(), false);
+	debug_sendLine("- sizeof(void*):  ", ManagedString((int) sizeof(void*)).toCharArray(), false);
+	debug_sendLine("- sizeof(size_t): ", ManagedString((int) sizeof(size_t)).toCharArray(), false);
 
 //	State<uint8_t> a[2] = { State<uint8_t>(0), State<uint8_t>(1) };
 //	debug_sendLine("sizeof(State<uint8_t>):    ", ManagedString((int) sizeof(a[0])).toCharArray(), false);
 //	debug_sendLine("sizeof(State<uint8_t>[2]): ", ManagedString((int) sizeof(a)).toCharArray(), false);
 
-	debug_sendLine("-- Software Information", false);
-	debug_sendLine("Build Date: ", __DATE__, " ", __TIME__, false);
-	debug_sendLine("mbed-classic version: " YOTTA_MBED_CLASSIC_VERSION_STRING, false);
-	debug_sendLine("microbit-dal version: ", microbit_dal_version(), false);
-	debug_sendLine("microbit_dal_ext_kit version: " YOTTA_MICROBIT_DAL_EXT_KIT_VERSION_STRING, false);
+	debug_sendLine("## Software Information", false);
+	debug_sendLine("- Build Date: ", __DATE__, " ", __TIME__, false);
+	debug_sendLine("- mbed-classic version: " YOTTA_MBED_CLASSIC_VERSION_STRING, false);
+	debug_sendLine("- microbit-dal version: ", microbit_dal_version(), false);
+	debug_sendLine("- microbit-dal-ext-kit version: " YOTTA_MICROBIT_DAL_EXT_KIT_VERSION_STRING, false);
 }
 
 const char* isRegistered(bool registered)

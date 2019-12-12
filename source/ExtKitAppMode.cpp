@@ -152,9 +152,9 @@ void debug_sendPossibleAppModes(const AppMode* appModes)
 	EXT_KIT_ASSERT(appModes);
 	EXT_KIT_ASSERT(*appModes);
 
-	debug_sendLine("--- Possible App Modes ---", false);
+	debug_sendLine("# Possible App Modes", false);
 	while(*appModes) {
-		debug_sendAppMode(0, *appModes++, false);
+		debug_sendAppMode("- ", *appModes++, false);
 	}
 }
 
