@@ -15,9 +15,151 @@
 namespace microbit_dal_ext_kit {
 namespace display {
 
-typedef char	Graph[2 * 5];	// Graph for a single digit
+/// @cond static
 
-static const Graph sBarGraph[] = {
+/// Scroll Parameter
+struct ScrollParam
+{
+	ScrollParam(const ManagedString& s, char c)
+		: s(s), c(c)
+	{
+	}
+
+	ManagedString	s;
+	char	c;
+
+};	// ScrollParam
+
+/// @endcond static
+
+static DisplayRotation sDisplayRotation = MICROBIT_DISPLAY_ROTATION_0;
+static bool sBackToFront = false;
+static int sScrollSpeed = MICROBIT_DEFAULT_SCROLL_SPEED;
+
+static void scrollString(void* /* new */ p);
+
+void setDisplayRotation(DisplayRotation displayRotation, bool backToFront)
+{
+	sDisplayRotation = displayRotation;
+	sBackToFront = backToFront;
+
+	MicroBitDisplay& d = ExtKit::global().display();
+	d.rotateTo(displayRotation);
+}
+
+DisplayRotation displayRotation()
+{
+	return sDisplayRotation;
+}
+
+bool isBackToFront()
+{
+	return sBackToFront;
+}
+
+bool isUpsideDown()
+{
+	return sDisplayRotation == MICROBIT_DISPLAY_ROTATION_180;
+}
+
+void clear(uint32_t durationInMilliseconds)
+{
+	MicroBitDisplay& d = ExtKit::global().display();
+	if(0 < durationInMilliseconds) {
+		MicroBitImage saved = d.screenShot();	d.clear();
+		time::sleep(durationInMilliseconds);	d.print(saved);
+	}
+	else {
+		d.clear();
+	}
+}
+
+void showImage(MicroBitImage image, uint32_t durationInMilliseconds)
+{
+	MicroBitDisplay& d = ExtKit::global().display();
+	if(0 < durationInMilliseconds) {
+		MicroBitImage saved = d.screenShot();	d.clear();
+		time::sleep(100 /* milliseconds */);	d.print(image);
+		time::sleep(durationInMilliseconds);	d.clear();
+		time::sleep(100 /* milliseconds */);	d.print(saved);
+	}
+	else {
+		d.print(image);
+	}
+}
+
+void showChar(char c, uint32_t durationInMilliseconds)
+{
+	MicroBitDisplay& d = ExtKit::global().display();
+	if(0 < durationInMilliseconds) {
+		MicroBitImage saved = d.screenShot();	d.clear();
+		time::sleep(100 /* milliseconds */);	d.printChar(c);
+		time::sleep(durationInMilliseconds);	d.clear();
+		time::sleep(100 /* milliseconds */);	d.print(saved);
+	}
+	else {
+		d.printChar(c);
+	}
+}
+
+void flashChar(char c, uint32_t durationInMilliseconds)
+{
+	showChar(c, durationInMilliseconds);
+}
+
+void setScrollSpeed(int scrollSpeed)
+{
+	sScrollSpeed = scrollSpeed;
+}
+
+void scrollString(const ManagedString& s, char c)
+{
+	ScrollParam* scrollParam = new ScrollParam(s, c);
+	EXT_KIT_ASSERT_OR_PANIC(scrollParam, panic::kOutOfMemory);
+
+	scrollString(scrollParam);
+}
+
+void scrollStringAsync(const ManagedString& s, char c)
+{
+	ScrollParam* scrollParam = new ScrollParam(s, c);
+	EXT_KIT_ASSERT_OR_PANIC(scrollParam, panic::kOutOfMemory);
+
+	create_fiber(scrollString, scrollParam);
+}
+
+void scrollString(void* /* new */ p)
+{
+	EXT_KIT_ASSERT(p);
+
+	MicroBitDisplay& d = ExtKit::global().display();
+	d.stopAnimation();
+	fiber_sleep(1 /* milliseconds */);
+
+	ScrollParam* /* new */ scrollParam = (ScrollParam*) p;
+	if(scrollParam->c) {
+		d.clear();
+		d.scroll(scrollParam->s, sScrollSpeed);
+		d.printChar(scrollParam->c);
+	}
+	else {
+		MicroBitImage saved = d.screenShot();
+		d.clear();
+		d.scroll(scrollParam->s, sScrollSpeed);
+		d.print(saved);
+	}
+	delete scrollParam;
+}
+
+/// @cond static
+
+/// Bar Graph for a single digit
+typedef char BarGraph[2 * 5];
+
+/// @endcond static
+
+/// Bar Graphs for dighits
+static const BarGraph sBarGraph[] = {
 	{0, 0,
 	 0, 0,
 	 0, 0,
@@ -75,122 +217,8 @@ static const Graph sBarGraph[] = {
 	 1, 1}	// FULL
 };
 
-static DisplayRotation sDisplayRotation = MICROBIT_DISPLAY_ROTATION_0;
-static bool sBackToFront = false;
-static int sScrollSpeed = MICROBIT_DEFAULT_SCROLL_SPEED;
-
-struct ScrollParam
+void showNumber(int twoDigitNumber /* 00-99 */, uint32_t durationInMilliseconds)
 {
-	ScrollParam(const ManagedString& s, char c)
-		: s(s), c(c)
-	{
-	}
-
-	ManagedString	s;
-	char	c;
-};
-
-static void scrollString(void* /* new */ p);
-
-void setDisplayRotation(DisplayRotation displayRotation, bool backToFront)
-{
-	sDisplayRotation = displayRotation;
-	sBackToFront = backToFront;
-
-	MicroBitDisplay& d = ExtKit::global().display();
-	d.rotateTo(displayRotation);
-}
-
-DisplayRotation displayRotation()
-{
-	return sDisplayRotation;
-}
-
-bool isBackToFront()
-{
-	return sBackToFront;
-}
-
-bool isUpsideDown()
-{
-	return (sDisplayRotation == MICROBIT_DISPLAY_ROTATION_180);
-}
-
-void clear()
-{
-	MicroBitDisplay& d = ExtKit::global().display();
-	d.clear();
-}
-
-void showImage(MicroBitImage image)
-{
-	MicroBitDisplay& d = ExtKit::global().display();
-	d.print(image);
-}
-
-void showChar(char c)
-{
-	MicroBitDisplay& d = ExtKit::global().display();
-	d.printChar(c);
-}
-
-void flashChar(char c, uint32_t durationInMilliseconds)
-{
-	MicroBitDisplay& d = ExtKit::global().display();
-	MicroBitImage saved = d.screenShot();
-	d.clear();		time::sleep(100 /* milliseconds */);
-	d.printChar(c);	time::sleep(durationInMilliseconds);
-	d.clear();		time::sleep(100 /* milliseconds */);
-	d.print(saved);
-}
-
-void setScrollSpeed(int scrollSpeed)
-{
-	sScrollSpeed = scrollSpeed;
-}
-
-void scrollString(const ManagedString& s, char c)
-{
-	ScrollParam* scrollParam = new ScrollParam(s, c);
-	EXT_KIT_ASSERT_OR_PANIC(scrollParam, panic::kOutOfMemory);
-
-	scrollString(scrollParam);
-}
-
-void scrollStringAsync(const ManagedString& s, char c)
-{
-	ScrollParam* scrollParam = new ScrollParam(s, c);
-	EXT_KIT_ASSERT_OR_PANIC(scrollParam, panic::kOutOfMemory);
-
-	create_fiber(scrollString, scrollParam);
-}
-
-void scrollString(void* /* new */ p)
-{
-	EXT_KIT_ASSERT(p);
-
-	MicroBitDisplay& d = ExtKit::global().display();
-	d.stopAnimation();
-	fiber_sleep(1 /* milliseconds */);
-
-	ScrollParam* /* new */ scrollParam = (ScrollParam*) p;
-	if(scrollParam->c) {
-		d.clear();
-		d.scroll(scrollParam->s, sScrollSpeed);
-		d.printChar(scrollParam->c);
-	}
-	else {
-		MicroBitImage saved = d.screenShot();
-		d.clear();
-		d.scroll(scrollParam->s, sScrollSpeed);
-		d.print(saved);
-	}
-	delete scrollParam;
-}
-
-void showNumber(int twoDigitNumber /* 00-99 */)
-{
-	MicroBitDisplay& d = ExtKit::global().display();
 	int d1;
 	int d2;
 	if(twoDigitNumber < 0) {
@@ -214,12 +242,11 @@ void showNumber(int twoDigitNumber /* 00-99 */)
 		image.setPixelValue(3, y, *p2++ ? 1 : 0);
 		image.setPixelValue(4, y, *p2++ ? 1 : 0);
 	}
-	d.print(image);
+	showImage(image, durationInMilliseconds);
 }
 
-void showBits(uint32_t bits /* 0x00000 - 0xfffff */)
+void showBits(uint32_t bits /* 0x00000 - 0xfffff */, uint32_t durationInMilliseconds)
 {
-	MicroBitDisplay& d = ExtKit::global().display();
 	MicroBitImage image(5,5);
 	for (int16_t x = 4; 0 <= x; x--) {
 		for (int16_t y = 4; 1 <= y; y--) {
@@ -228,38 +255,12 @@ void showBits(uint32_t bits /* 0x00000 - 0xfffff */)
 		}
 		image.setPixelValue(x, 0, 1);
 	}
-	d.print(image);
+	showImage(image, durationInMilliseconds);
 }
 
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageArrowN,
-	0,0,1,0,0,
-	0,1,0,1,0,
-	1,0,0,0,1,
-	0,0,0,0,0,
-	0,0,0,0,0
-)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageArrowE,
-	0,0,1,0,0,
-	0,0,0,1,0,
-	0,0,0,0,1,
-	0,0,0,1,0,
-	0,0,1,0,0
-)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageArrowW,
-	0,0,1,0,0,
-	0,1,0,0,0,
-	1,0,0,0,0,
-	0,1,0,0,0,
-	0,0,1,0,0
-)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageArrowS,
-	0,0,0,0,0,
-	0,0,0,0,0,
-	1,0,0,0,1,
-	0,1,0,1,0,
-	0,0,1,0,0
-)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageSquare,
+/// @cond static
+
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageHollowSquare,
 	1,1,1,1,1,
 	1,0,0,0,1,
 	1,0,0,0,1,
@@ -280,113 +281,15 @@ EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageHollowDiamond,
 	0,1,0,1,0,
 	0,0,1,0,0
 )
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageLargeX,
+	1,0,0,0,1,
+	0,1,0,1,0,
+	0,0,1,0,0,
+	0,1,0,1,0,
+	1,0,0,0,1
+)
 
-void showButton(Buttons buttons)
-{
-	bool backToFront = isBackToFront();
-	MicroBitDisplay& d = ExtKit::global().display();
-	if(buttons == button::kNone)					{ d.clear(); }
-	else if(buttons == button::kInvalid)			{ d.printChar('!'); }
-	else if((buttons & button::kLR) == button::kLR)	{ d.printChar('W'); }
-	else if(buttons & button::kL)					{ d.printChar('L'); }
-	else if(buttons & button::kR)					{ d.printChar('R'); }
-	else if(buttons & button::kDirN)				{ d.print(backToFront ? sImageArrowS : sImageArrowN); }
-	else if(buttons & button::kDirE)				{ d.print(backToFront ? sImageArrowW : sImageArrowE); }
-	else if(buttons & button::kDirS)				{ d.print(backToFront ? sImageArrowN : sImageArrowS); }
-	else if(buttons & button::kDirW)				{ d.print(backToFront ? sImageArrowE : sImageArrowW); }
-	else if(buttons & button::kStart)				{ d.print(sImageSolidDiamond); }
-	else if(buttons & button::kSelect)				{ d.print(sImageHollowDiamond); }
-	else if(buttons & button::kOption1)				{ d.printChar('1'); }
-	else if(buttons & button::kOption2)				{ d.printChar('2'); }
-	else if(buttons & button::kOption3)				{ d.printChar('3'); }
-	else											{ d.printChar('?'); }
-}
-
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirN,
-	0,1,1,1,0,
-	0,0,0,0,0,
-	0,0,0,0,0,
-	0,0,0,0,0,
-	0,0,0,0,0
-)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirE,
-	0,0,0,0,0,
-	0,0,0,0,1,
-	0,0,0,0,1,
-	0,0,0,0,1,
-	0,0,0,0,0
-)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirW,
-	0,0,0,0,0,
-	1,0,0,0,0,
-	1,0,0,0,0,
-	1,0,0,0,0,
-	0,0,0,0,0
-)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirS,
-	0,0,0,0,0,
-	0,0,0,0,0,
-	0,0,0,0,0,
-	0,0,0,0,0,
-	0,1,1,1,0
-)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirNE,
-	0,0,0,1,1,
-	0,0,0,0,1,
-	0,0,0,0,0,
-	0,0,0,0,0,
-	0,0,0,0,0
-)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirNW,
-	1,1,0,0,0,
-	1,0,0,0,0,
-	0,0,0,0,0,
-	0,0,0,0,0,
-	0,0,0,0,0
-)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirSE,
-	0,0,0,0,0,
-	0,0,0,0,0,
-	0,0,0,0,0,
-	0,0,0,0,1,
-	0,0,0,1,1
-)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirSW,
-	0,0,0,0,0,
-	0,0,0,0,0,
-	0,0,0,0,0,
-	1,0,0,0,0,
-	1,1,0,0,0
-)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirLF,
-	1,0,0,0,0,
-	1,0,0,0,0,
-	1,0,0,0,0,
-	0,0,0,0,0,
-	0,0,0,0,0
-)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirLB,
-	0,0,0,0,0,
-	0,0,0,0,0,
-	1,0,0,0,0,
-	1,0,0,0,0,
-	1,0,0,0,0
-)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirRF,
-	0,0,0,0,1,
-	0,0,0,0,1,
-	0,0,0,0,1,
-	0,0,0,0,0,
-	0,0,0,0,0
-)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirRB,
-	0,0,0,0,0,
-	0,0,0,0,0,
-	0,0,0,0,1,
-	0,0,0,0,1,
-	0,0,0,0,1
-)
-EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirStop,
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageSmallX,
 	0,0,0,0,0,
 	0,1,0,1,0,
 	0,0,1,0,0,
@@ -394,27 +297,571 @@ EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageDirStop,
 	0,0,0,0,0
 )
 
-void showDirection(Direction direction)
+/// @endcond static
+
+void showButton(Buttons buttons, uint32_t durationInMilliseconds)
+{
+	char c = 0;
+	const MicroBitImage* image = 0;
+	Direction direction = direction::kCenter;
+	if(buttons == button::kNone) {
+		c = ' ';
+	}
+	else if(buttons == button::kInvalid) {
+		c = '!';
+	}
+	else if((buttons & button::kLR) == button::kLR) {
+		c = 'W';
+	}
+	else if(buttons & button::kL) {
+		c = 'L';
+	}
+	else if(buttons & button::kR) {
+		c = 'R';
+	}
+	else if(buttons & button::kDirN) {
+		direction = direction::kN;
+	}
+	else if(buttons & button::kDirE) {
+		direction = direction::kE;
+	}
+	else if(buttons & button::kDirS) {
+		direction = direction::kS;
+	}
+	else if(buttons & button::kDirW) {
+		direction = direction::kW;
+	}
+	else if(buttons & button::kStart) {
+		image = &sImageSolidDiamond;
+	}
+	else if(buttons & button::kSelect) {
+		image = &sImageHollowDiamond;
+	}
+	else if(buttons & button::kOption1) {
+		c = '1';
+	}
+	else if(buttons & button::kOption2) {
+		c = '2';
+	}
+	else if(buttons & button::kOption3) {
+		c = '3';
+	}
+	else {
+		c = '?';
+	}
+
+	if(c) {
+		showChar(c, durationInMilliseconds);
+	}
+	else if(image) {
+		showImage(*const_cast<MicroBitImage*>(image), durationInMilliseconds);
+	}
+	else if(direction != direction::kCenter) {
+		showDirection(direction, kAngle, durationInMilliseconds);
+	}
+}
+
+/// @cond static
+
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageGuideBarN,
+	0,1,1,1,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageGuideBarNW,
+	1,1,0,0,0,
+	1,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageGuideBarW,
+	0,0,0,0,0,
+	1,0,0,0,0,
+	1,0,0,0,0,
+	1,0,0,0,0,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageGuideBarSW,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	1,0,0,0,0,
+	1,1,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageGuideBarS,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,1,1,1,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageGuideBarSE,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,1,
+	0,0,0,1,1
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageGuideBarE,
+	0,0,0,0,0,
+	0,0,0,0,1,
+	0,0,0,0,1,
+	0,0,0,0,1,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageGuideBarNE,
+	0,0,0,1,1,
+	0,0,0,0,1,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0
+)
+
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageGuideBarNNW,
+	1,1,1,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageGuideBarWNW,
+	1,0,0,0,0,
+	1,0,0,0,0,
+	1,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageGuideBarWSW,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	1,0,0,0,0,
+	1,0,0,0,0,
+	1,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageGuideBarSSW,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	1,1,1,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageGuideBarSSE,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,1,1,1
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageGuideBarESE,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,1,
+	0,0,0,0,1,
+	0,0,0,0,1
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageGuideBarENE,
+	0,0,0,0,1,
+	0,0,0,0,1,
+	0,0,0,0,1,
+	0,0,0,0,0,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageGuideBarNNE,
+	0,0,1,1,1,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	0,0,0,0,0
+)
+
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageAngleN,
+	0,0,1,0,0,
+	0,1,0,1,0,
+	1,0,0,0,1,
+	0,0,0,0,0,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageAngleNW,
+	1,1,1,1,0,
+	1,0,0,0,0,
+	1,0,0,0,0,
+	1,0,0,0,0,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageAngleW,
+	0,0,1,0,0,
+	0,1,0,0,0,
+	1,0,0,0,0,
+	0,1,0,0,0,
+	0,0,1,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageAngleSW,
+	0,0,0,0,0,
+	1,0,0,0,0,
+	1,0,0,0,0,
+	1,0,0,0,0,
+	1,1,1,1,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageAngleS,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	1,0,0,0,1,
+	0,1,0,1,0,
+	0,0,1,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageAngleSE,
+	0,0,0,0,0,
+	0,0,0,0,1,
+	0,0,0,0,1,
+	0,0,0,0,1,
+	0,1,1,1,1
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageAngleE,
+	0,0,1,0,0,
+	0,0,0,1,0,
+	0,0,0,0,1,
+	0,0,0,1,0,
+	0,0,1,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageAngleNE,
+	0,1,1,1,1,
+	0,0,0,0,1,
+	0,0,0,0,1,
+	0,0,0,0,1,
+	0,0,0,0,0
+)
+
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageArrowN,
+	0,0,1,0,0,
+	0,1,1,1,0,
+	1,0,1,0,1,
+	0,0,1,0,0,
+	0,0,1,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageArrowNW,
+	1,1,1,0,0,
+	1,1,0,0,0,
+	1,0,1,0,0,
+	0,0,0,1,0,
+	0,0,0,0,1
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageArrowW,
+	0,0,1,0,0,
+	0,1,0,0,0,
+	1,1,1,1,1,
+	0,1,0,0,0,
+	0,0,1,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageArrowSW,
+	0,0,0,0,1,
+	0,0,0,1,0,
+	1,0,1,0,0,
+	1,1,0,0,0,
+	1,1,1,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageArrowS,
+	0,0,1,0,0,
+	0,0,1,0,0,
+	1,0,1,0,1,
+	0,1,1,1,0,
+	0,0,1,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageArrowSE,
+	1,0,0,0,0,
+	0,1,0,0,0,
+	0,0,1,0,1,
+	0,0,0,1,1,
+	0,0,1,1,1
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageArrowE,
+	0,0,1,0,0,
+	0,0,0,1,0,
+	1,1,1,1,1,
+	0,0,0,1,0,
+	0,0,1,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageArrowNE,
+	0,0,1,1,1,
+	0,0,0,1,1,
+	0,0,1,0,1,
+	0,1,0,0,0,
+	1,0,0,0,0
+)
+
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageSolidTriangleN,
+	0,0,1,0,0,
+	0,1,1,1,0,
+	1,1,1,1,1,
+	0,0,0,0,0,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageSolidTriangleNW,
+	1,1,1,1,0,
+	1,1,1,0,0,
+	1,1,0,0,0,
+	1,0,0,0,0,
+	0,0,0,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageSolidTriangleW,
+	0,0,1,0,0,
+	0,1,1,0,0,
+	1,1,1,0,0,
+	0,1,1,0,0,
+	0,0,1,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageSolidTriangleSW,
+	0,0,0,0,0,
+	1,0,0,0,0,
+	1,1,0,0,0,
+	1,1,1,0,0,
+	1,1,1,1,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageSolidTriangleS,
+	0,0,0,0,0,
+	0,0,0,0,0,
+	1,1,1,1,1,
+	0,1,1,1,0,
+	0,0,1,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageSolidTriangleSE,
+	0,0,0,0,0,
+	0,0,0,0,1,
+	0,0,0,1,1,
+	0,0,1,1,1,
+	0,1,1,1,1
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageSolidTriangleE,
+	0,0,1,0,0,
+	0,0,1,1,0,
+	0,0,1,1,1,
+	0,0,1,1,0,
+	0,0,1,0,0
+)
+EXT_KIT_DEFINE_LITERAL_MICROBIT_IMAGE_5_X_5(static const, sImageSolidTriangleNE,
+	0,1,1,1,1,
+	0,0,1,1,1,
+	0,0,0,1,1,
+	0,0,0,0,1,
+	0,0,0,0,0
+)
+
+/// Indices and count for pages
+enum PageIndex
+{
+	kPage0,		///< Page 0
+	kPage1,		///< Page 1
+	kPageCount	///< Page count
+};
+
+/// Indices and count for images
+enum ImageIndex
+{
+	kImageN,		///!< (kPage0) N for MICROBIT_DISPLAY_ROTATION_0
+	kImageNW,		///!< (kPage0) NW for MICROBIT_DISPLAY_ROTATION_0
+	kImageW,		///!< (kPage0) W for MICROBIT_DISPLAY_ROTATION_0 (or N for MICROBIT_DISPLAY_ROTATION_90)
+	kImageSW,		///!< (kPage0) SW for MICROBIT_DISPLAY_ROTATION_0
+	kImageS,		///!< (kPage0) S for MICROBIT_DISPLAY_ROTATION_0 (or N for MICROBIT_DISPLAY_ROTATION_180)
+	kImageSE,		///!< (kPage0) SE for MICROBIT_DISPLAY_ROTATION_0
+	kImageE,		///!< (kPage0) E for MICROBIT_DISPLAY_ROTATION_0 (or N for MICROBIT_DISPLAY_ROTATION_270)
+	kImageNE,		///!< (kPage0) NE for MICROBIT_DISPLAY_ROTATION_0
+	kImageCount,	///!< Image count
+
+	kImageNNW = 0,	///!< (kPage1) NNW for MICROBIT_DISPLAY_ROTATION_0
+	kImageWNW,		///!< (kPage1) WNW for MICROBIT_DISPLAY_ROTATION_0
+	kImageWSW,		///!< (kPage1) WSW for MICROBIT_DISPLAY_ROTATION_0
+	kImageSSW,		///!< (kPage1) SSW for MICROBIT_DISPLAY_ROTATION_0
+	kImageSSE,		///!< (kPage1) SSE for MICROBIT_DISPLAY_ROTATION_0
+	kImageESE,		///!< (kPage1) ESE for MICROBIT_DISPLAY_ROTATION_0
+	kImageENE,		///!< (kPage1) ENE for MICROBIT_DISPLAY_ROTATION_0
+	kImageNNE,		///!< (kPage1) NNE for MICROBIT_DISPLAY_ROTATION_0
+
+};	// ImageIndex
+
+/// @endcond static
+
+static const MicroBitImage* sArrowImages[kCountArrowTypes][kPageCount][kImageCount] = {
+	{	// [kGuideBar]
+		{	// [kPage0]
+			&sImageGuideBarN,	// [kImageN]
+			&sImageGuideBarNW,	// [kImageNW]
+			&sImageGuideBarW,	// [kImageW]
+			&sImageGuideBarSW,	// [kImageSW]
+			&sImageGuideBarS,	// [kImageS]
+			&sImageGuideBarSE,	// [kImageSE]
+			&sImageGuideBarE,	// [kImageE]
+			&sImageGuideBarNE	// [kImageNE]
+		},
+		{	// [kPage1]
+			&sImageGuideBarNNW,	// [kImageNNW]
+			&sImageGuideBarWNW,	// [kImageWNW]
+			&sImageGuideBarWSW,	// [kImageWSW]
+			&sImageGuideBarSSW,	// [kImageSSW]
+			&sImageGuideBarSSE,	// [kImageSSE]
+			&sImageGuideBarESE,	// [kImageESE]
+			&sImageGuideBarENE,	// [kImageENE]
+			&sImageGuideBarNNE	// [kImageNNE]
+		}
+	},
+	{	// [kAngle]
+		{	// [kPage0]
+			&sImageAngleN,	// [kImageN]
+			&sImageAngleNW,	// [kImageNW]
+			&sImageAngleW,	// [kImageW]
+			&sImageAngleSW,	// [kImageSW]
+			&sImageAngleS,	// [kImageS]
+			&sImageAngleSE,	// [kImageSE]
+			&sImageAngleE,	// [kImageE]
+			&sImageAngleNE	// [kImageNE]
+		},
+		{	// [kPage1]
+			0,	// [kImageNNW]
+			0,	// [kImageWNW]
+			0,	// [kImageWSW]
+			0,	// [kImageSSW]
+			0,	// [kImageSSE]
+			0,	// [kImageESE]
+			0,	// [kImageENE]
+			0	// [kImageNNE]
+		}
+	},
+	{	// [kArrow]
+		{	// [kPage0]
+			&sImageArrowN,	// [kImageN]
+			&sImageArrowNW,	// [kImageNW]
+			&sImageArrowW,	// [kImageW]
+			&sImageArrowSW,	// [kImageSW]
+			&sImageArrowS,	// [kImageS]
+			&sImageArrowSE,	// [kImageSE]
+			&sImageArrowE,	// [kImageE]
+			&sImageArrowNE	// [kImageNE]
+		},
+		{	// [kPage1]
+			0,	// [kImageNNW]
+			0,	// [kImageWNW]
+			0,	// [kImageWSW]
+			0,	// [kImageSSW]
+			0,	// [kImageSSE]
+			0,	// [kImageESE]
+			0,	// [kImageENE]
+			0	// [kImageNNE]
+		}
+	},
+	{	// [kSolidTriangle]
+		{	// [kPage0]
+			&sImageSolidTriangleN,	// [kImageN]
+			&sImageSolidTriangleNW,	// [kImageNW]
+			&sImageSolidTriangleW,	// [kImageW]
+			&sImageSolidTriangleSW,	// [kImageSW]
+			&sImageSolidTriangleS,	// [kImageS]
+			&sImageSolidTriangleSE,	// [kImageSE]
+			&sImageSolidTriangleE,	// [kImageE]
+			&sImageSolidTriangleNE	// [kImageNE]
+		},
+		{	// [kPage1]
+			0,	// [kImageNNW]
+			0,	// [kImageWNW]
+			0,	// [kImageWSW]
+			0,	// [kImageSSW]
+			0,	// [kImageSSE]
+			0,	// [kImageESE]
+			0,	// [kImageENE]
+			0	// [kImageNNE]
+		}
+	}
+};
+
+void showDirection(Direction direction, ArrowType arrowType, uint32_t durationInMilliseconds)
 {
 	bool backToFront = isBackToFront();
-	MicroBitDisplay& d = ExtKit::global().display();
+	char c = 0;
+	const MicroBitImage* image = 0;
+	PageIndex pageIndex = kPage0;
+	int /* ImageIndex */ imageIndex = -1;
 	switch(direction) {
-		case direction::kCenter:	d.clear();				break;
-		case direction::kN:			d.print(backToFront ? sImageDirS : sImageDirN);		break;
-		case direction::kE:			d.print(backToFront ? sImageDirW : sImageDirE);		break;
-		case direction::kW:			d.print(backToFront ? sImageDirE : sImageDirW);		break;
-		case direction::kS:			d.print(backToFront ? sImageDirN : sImageDirS);		break;
-		case direction::kNE:		d.print(backToFront ? sImageDirSW : sImageDirNE);	break;
-		case direction::kNW:		d.print(backToFront ? sImageDirSE : sImageDirNW);	break;
-		case direction::kSE:		d.print(backToFront ? sImageDirNW : sImageDirSE);	break;
-		case direction::kSW:		d.print(backToFront ? sImageDirNE : sImageDirSW);	break;
-		case direction::kLF:		d.print(backToFront ? sImageDirRB : sImageDirLF);	break;
-		case direction::kLB:		d.print(backToFront ? sImageDirRF : sImageDirLB);	break;
-		case direction::kRF:		d.print(backToFront ? sImageDirLB : sImageDirRF);	break;
-		case direction::kRB:		d.print(backToFront ? sImageDirLF : sImageDirRB);	break;
-		case direction::kStop:		d.print(sImageDirStop);	break;
-		case direction::kInvalid:	d.printChar('!');		break;
-		default:					d.printChar('?');		break;
+		case direction::kCenter: {
+			c = ' ';
+			break;
+		}
+		case direction::kN: {
+			imageIndex = backToFront ? kImageS : kImageN;
+			break;
+		}
+		case direction::kE: {
+			imageIndex = backToFront ? kImageW : kImageE;
+			break;
+		}
+		case direction::kW: {
+			imageIndex = backToFront ? kImageE : kImageW;
+			break;
+		}
+		case direction::kS: {
+			imageIndex = backToFront ? kImageN : kImageS;
+			break;
+		}
+		case direction::kNE: {
+			imageIndex = backToFront ? kImageSW : kImageNE;
+			break;
+		}
+		case direction::kNW: {
+			imageIndex = backToFront ? kImageSE : kImageNW;
+			break;
+		}
+		case direction::kSE: {
+			imageIndex = backToFront ? kImageNW : kImageSE;
+			break;
+		}
+		case direction::kSW: {
+			imageIndex = backToFront ? kImageNE : kImageSW;
+			break;
+		}
+		case direction::kLF: {
+			pageIndex = kPage1;
+			imageIndex = backToFront ? kImageESE : kImageWNW;
+			break;
+		}
+		case direction::kLB: {
+			pageIndex = kPage1;
+			imageIndex = backToFront ? kImageENE : kImageWSW;
+			break;
+		}
+		case direction::kRF: {
+			pageIndex = kPage1;
+			imageIndex = backToFront ? kImageWSW : kImageENE;
+			break;
+		}
+		case direction::kRB: {
+			pageIndex = kPage1;
+			imageIndex = backToFront ? kImageWNW : kImageESE;
+			break;
+		}
+		case direction::kStop: {
+			image = &sImageSmallX;
+			break;
+		}
+		case direction::kInvalid: {
+			c = '!';
+			break;
+		}
+		default: {
+			c = '?';
+			break;
+		}
+	}
+
+	if(c) {
+		showChar(c, durationInMilliseconds);
+	}
+	else if(image) {
+		showImage(*const_cast<MicroBitImage*>(image), durationInMilliseconds);
+	}
+	else if(0 <= imageIndex) {
+		image = sArrowImages[arrowType][pageIndex][imageIndex];
+		if(image) {
+			showImage(*const_cast<MicroBitImage*>(image), durationInMilliseconds);
+		}
 	}
 }
 
