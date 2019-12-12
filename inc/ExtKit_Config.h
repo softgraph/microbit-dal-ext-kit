@@ -49,10 +49,10 @@ namespace microbit_dal_ext_kit {
 				<td>80</td>
 			</tr>
 		</table>
-		These values are defined in <a href=_ext_kit___config_8h_source.html>ExtKit_Config.h</a>.
+		These default values are defined in <a href=_ext_kit___config_8h_source.html>ExtKit_Config.h</a>.
 
 	# Compile Time Options with Yotta
-		The above values can be changed through the configuration system provided by Yotta.
+		These values can be changed through the configuration system provided by Yotta.
 		Here is an example for `config.json` file.
 		@include	config.example.json
 		@reference
@@ -72,7 +72,7 @@ namespace microbit_dal_ext_kit {
 #define		YOTTA_CFG_MICROBIT_DAL__EXT_KIT_RADIO_GROUP			0
 #endif	//	YOTTA_CFG_MICROBIT_DAL__EXT_KIT_RADIO_GROUP
 
-/// Ensure that the config feature for usig the serial ext. debugger is defined. The valid value is 1 (enabled) or 0 (disabled).
+/// Ensure that the config feature for usig the serial external debugger is defined. The valid value is 1 (enabled) or 0 (disabled).
 #ifndef		YOTTA_CFG_MICROBIT_DAL__EXT_KIT_SERIAL_EXT_DEBUG
 #define		YOTTA_CFG_MICROBIT_DAL__EXT_KIT_SERIAL_EXT_DEBUG	1
 #endif	//	YOTTA_CFG_MICROBIT_DAL__EXT_KIT_SERIAL_EXT_DEBUG
