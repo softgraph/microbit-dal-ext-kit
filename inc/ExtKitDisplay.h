@@ -100,25 +100,25 @@ bool isUpsideDown();
 
 /// Clear Display
 /**
- * @note The functions is blocked until the flashing is completed if `durationInMilliseconds` is not 0.
+ * @note The function will be blocked until the flashing is completed if `durationInMilliseconds` is not 0.
  */
 void clear(uint32_t durationInMilliseconds = 0);
 
 /// Show an Image
 /**
- * @note The functions is blocked until the flashing is completed if `durationInMilliseconds` is not 0.
+ * @note The function will be blocked until the flashing is completed if `durationInMilliseconds` is not 0.
  */
 void showImage(MicroBitImage image, uint32_t durationInMilliseconds = 0);
 
 /// Show a Character
 /**
- * @note The functions is blocked until the flashing is completed if `durationInMilliseconds` is not 0.
+ * @note The function will be blocked until the flashing is completed if `durationInMilliseconds` is not 0.
  */
 void showChar(char c, uint32_t durationInMilliseconds = 0);
 
 /// Flash a Character
 /**
- * @note The functions is blocked until the flashing is completed if `durationInMilliseconds` is not 0.
+ * @note The function will be blocked until the flashing is completed if `durationInMilliseconds` is not 0.
  * @deprecated This method is obsolete and will be removed in a future release. Please use `showChar()` with `durationInMilliseconds` instead.
  */
 void flashChar(char c, uint32_t durationInMilliseconds = 500);
@@ -134,19 +134,19 @@ void scrollStringAsync(const ManagedString& s, char c = 0);
 
 /// Show a Number
 /**
- * @note The functions is blocked until the flashing is completed if `durationInMilliseconds` is not 0.
+ * @note The function will be blocked until the flashing is completed if `durationInMilliseconds` is not 0.
  */
 void showNumber(int twoDigitNumber /* 00-99 */, uint32_t durationInMilliseconds = 0);
 
 /// Show Bits
 /**
- * @note The functions is blocked until the flashing is completed if `durationInMilliseconds` is not 0.
+ * @note The function will be blocked until the flashing is completed if `durationInMilliseconds` is not 0.
  */
 void showBits(uint32_t bits /* 0x00000 - 0xfffff */, uint32_t durationInMilliseconds = 0);
 
-/// Show Button State
+/// Show Button %State
 /**
- * @note The functions is blocked until the flashing is completed if `durationInMilliseconds` is not 0.
+ * @note The function will be blocked until the flashing is completed if `durationInMilliseconds` is not 0.
  */
 void showButton(Buttons buttons, uint32_t durationInMilliseconds = 0);
 
@@ -170,9 +170,9 @@ enum ArrowType
 /// Count of Arrow Types
 const size_t kCountArrowTypes = kSolidTriangle + 1;
 
-/// Show Direction State
+/// Show Direction %State
 /**
- * @note The functions is blocked until the flashing is completed if `durationInMilliseconds` is not 0.
+ * @note The function will be blocked until the flashing is completed if `durationInMilliseconds` is not 0.
  */
 void showDirection(Direction direction, ArrowType arrowType = kGuideBar, uint32_t durationInMilliseconds = 0);
 
