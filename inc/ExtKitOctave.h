@@ -17,7 +17,7 @@
 
 namespace microbit_dal_ext_kit {
 
-///	Ocrave. The constants for type `#Octave` are defined in namespace `microbit_dal_ext_kit::octave`.
+///	Octave. The constants for type `#Octave` are defined in namespace `microbit_dal_ext_kit::octave`.
 typedef uint16_t	Octave;
 
 /// `State` specialization for `#Octave`
@@ -38,7 +38,7 @@ public:
 
 };	// StateChangeForOctave
 
-///	Ocrave utility
+///	Octave utility
 namespace octave {
 
 ///	Invalid value
