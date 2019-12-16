@@ -2,7 +2,7 @@
 /**	@package	microbit_dal_ext_kit
 */
 
-/// Remote State Component
+/// Remote State components
 /**	@file
 	@author	Copyright (c) 2019 Tomoyuki Nakashima.<br>
 			This code is licensed under MIT license. See `LICENSE` in the project root for more information.
@@ -24,7 +24,7 @@ class MicroBitEvent;
 
 namespace microbit_dal_ext_kit {
 
-/// Remote %State
+/// Remote %State components
 namespace remoteState {
 
 /// Remote %State Request Marker
@@ -133,7 +133,7 @@ private:
 	/// Global instance
 	static Transmitter*	sGlobal;
 
-	/// Root Node for `CategoryRecord`
+	/// Root Node for CategoryRecord
 	RootForDynamicNodes	mRoot;
 
 };	// Transmitter
@@ -237,7 +237,7 @@ private:
 	/// Global instance
 	static Receiver*	sGlobal;
 
-	/// Root Node for `CategoryRecord`
+	/// Root Node for CategoryRecord
 	RootForDynamicNodes mRoot;
 
 };	// Receiver

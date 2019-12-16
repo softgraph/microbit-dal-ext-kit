@@ -17,7 +17,7 @@
 
 namespace microbit_dal_ext_kit {
 
-/// The root base class for any ext-kit `Component`. A `Component` is a small service provider and controlled by `start()` and `stop()`.
+/// The root base class for any ext-kit Component. A Component is a small service provider and controlled by start() and stop().
 /* abstract */ class Component
 {
 	friend class CompositeComponent;
@@ -104,7 +104,7 @@ private:
 
 	};	// ComponentRecord
 
-	/// Root Node for `ComponentRecord`
+	/// Root Node for ComponentRecord
 	RootForDynamicNodes	mRoot;
 
 };	// CompositeComponent

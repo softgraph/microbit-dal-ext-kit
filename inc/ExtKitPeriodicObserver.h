@@ -139,7 +139,7 @@ private:
 	/// Request Token
 	RequestToken*	mRequestToken;
 
-	/// Root Node for `HandlerRecord`
+	/// Root Node for HandlerRecord
 	RootForDynamicNodes		mRoot;
 
 };	// PeriodicObserver

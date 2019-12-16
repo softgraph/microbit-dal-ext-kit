@@ -35,8 +35,8 @@ class MicroBitThermometer;
 namespace microbit_dal_ext_kit {
 
 /**	@page	ExtKit_Global	Global instance - the access to the instances of microbit-dal's MicroBit* classes
-	`ExtKit::global()` provides the access to the instances of microbit-dal's `MicroBit*` classes owned by or registered to `MicroBitExtKit` or `PrimitiveExtKit`. <br>
-	Here is an example for using `ExtKit::global()`.
+	ExtKit::global() provides the access to the instances of microbit-dal's MicroBit* classes owned by or registered to MicroBitExtKit or PrimitiveExtKit. <br>
+	Here is an example for using ExtKit::global().
 	@code
 		MicroBitDisplay& d = ExtKit::global().display();
 		d.print("Hello");

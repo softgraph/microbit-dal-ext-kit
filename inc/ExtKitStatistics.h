@@ -46,7 +46,7 @@ private:
 	/// Prepare item
 	static StatisticRecord& prepareItem(const ManagedString& title);
 
-	/// Root Node for `StatisticRecord`
+	/// Root Node for StatisticRecord
 	static RootForDynamicNodes	sRoot;
 
 };	// Statistics

@@ -19,7 +19,7 @@
 namespace microbit_dal_ext_kit {
 
 /**	@page	ExtKit_Device	Device class - the first instance for using microbit-dal-ext-kit
-	- An instance of either class `MicroBitExtKit` or `PrimitiveExtKit` must be created first for using microbit-dal-ext-kit.
+	- An instance of either class MicroBitExtKit or PrimitiveExtKit must be created first for using microbit-dal-ext-kit.
 	- The instance should not be created in stack memory (like local variables) - either in your main method or anywhere else. <br>
 		This restriction is the same as the warning below for micro:bit runtime.
 			<blockquote>
@@ -32,22 +32,22 @@ namespace microbit_dal_ext_kit {
 
 	- Two or more instances are not allowed.
 	- You can choose one of the following classes
-		- `MicroBitExtKit` is derived from microbit-dal's class `MicroBit`. You can use all features of `MicroBit` via the instance of `MicroBitExtKit`.
-		- `PrimitiveExtKit` is a minimal version of `MicroBitExtKit`. You can choose this if you don't want to instanciate the class `MicroBit`. <br>
-			Only the following instances are included in `PrimitiveExtKit`.
-			- `mbed::InterruptIn` for the reset button
-			- `MicroBitSerial` for the serial port over USB
-			- `MicroBitI2C`
-			- `MicroBitMessageBus`
-			- `MicroBitDisplay`
-			- `MicroBitButton` for button A and B
-			- `MicroBitMultiButton` for button A+B
-			- `MicroBitPin` for all pins supported by `MicroBitIO`
+		- MicroBitExtKit is derived from microbit-dal's class MicroBit. You can use all features of class MicroBit via the instance of MicroBitExtKit.
+		- PrimitiveExtKit is a minimal version of MicroBitExtKit. You can choose this if you don't want to instanciate the class MicroBit. <br>
+			Only the following instances are included in PrimitiveExtKit.
+			- mbed::InterruptIn for the reset button
+			- MicroBitSerial for the serial port over USB
+			- MicroBitI2C
+			- MicroBitMessageBus
+			- MicroBitDisplay
+			- MicroBitButton for button A and B
+			- MicroBitMultiButton for button A+B
+			- MicroBitPin for all pins supported by MicroBitIO
 			.
-			If you need another instance which depends on the instances listed here, inherit `PrimitiveExtKit` and add the required class as a member variable. This approach ensures that the initialization of the instances listed here are done by the constructor of `PrimitiveExtKit` before the initialization of your member variables.
+			If you need another instance which depends on the instances listed here, inherit PrimitiveExtKit and add the required class as a member variable. This approach ensures that the initialization of the instances listed here are done by the constructor of PrimitiveExtKit before the initialization of your member variables.
 */
 
-/// The common interface for any ext-kit `Device`
+/// The common interface for any ext-kit Device
 /**	Any class inherits this interface should also expose the following member variables.
 
 		public:
@@ -67,7 +67,7 @@ namespace microbit_dal_ext_kit {
 	/* to be implemented */ void init();
 };
 
-/// An ext-kit `Device` derived from `MicroBit`
+/// An ext-kit Device derived from MicroBit
 class MicroBitExtKit : public MicroBit, public Device
 {
 public:
@@ -83,7 +83,7 @@ protected:
 
 };	// MicroBitExtKit
 
-/// A minimal ext-kit `Device`
+/// A minimal ext-kit Device
 class PrimitiveExtKit : public Device
 {
 public:
@@ -93,38 +93,38 @@ public:
 	/// Initialize
 	void init();
 
-	/// The same name as class `MicroBit`
+	/// The same name as class MicroBit
 	MicroBitSerial			serial;
 
-	/// The same name as class `MicroBit`
+	/// The same name as class MicroBit
 	mbed::InterruptIn		resetButton;
 
-	/// The same name as class `MicroBit`
+	/// The same name as class MicroBit
 	MicroBitI2C				i2c;
 
-	/// The same name as class `MicroBit`
+	/// The same name as class MicroBit
 	MicroBitMessageBus		messageBus;
 
-	/// The same name as class `MicroBit`
+	/// The same name as class MicroBit
 	MicroBitDisplay			display;
 
-	/// The same name as class `MicroBit`
+	/// The same name as class MicroBit
 	MicroBitButton			buttonA;
 
-	/// The same name as class `MicroBit`
+	/// The same name as class MicroBit
 	MicroBitButton			buttonB;
 
-	/// The same name as class `MicroBit`
+	/// The same name as class MicroBit
 	MicroBitMultiButton		buttonAB;
 
-	/// The same name as class `MicroBit`
+	/// The same name as class MicroBit
 	MicroBitIO				io;
 
 protected:
 	/// Ext Kit global instance
 	ExtKit	mExtKit;
 
-	/// The same name as class `MicroBit`
+	/// The same name as class MicroBit
 	uint8_t	status;
 
 private:
