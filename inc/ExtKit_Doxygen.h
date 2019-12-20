@@ -23,49 +23,49 @@ namespace microbit_dal_ext_kit {
 
 	# Components dedicated to extensiton boards
 		<table><tr><td>
-		%Component		</td><td>	Description
+		%Component			</td><td>	Description
 		</td></tr><tr><td>
-		`JoystickBit`	</td><td>	@copybrief	JoystickBit
+		JoystickBit			</td><td>	@copybrief	JoystickBit
 		</td></tr><tr><td>
-		`MotoBit`		</td><td>	@copybrief	MotoBit
+		MotoBit				</td><td>	@copybrief	MotoBit
 		</td></tr><tr><td>
-		`TouchPiano`	</td><td>	@copybrief	TouchPiano
+		TouchPiano			</td><td>	@copybrief	TouchPiano
 		</td></tr><tr><td>
-		`ZipHalo`		</td><td>	@copybrief	ZipHalo
+		ZipHalo				</td><td>	@copybrief	ZipHalo
 		</td></tr></table>
 
 	# Components dedicated to hardware modules
 		<table><tr><td>
-		%Component		</td><td>	Description
+		%Component			</td><td>	Description
 		</td></tr><tr><td>
-		`Buzzer`		</td><td>	@copybrief	Buzzer
+		Buzzer				</td><td>	@copybrief	Buzzer
 		</td></tr><tr><td>
-		`MotorsLR`		</td><td>	@copybrief	MotorsLR
+		MotorsLR			</td><td>	@copybrief	MotorsLR
 		</td></tr><tr><td>
-		`MotorsPT`		</td><td>	@copybrief	MotorsPT
+		MotorsPT			</td><td>	@copybrief	MotorsPT
 		</td></tr><tr><td>
-		`NeoPixel`		</td><td>	@copybrief	NeoPixel
+		NeoPixel			</td><td>	@copybrief	NeoPixel
 		</td></tr><tr><td>
-		`Sonar`			</td><td>	@copybrief	Sonar
+		Sonar				</td><td>	@copybrief	Sonar
 		</td></tr></table>
 
 	# Other components
 		<table><tr><td>
 		%Component					</td><td>	Description
 		</td></tr><tr><td>
-		`Component`					</td><td>	@copybrief	Component
+		Component					</td><td>	@copybrief	Component
 		</td></tr><tr><td>
-		`CompositeComponent`		</td><td>	@copybrief	CompositeComponent
+		CompositeComponent			</td><td>	@copybrief	CompositeComponent
 		</td></tr><tr><td>
-		`Motors`					</td><td>	@copybrief	Motors
+		Motors						</td><td>	@copybrief	Motors
 		</td></tr><tr><td>
-		`PeriodicObserver`			</td><td>	@copybrief	PeriodicObserver
+		PeriodicObserver			</td><td>	@copybrief	PeriodicObserver
 		</td></tr><tr><td>
-		`remoteState::Transmitter`	</td><td>	@copybrief	remoteState::Transmitter
+		remoteState::Transmitter	</td><td>	@copybrief	remoteState::Transmitter
 		</td></tr><tr><td>
-		`remoteState::Receiver`		</td><td>	@copybrief	remoteState::Receiver
+		remoteState::Receiver		</td><td>	@copybrief	remoteState::Receiver
 		</td></tr><tr><td>
-		`SerialDebugger`			</td><td>	@copybrief	SerialDebugger
+		SerialDebugger				</td><td>	@copybrief	SerialDebugger
 		</td></tr></table>
 */
 

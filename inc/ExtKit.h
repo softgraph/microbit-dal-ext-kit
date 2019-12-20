@@ -17,7 +17,7 @@ namespace microbit_dal_ext_kit {
 /**	@page	ExtKit_Headers	Header File Structure of microbit-dal-ext-kit
 	The interfaces of `microbit-dal-ext-kit` are provided by the following header files.
 
-	# Device Class
+	# %Device Class
 		See also @ref	ExtKit_Device.
 		- ExtKitDevice.h
 

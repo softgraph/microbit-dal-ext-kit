@@ -75,7 +75,7 @@ protected:
 
 };	// Component
 
-/// The base class for any ext-kit `Component` which has child `Component`(s)
+/// The base class for any ext-kit Component which has child Component(s)
 /* abstract */ class CompositeComponent : public Component
 {
 protected:
