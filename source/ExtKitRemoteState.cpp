@@ -11,7 +11,6 @@
 
 #include "ExtKitRemoteState.h"	// self
 #include "ExtKit.h"
-#include "ExtKitState.cpp.h"
 
 namespace microbit_dal_ext_kit {
 namespace remoteState {
