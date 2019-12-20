@@ -49,8 +49,8 @@ const Direction kW			= 1 << 2;			///< West      or turn left
 const Direction kS			= 1 << 3;			///< South     or move backward
 const Direction kNE			= kN | kE;			///< Northeast or move forward and turn right
 const Direction kNW			= kN | kW;			///< Northwest or move forward and turn left
-const Direction kSE			= kS | kE;			///< Southeast or move backward and turn right
-const Direction kSW			= kS | kW;			///< Southwest or move backward and turn left
+const Direction kSE			= kS | kE;			///< Southeast or move backward and turn left
+const Direction kSW			= kS | kW;			///< Southwest or move backward and turn right
 
 const Direction kLF			= 1 << 4;			///< Move left motor forward
 const Direction kLB			= 1 << 5;			///< Move left motor backward
@@ -58,6 +58,12 @@ const Direction kRF			= 1 << 6;			///< Move right motor forward
 const Direction kRB			= 1 << 7;			///< Move right motor backward
 
 const Direction kStop		= 1 << 15;			///< Stop
+
+/// Four (cardinal) directions and a center
+const Direction kFour[5] = { kN, kE, kS, kW, kCenter };	
+
+/// Eight (cardinal or primary inter-cardinal) directions and a center
+const Direction kEight[9] = { kN, kNE, kE, kSE, kS, kSW, kW, kNW, kCenter };
 
 }	// direction
 }	// microbit_dal_ext_kit
